@@ -1,0 +1,2412 @@
+﻿[
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107130",
+        "specialist":  "CT DIJAGNOSTIKA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.12.2022. 10:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109238",
+        "specialist":  "CZA - AMBULANTA ZA DJEДЊIJU FIZIJATRIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "26.06.2025. 13:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109219",
+        "specialist":  "CZA - KAB. DEFEKTOLOG -OLIGOFRENOLOG",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "25.02.2026. 13:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109229",
+        "specialist":  "CZA - KAB. DEFEKTOLOG -SOMATOPED",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.12.2025. 20:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109209",
+        "specialist":  "CZA - KABINET DEFEKTOLOG -LOGOPED 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.10.2025. 20:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109218",
+        "specialist":  "CZA - KABINET DEFEKTOLOG -LOGOPED 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.10.2025. 13:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109217",
+        "specialist":  "CZA - KABINET DEFEKTOLOG -LOGOPED 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.10.2025. 20:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109299",
+        "specialist":  "CZA - PSIHIJATRIJSKA AMBULANTA 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "29.04.2026. 10:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109297",
+        "specialist":  "CZA - PSIHIJATRIJSKA AMBULANTA 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "27.03.2026. 08:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109298",
+        "specialist":  "CZA - PSIHIJATRIJSKA AMBULANTA 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.03.2026. 10:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109249",
+        "specialist":  "CZA - PSIHOLOЕ KI KABINET 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 20:15",
+        "last_booked":  "03.03.2026. 15:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109259",
+        "specialist":  "CZA - PSIHOLOЕ KI KABINET 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:15",
+        "last_booked":  "03.03.2026. 07:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109279",
+        "specialist":  "CZA - PSIHOLOЕ KI KABINET 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "13.12.2023. 13:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109280",
+        "specialist":  "CZA - PSIHOLOЕ KI KABINET 4",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "23.04.2025. 09:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109269",
+        "specialist":  "CZA - PSIHOLOЕ KI KABINET 5",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 20:15",
+        "last_booked":  "04.03.2026. 07:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101609",
+        "specialist":  "DJEДЊIJA ALERGOLOЕ KA -IMUNOLOЕ KA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "29.04.2026. 13:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "105109",
+        "specialist":  "DJEДЊIJA ANESTEZIOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 16:50",
+        "last_booked":  "11.02.2026. 16:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101209",
+        "specialist":  "DJEДЊIJA ENDOKRINOLOЕ KA AMBULANTA 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 12:20",
+        "last_booked":  "28.04.2026. 11:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101709",
+        "specialist":  "DJEДЊIJA ENDOKRINOLOЕ KA AMBULANTA 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.04.2026. 12:20",
+        "last_booked":  "25.03.2026. 11:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102419",
+        "specialist":  "DJEДЊIJA FIZIJATRIJSKA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "28.04.2026. 13:40",
+        "last_booked":  "28.04.2026. 09:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101509",
+        "specialist":  "DJEДЊIJA GASTROENTEROLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:40",
+        "last_booked":  "01.04.2026. 09:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101109",
+        "specialist":  "DJEДЊIJA HEMATOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:40",
+        "last_booked":  "11.02.2026. 09:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102108",
+        "specialist":  "DJEДЊIJA HIRURЕ KA AMBULANTA 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:50",
+        "last_booked":  "11.02.2026. 11:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102109",
+        "specialist":  "DJEДЊIJA HIRURЕ KA AMBULANTA 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.04.2026. 13:50",
+        "last_booked":  "11.02.2026. 11:10",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101119",
+        "specialist":  "DJEДЊIJA KARDIOLOЕ KA AMBULANTA 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:30",
+        "last_booked":  "11.02.2026. 12:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102107",
+        "specialist":  "DJEДЊIJA KARDIOLOЕ KA AMBULANTA 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:30",
+        "last_booked":  "16.02.2026. 11:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101219",
+        "specialist":  "DJEДЊIJA NEFROLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:40",
+        "last_booked":  "11.02.2026. 09:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101329",
+        "specialist":  "DJEДЊIJA NEUROLOЕ KA AMBULANTA 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "28.04.2026. 13:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101349",
+        "specialist":  "DJEДЊIJA NEUROLOЕ KA AMBULANTA 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.04.2026. 13:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101359",
+        "specialist":  "DJEДЊIJA NEUROLOЕ KA AMBULANTA 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.09.2024. 13:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102320",
+        "specialist":  "DJEДЊIJA OFTALMOLOЕ KA AMBULANTA 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:40",
+        "last_booked":  "02.04.2026. 08:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102209",
+        "specialist":  "DJEДЊIJA ORL AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.04.2026. 12:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102409",
+        "specialist":  "DJEДЊIJA ORTOPEDSKA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "28.04.2026. 13:45",
+        "last_booked":  "14.04.2026. 11:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101520",
+        "specialist":  "DJEДЊIJA ORTOPEDSKA AMBULANTA - TRAUMA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 19:45",
+        "last_booked":  "03.03.2026. 19:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109239",
+        "specialist":  "DJEДЊIJA PSIHIJATRIJSKA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "28.06.2022. 17:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101409",
+        "specialist":  "DJEДЊIJA PULMOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 12:40",
+        "last_booked":  "13.03.2026. 10:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101411",
+        "specialist":  "DJEДЊIJA PULMOLOЕ KA AMBULANTA 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.04.2026. 12:40",
+        "last_booked":  "02.03.2026. 09:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102509",
+        "specialist":  "DJEДЊIJA UROLOЕ KA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "20.04.2026. 19:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101328",
+        "specialist":  "DJEДЊIJI KABINET ZA EEG",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:15",
+        "last_booked":  "03.04.2026. 13:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101128",
+        "specialist":  "DJEДЊIJI KABINET ZA ERGOMETRIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "28.04.2026. 12:30",
+        "last_booked":  "17.02.2026. 10:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101118",
+        "specialist":  "DJEДЊIJI KABINET ZA HOLTER",
+        "status":  "HAS_SLOTS",
+        "first_available":  "26.02.2026. 08:30",
+        "last_booked":  "12.02.2026. 08:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107189",
+        "specialist":  "DJEДЊIJI MR ENTEROGRAFIJE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "25.05.2022. 16:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107199",
+        "specialist":  "DJEДЊIJI MR UROGRAFIJE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "25.12.2025. 13:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "108100",
+        "specialist":  "DNEVNA BOLNICA IBD",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.12.2022. 13:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107149",
+        "specialist":  "KABINET ZA DJEДЊIJI MR - MKS",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 13:00",
+        "last_booked":  "17.02.2026. 13:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107129",
+        "specialist":  "KABINET ZA DJEДЊIJI MR - NEURO",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 13:00",
+        "last_booked":  "12.02.2026. 09:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107169",
+        "specialist":  "KABINET ZA DJEДЊIJI MR BODY",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "25.12.2023. 10:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107159",
+        "specialist":  "KABINET ZA DJEДЊIJI UZ KUKOVA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 16:45",
+        "last_booked":  "16.02.2026. 15:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107209",
+        "specialist":  "KABINET ZA DJEДЊIJU MR -OPЕ TA ANESTEZIJA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "28.05.2022. 10:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107109",
+        "specialist":  "KABINET ZA DJEДЊIJU RTG DIJAGNOSTIKU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 12:50",
+        "last_booked":  "11.02.2026. 10:50",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107139",
+        "specialist":  "KABINET ZA DJEДЊIJU UZ DIJAGNOSTIKU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 13:30",
+        "last_booked":  "13.03.2026. 13:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "103209",
+        "specialist":  "NEONATOLOЕ KA AMBULANTA 1 IBD",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 12:40",
+        "last_booked":  "19.02.2026. 08:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "103210",
+        "specialist":  "NEONATOLOЕ KA AMBULANTA 2 IBD",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.04.2026. 12:40",
+        "last_booked":  "24.02.2026. 11:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101519",
+        "specialist":  "PEDIJATRIJSKA REUMATOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.04.2026. 13:40",
+        "last_booked":  "18.02.2026. 11:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "114050",
+        "specialist":  "ALERGOLOЕ KA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "28.05.2026. 12:25",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "115029",
+        "specialist":  "AMBULANTA ZA KAPILAROSKOPIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "25.05.2026. 10:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "111339",
+        "specialist":  "DNEVNA HEMATOLOЕ KA BOLNICA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 08:50",
+        "last_booked":  "08.04.2026. 08:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "114009",
+        "specialist":  "ENDOKRINOLOЕ KA AMBULANTA 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "29.05.2026. 12:25",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "114019",
+        "specialist":  "ENDOKRINOLOЕ KA AMBULANTA 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "29.05.2026. 12:25",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "114029",
+        "specialist":  "ENDOKRINOLOЕ KA AMBULANTA 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "25.08.2025. 12:25",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "113010",
+        "specialist":  "GASTROENTEROHEPATOLOЕ KA AMBULANTA 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "25.03.2026. 12:25",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "114039",
+        "specialist":  "GASTROENTEROLOЕ KA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "28.05.2026. 12:25",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "111309",
+        "specialist":  "HEMATOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.05.2026. 12:25",
+        "last_booked":  "08.05.2026. 11:55",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "111320",
+        "specialist":  "HEMATOLOЕ KA AMBULANTA 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "14.05.2026. 12:25",
+        "last_booked":  "07.05.2026. 12:25",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "111319",
+        "specialist":  "HEMATOLOЕ KI KONZILIJUM ZA BIOLOЕ KU TERAPIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "04.11.2022. 08:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "113019",
+        "specialist":  "KABINET ZA GASTROSKOPIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "26.05.2026. 10:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "113020",
+        "specialist":  "KABINET ZA GASTROSKOPIJU 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "29.03.2022. 13:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "113129",
+        "specialist":  "KABINET ZA KOLONOSKOPIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "27.05.2026. 09:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "113128",
+        "specialist":  "KABINET ZA KOLONOSKOPIJU 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.03.2022. 13:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "115019",
+        "specialist":  "KABINET ZA OSTEODENZITOMETRIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "28.05.2026. 10:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "115059",
+        "specialist":  "KABINET ZA UZ LOKOMO. SISTEMA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "27.03.2025. 13:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "130156",
+        "specialist":  "KONZILIJUM ALERGOLOGA I KLINIДЊKIH IMUNOLOGA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "13.02.2025. 13:55",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "116009",
+        "specialist":  "PULMOLOЕ KA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "26.05.2026. 12:25",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "115009",
+        "specialist":  "REUMATOLOЕ KA AMBULANTA 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "28.05.2026. 19:25",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "115039",
+        "specialist":  "REUMATOLOЕ KA AMBULANTA 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "12.05.2026. 12:25",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "115049",
+        "specialist":  "REUMATOLOЕ KI KONZILIJUM ZA BIOLOЕ KU TERAPIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "09.12.2022. 08:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "121109",
+        "specialist":  "AMBULANTA ZA DIGESTIVNU HIRURGIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "25.02.2026. 13:50",
+        "last_booked":  "23.02.2026. 11:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "121119",
+        "specialist":  "AMBULANTA ZA DIGESTIVNU HIRURGIJU 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "26.02.2026. 13:50",
+        "last_booked":  "17.02.2026. 13:50",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "124109",
+        "specialist":  "AMBULANTA ZA ENDOKRINU HIRURGIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 10:10",
+        "last_booked":  "13.02.2026. 11:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "122209",
+        "specialist":  "AMBULANTA ZA HIRURGIJU DOJKE",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.02.2026. 13:50",
+        "last_booked":  "11.02.2026. 12:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "120109",
+        "specialist":  "AMBULANTA ZA OPЕ TU HIRURGIJU 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "20.02.2026. 13:50",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "120117",
+        "specialist":  "AMBULANTA ZA OPЕ TU HIRURGIJU 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "25.02.2026. 13:50",
+        "last_booked":  "25.02.2026. 13:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "123209",
+        "specialist":  "AMBULANTA ZA PLASTIДЊNU HIRURGIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "26.02.2026. 13:50",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "123300",
+        "specialist":  "AMBULANTA ZA PLASTIДЊNU HIRURGIJU 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "25.02.2026. 10:50",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "122109",
+        "specialist":  "AMBULANTA ZA TORAKALNU I EZOFAGEALNU HIRURGIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.02.2026. 12:50",
+        "last_booked":  "12.02.2026. 12:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "123420",
+        "specialist":  "AMBULANTA ZA VASKULARNU HIRURGIJU 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "25.02.2026. 19:50",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "124209",
+        "specialist":  "AMBULANTA ZA VASKULARNU HIRURGIJU 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "27.02.2026. 13:50",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ORTOPEDIJU I TRAUMATOLOGIJU",
+        "code":  "130159",
+        "specialist":  "INTERVENTNA ORTOP.AMB-KONT.",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 10:40",
+        "last_booked":  "09.03.2026. 10:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ORTOPEDIJU I TRAUMATOLOGIJU",
+        "code":  "130109",
+        "specialist":  "ORTOPEDSKA AMBULANTA I",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 13:45",
+        "last_booked":  "25.03.2026. 12:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ORTOPEDIJU I TRAUMATOLOGIJU",
+        "code":  "130119",
+        "specialist":  "ORTOPEDSKA AMBULANTA II",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 13:45",
+        "last_booked":  "27.03.2026. 09:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ORTOPEDIJU I TRAUMATOLOGIJU",
+        "code":  "130149",
+        "specialist":  "ORTOPEDSKA AMBULANTA III",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 13:45",
+        "last_booked":  "25.03.2026. 12:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA UROLOGIJU",
+        "code":  "140109",
+        "specialist":  "UROLOЕ KA AMBULANTA I",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:45",
+        "last_booked":  "02.04.2026. 13:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA UROLOGIJU",
+        "code":  "140129",
+        "specialist":  "UROLOЕ KA AMBULANTA II",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:45",
+        "last_booked":  "02.04.2026. 13:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA UROLOGIJU",
+        "code":  "140119",
+        "specialist":  "UROLOЕ KA INTERVENTNA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "18.11.2022. 08:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROHIRURGIJU",
+        "code":  "150809",
+        "specialist":  "NEUROHIRUSKA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.03.2026. 13:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROHIRURGIJU",
+        "code":  "150119",
+        "specialist":  "NEUROHIRURЕ KA INTERVENTNA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 11:40",
+        "last_booked":  "17.02.2026. 09:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160260",
+        "specialist":  "DEFEKTOLOЕ KO - LOGOPEDSKA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "28.12.2022. 17:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160218",
+        "specialist":  "DISPANZER ZA EPILEPSIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "26.03.2026. 12:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160229",
+        "specialist":  "EEG AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 13:30",
+        "last_booked":  "11.02.2026. 13:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160239",
+        "specialist":  "EMNG AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "28.08.2025. 13:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160309",
+        "specialist":  "INTERVENTNA NEUROLOЕ KA AMB I",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.10.2022. 08:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160279",
+        "specialist":  "INTERVENTNA NEUROLOЕ KA AMB II",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "15.12.2021. 12:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160249",
+        "specialist":  "KABINET ZA EVOCIRANE POTENCIJALE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "09.06.2025. 17:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160109",
+        "specialist":  "NEUROLOЕ KA AMBULANTA I",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.03.2026. 12:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160119",
+        "specialist":  "NEUROLOЕ KA AMBULANTA II",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.03.2026. 12:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160259",
+        "specialist":  "NEUROLOЕ KO-PSIHOLOЕ KI KABINET",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "10.06.2022. 15:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA PSIHIJATRIJU",
+        "code":  "170700",
+        "specialist":  "AMBULANTA SUPSTITUCIONOJ TERAPIJI",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "26.03.2023. 13:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA PSIHIJATRIJU",
+        "code":  "170509",
+        "specialist":  "PSIHIJATRIJSKA AMBULANTA 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 12:40",
+        "last_booked":  "13.03.2026. 10:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA PSIHIJATRIJU",
+        "code":  "170519",
+        "specialist":  "PSIHIJATRIJSKA AMBULANTA 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 12:40",
+        "last_booked":  "16.03.2026. 08:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA PSIHIJATRIJU",
+        "code":  "170699",
+        "specialist":  "PSIHIJATRIJSKA AMBULANTA 3",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 12:40",
+        "last_booked":  "12.03.2026. 10:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA PSIHIJATRIJU",
+        "code":  "170902",
+        "specialist":  "PSIHOLOЕ KI KABINET I",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 18:00",
+        "last_booked":  "23.02.2026. 11:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA PSIHIJATRIJU",
+        "code":  "170899",
+        "specialist":  "PSIHOLOЕ KI KABINET II",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 12:30",
+        "last_booked":  "11.02.2026. 16:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA GINEKOLOGIJU I AKUЕ ERSTVO",
+        "code":  "111111",
+        "specialist":  "Ljekar specijalista u amb. 11.02.2026. 10:00 30.04.2026. 13:45",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:45",
+        "last_booked":  "11.02.2026. 10:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA GINEKOLOGIJU I AKUЕ ERSTVO",
+        "code":  "180120",
+        "specialist":  "DNEVNA BOLNICA GAK",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "04.02.2025. 00:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA GINEKOLOGIJU I AKUЕ ERSTVO",
+        "code":  "180189",
+        "specialist":  "GINEKOLOЕ KA AMBULANTA ZA INFERTILITET",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.04.2026. 13:45",
+        "last_booked":  "16.02.2026. 08:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA GINEKOLOGIJU I AKUЕ ERSTVO",
+        "code":  "180199",
+        "specialist":  "GINEKOLOЕ KO ENDOKRINOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "24.04.2026. 13:40",
+        "last_booked":  "13.02.2026. 13:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA GINEKOLOGIJU I AKUЕ ERSTVO",
+        "code":  "180169",
+        "specialist":  "GINEKOLOЕ KO ONKOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 10:15",
+        "last_booked":  "17.02.2026. 09:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA GINEKOLOGIJU I AKUЕ ERSTVO",
+        "code":  "180179",
+        "specialist":  "GINEKOLOЕ KO PERINATOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.04.2026. 13:40",
+        "last_booked":  "11.02.2026. 12:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA GINEKOLOGIJU I AKUЕ ERSTVO",
+        "code":  "180109",
+        "specialist":  "GINEKOLOЕ KO-AKUЕ ERSKA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "20.10.2022. 07:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190230",
+        "specialist":  "KABINET ZA BRAHITERAPIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "01.07.2026. 13:15",
+        "last_booked":  "11.02.2026. 08:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190310",
+        "specialist":  "AMBULANTA ZA NUKLEARNU MEDICINU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 11:50",
+        "last_booked":  "27.03.2026. 08:10",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190018",
+        "specialist":  "INTERVENTNA AMBULANTA ZA HEMIOTERAPIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.10.2025. 13:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190800",
+        "specialist":  "KONZILIJUM ZA PET/CT",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "02.10.2025. 12:05",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190109",
+        "specialist":  "ONKOLOЕ KA AMBULANTA ZA HEMIOTERAPIJU 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "01.07.2026. 16:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190119",
+        "specialist":  "ONKOLOЕ KA AMBULANTA ZA HEMIOTERAPIJU 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.10.2025. 14:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190129",
+        "specialist":  "ONKOLOЕ KA AMBULANTA ZA HEMIOTERAPIJU 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.10.2025. 14:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190139",
+        "specialist":  "ONKOLOЕ KA AMBULANTA ZA HEMIOTERAPIJU 4",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.10.2025. 14:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190209",
+        "specialist":  "ONKOLOЕ KA AMBULANTA ZA RADIOTERAPIJU 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "01.07.2026. 13:45",
+        "last_booked":  "12.02.2026. 13:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190219",
+        "specialist":  "ONKOLOЕ KA AMBULANTA ZA RADIOTERAPIJU 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "01.07.2026. 13:45",
+        "last_booked":  "12.02.2026. 12:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190700",
+        "specialist":  "ONKOLOЕ KI KONZILIJUM",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "29.12.2023. 13:50",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200119",
+        "specialist":  "ALERGOLOЕ KA AMBULANTA ORL",
+        "status":  "HAS_SLOTS",
+        "first_available":  "24.02.2026. 13:40",
+        "last_booked":  "17.02.2026. 10:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200625",
+        "specialist":  "INTERVENTNA ORL AMB. KCCG",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.12.2025. 23:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200129",
+        "specialist":  "KONZILIJUM ORL",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "16.11.2022. 08:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200130",
+        "specialist":  "KONZILIJUM ZA SLUЕ NA POMAGALA I LJEKOVE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "27.06.2025. 13:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200630",
+        "specialist":  "SPECIJALISTIДЊKA ORL 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "24.02.2026. 09:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200109",
+        "specialist":  "SPECIJALISTIДЊKA ORL AMBULANTA I",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "27.02.2026. 13:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200319",
+        "specialist":  "SUBSPEC. AUDIOLOЕ KA ORL AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "27.02.2026. 13:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200219",
+        "specialist":  "SUBSPEC. FONIJATRISKA ORL AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "26.03.2026. 13:40",
+        "last_booked":  "05.03.2026. 11:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200519",
+        "specialist":  "SUBSPEC. ORL AMBULANTA ZA PLASTIДЊNU HIRURGIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.12.2025. 09:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210179",
+        "specialist":  "KABINET ZA DIJAGNOSTIKU (KVP I OCT)",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.03.2026. 18:40",
+        "last_booked":  "19.03.2026. 16:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210199",
+        "specialist":  "KABINET ZA FLUORESCINSKU ANGIOGRAFIJU - FA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "13.01.2026. 13:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210139",
+        "specialist":  "KABINET ZA GLAUKOM",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "24.03.2026. 12:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210119",
+        "specialist":  "KABINET ZA KONTAKTNA SOДЊIVA I BOLESTI ROЕЅNJAДЊE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "24.03.2026. 13:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210129",
+        "specialist":  "KABINET ZA LASER I OCT",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.03.2026. 13:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210110",
+        "specialist":  "KABINET ZA OKULOPLASTIДЊNU HIRURGIJU I SUZNE PUTEVE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "27.03.2026. 12:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210149",
+        "specialist":  "KABINET ZA ULTRAZVUK OKA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "23.03.2026. 13:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210008",
+        "specialist":  "KABINET ZA UVEITISE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "16.03.2026. 13:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210169",
+        "specialist":  "OFTALMOLOЕ KA INTERVENTA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 13:15",
+        "last_booked":  "03.03.2026. 12:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210180",
+        "specialist":  "OFTALMOLOЕ KA INTERVENTNA AMB. 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "15.08.2022. 08:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210109",
+        "specialist":  "OFTALMOLOЕ KA OPЕ TA AMBULANTA 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.03.2026. 09:50",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210159",
+        "specialist":  "OFTALMOLOЕ KA OPЕ TA AMBULANTA 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "24.03.2026. 13:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210007",
+        "specialist":  "OFTALMOLOЕ KA OPЕ TA AMBULANTA 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "20.03.2026. 13:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA INFEKTIVNE BOLESTI",
+        "code":  "220109",
+        "specialist":  "AMBULANTA ZA INFEKTIVNE BOLESTI",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 13:45",
+        "last_booked":  "12.02.2026. 13:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA INFEKTIVNE BOLESTI",
+        "code":  "220900",
+        "specialist":  "DNEVNA BOLNICA INFEKTIVNE KLINIKE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.10.2022. 13:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA DERMATOVENEROLOGIJU",
+        "code":  "230409",
+        "specialist":  "AMBULANTA ZA DERMATOVENEROLOGIJU 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:45",
+        "last_booked":  "08.04.2026. 13:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA DERMATOVENEROLOGIJU",
+        "code":  "230419",
+        "specialist":  "AMBULANTA ZA DERMATOVENEROLOGIJU 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:45",
+        "last_booked":  "09.04.2026. 08:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA DERMATOVENEROLOGIJU",
+        "code":  "230229",
+        "specialist":  "INTERVENTNA AMBULANTA ZA DERMATOVENEROLOGIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 10:15",
+        "last_booked":  "20.02.2026. 09:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA DERMATOVENEROLOGIJU",
+        "code":  "230109",
+        "specialist":  "KABINET ZA ALERGIJSKO -EPIKUTANO TESTIRANJE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "29.09.2025. 10:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA DERMATOVENEROLOGIJU",
+        "code":  "230119",
+        "specialist":  "KABINET ZA PATCH TESTIRANJE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "29.09.2025. 13:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA DERMATOVENEROLOGIJU",
+        "code":  "230009",
+        "specialist":  "KONZILIJUM DERMATOVENEROLOGA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "25.03.2026. 13:45",
+        "last_booked":  "11.03.2026. 13:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA ANESTEZIJU I INTEZIVNU TERAPIJU BOLA",
+        "code":  "240109",
+        "specialist":  "ANESTEZILOЕ KA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "27.02.2026. 12:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "270610",
+        "specialist":  "AMBULANTA ZA KARDIOHIRURGIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 14:40",
+        "last_booked":  "11.02.2026. 08:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "290580",
+        "specialist":  "ELEKTROFIZIOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 12:45",
+        "last_booked":  "16.03.2026. 12:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260539",
+        "specialist":  "KABINET ZA EHO SRCA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 10:15",
+        "last_booked":  "20.05.2026. 09:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260549",
+        "specialist":  "KABINET ZA ERGOMETRIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.06.2026. 11:00",
+        "last_booked":  "16.04.2026. 09:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "280589",
+        "specialist":  "KABINET ZA HOLTER KRVNOG PRITISKA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 08:20",
+        "last_booked":  "12.03.2026. 08:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260559",
+        "specialist":  "KABINET ZA HOLTER MONITORING",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.06.2026. 08:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260320",
+        "specialist":  "KABINET ZA HUMEDS HOLTER",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.06.2026. 12:00",
+        "last_booked":  "11.05.2026. 12:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260308",
+        "specialist":  "KABINET ZA PRAД†ENJE RADA PACE MAKERA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.07.2026. 10:50",
+        "last_booked":  "29.04.2026. 10:50",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "280569",
+        "specialist":  "KABINET ZA STRES EHO TEST",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.06.2026. 11:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "280579",
+        "specialist":  "KABINET ZA TE UZV SRCA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 13:00",
+        "last_booked":  "23.06.2026. 13:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "270799",
+        "specialist":  "KARDIO ANESTEZIOLOЕ KA AMB",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 14:45",
+        "last_booked":  "11.02.2026. 07:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "270801",
+        "specialist":  "KARDIOLOЕ KA KONTROLA NAKON KARD.HIR. OP.",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.12.2025. 14:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260509",
+        "specialist":  "KARDIOLOЕ KA AMBULANTA 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.06.2026. 12:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260510",
+        "specialist":  "KardioloЕЎka ambulanta 1 - kontrolni pregled",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.09.2024. 11:55",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260529",
+        "specialist":  "KARDIOLOЕ KA AMBULANTA 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "29.08.2025. 17:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260519",
+        "specialist":  "KARDIOLOЕ KA AMBULANTA 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "07.10.2025. 17:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "290101",
+        "specialist":  "KARDIOLOЕ KA INTERVENTNA AMB",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.12.2021. 07:48",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "290600",
+        "specialist":  "KONZILIJUM ZA UPUД†IVANJE PACIJENATA U INOSTRANSTVO",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "25.10.2022. 13:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "STOMATOLOЕ KA POLIKLINIKA",
+        "code":  "300100",
+        "specialist":  "ODJELJENJE ORALNE HIRURGIJE 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.10.2022. 10:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "STOMATOLOЕ KA POLIKLINIKA",
+        "code":  "300500",
+        "specialist":  "ODJELJENJE STOMATOLOЕ KE PROTETIKE SA LABORATORIJOM",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.11.2022. 20:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "STOMATOLOЕ KA POLIKLINIKA",
+        "code":  "300600",
+        "specialist":  "ODJELJENJE ZA BOLESTI ZUBA SA ENDODONCIJOM",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.10.2022. 13:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "STOMATOLOЕ KA POLIKLINIKA",
+        "code":  "300300",
+        "specialist":  "ODJELJENJE ZA ORTOPEDIJU VILICE SA LABORATORIJOM 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.10.2022. 13:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "STOMATOLOЕ KA POLIKLINIKA",
+        "code":  "300301",
+        "specialist":  "ODJELJENJE ZA ORTOPEDIJU VILICE SA LABORATORIJOM 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.09.2022. 20:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA NEFROLOGIJU",
+        "code":  "140319",
+        "specialist":  "AMBULANTA ZA TRANSPLANTIRANE PACIJENTE",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.06.2026. 17:45",
+        "last_booked":  "16.02.2026. 15:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA NEFROLOGIJU",
+        "code":  "140309",
+        "specialist":  "NEFROLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 17:45",
+        "last_booked":  "05.03.2026. 13:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA MAKSILOFACIJALNU HIRURGIJU",
+        "code":  "320109",
+        "specialist":  "AMBULANTA ZA MAKSILOFACIJALNU HIRURGIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.08.2026. 12:40",
+        "last_booked":  "11.02.2026. 12:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "KLINIKA ZA MAKSILOFACIJALNU HIRURGIJU",
+        "code":  "250800",
+        "specialist":  "KONZILIJUM ZA MFH",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "29.12.2025. 12:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA FIZIKALNU MEDICINU I REHABILITACIJU",
+        "code":  "500109",
+        "specialist":  "AMBULANTA ZA FIZIKALNU MEDICINU 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.05.2026. 13:45",
+        "last_booked":  "18.05.2026. 09:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA FIZIKALNU MEDICINU I REHABILITACIJU",
+        "code":  "500119",
+        "specialist":  "AMBULANTA ZA FIZIKALNU MEDICINU 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.05.2026. 13:45",
+        "last_booked":  "15.05.2026. 13:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA FIZIKALNU MEDICINU I REHABILITACIJU",
+        "code":  "500129",
+        "specialist":  "AMBULANTA ZA FIZIKALNU MEDICINU 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.09.2022. 13:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA FIZIKALNU MEDICINU I REHABILITACIJU",
+        "code":  "500139",
+        "specialist":  "INTERVENTNA AMBULANTA ZA FIZIKALNU MEDICINU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "05.11.2025. 18:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510466",
+        "specialist":  "AMBULANTA ZA ZAKAZIVANJE KONZILIJUMA ZA MR",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.02.2026. 11:58",
+        "last_booked":  "27.02.2026. 11:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510640",
+        "specialist":  "CT ANGIO BODY",
+        "status":  "HAS_SLOTS",
+        "first_available":  "24.06.2026. 19:30",
+        "last_booked":  "11.02.2026. 19:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510630",
+        "specialist":  "CT ANGIO GLAVE I VRATA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "24.06.2026. 16:30",
+        "last_booked":  "04.03.2026. 15:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510324",
+        "specialist":  "CT BODY 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 19:00",
+        "last_booked":  "16.06.2026. 16:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510336",
+        "specialist":  "CT BODY 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 19:00",
+        "last_booked":  "05.06.2026. 16:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510316",
+        "specialist":  "CT BODY ONKOLOЕ KI",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.12.2026. 19:00",
+        "last_booked":  "09.05.2026. 09:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510366",
+        "specialist":  "CT KOLONOSKOPIJE",
+        "status":  "HAS_SLOTS",
+        "first_available":  "25.06.2026. 08:15",
+        "last_booked":  "19.02.2026. 08:15",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510326",
+        "specialist":  "CT KORONOGRAFIJE",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.08.2026. 16:00",
+        "last_booked":  "28.06.2026. 14:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510346",
+        "specialist":  "CT MSK",
+        "status":  "HAS_SLOTS",
+        "first_available":  "24.06.2026. 13:00",
+        "last_booked":  "25.02.2026. 11:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510314",
+        "specialist":  "CT NEURO 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "26.06.2026. 19:30",
+        "last_booked":  "05.06.2026. 17:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510356",
+        "specialist":  "CT NEURO 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.06.2026. 19:00",
+        "last_booked":  "25.05.2026. 18:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510138",
+        "specialist":  "KABINET ZA DIGITALNI MAMOGRAF",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.02.2026. 11:30",
+        "last_booked":  "11.02.2026. 11:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510158",
+        "specialist":  "KABINET ZA EKSPERTSKI UZ DOJKI SA CORE BIOPSIJOM",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.03.2026. 09:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510218",
+        "specialist":  "KABINET ZA ULTRAZVUДЊNU DIJAGNOSTIKU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.12.2026. 12:40",
+        "last_booked":  "11.08.2026. 08:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510155",
+        "specialist":  "KONZILIJUM RADIOLOGA ZA DIJAGNOSTIKU BOLESTI DOJKE",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 10:55",
+        "last_booked":  "09.04.2026. 09:35",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510325",
+        "specialist":  "MR BODY 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "27.02.2025. 18:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510327",
+        "specialist":  "MR BODY 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.05.2025. 10:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510315",
+        "specialist":  "MR BODY ONKOLOЕ KI 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "23.02.2025. 10:40",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510317",
+        "specialist":  "MR BODY ONKOLOЕ KI 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "26.02.2025. 18:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510367",
+        "specialist":  "MR DOJKI",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "25.02.2025. 18:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510337",
+        "specialist":  "MR ENTEROGRAFIJE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "28.02.2025. 18:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510335",
+        "specialist":  "MR MSK 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "26.02.2025. 18:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510347",
+        "specialist":  "MR MSK 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "28.05.2025. 12:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510320",
+        "specialist":  "MR MSK 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "22.02.2025. 15:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510345",
+        "specialist":  "MR NEURO 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "30.05.2025. 12:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510357",
+        "specialist":  "MR NEURO 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "26.05.2025. 12:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510319",
+        "specialist":  "MR NEURO 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "23.02.2025. 11:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA MEDICINSKU GENETIKU I IMUNOLOGIJU",
+        "code":  "101309",
+        "specialist":  "GENETSKA AMBULANTA 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 18:00",
+        "last_booked":  "02.03.2026. 11:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA MEDICINSKU GENETIKU I IMUNOLOGIJU",
+        "code":  "101420",
+        "specialist":  "GENETSKA AMBULANTA 2 - ZA TRUDNICE",
+        "status":  "HAS_SLOTS",
+        "first_available":  "26.03.2026. 13:30",
+        "last_booked":  "11.02.2026. 09:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA MEDICINSKU GENETIKU I IMUNOLOGIJU",
+        "code":  "101339",
+        "specialist":  "GENETSKA AMBULANTA 3",
+        "status":  "HAS_SLOTS",
+        "first_available":  "25.03.2026. 18:00",
+        "last_booked":  "23.02.2026. 15:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA MEDICINSKU GENETIKU I IMUNOLOGIJU",
+        "code":  "101430",
+        "specialist":  "GENETSKA AMBULANTA 4",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "23.02.2026. 15:45",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107189",
+        "specialist":  "DJEДЊIJI MR ENTEROGRAFIJE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "25.05.2022. 18:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107149",
+        "specialist":  "KABINET ZA DJEДЊIJI MR - MKS",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 12:00",
+        "last_booked":  "17.02.2026. 09:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107129",
+        "specialist":  "KABINET ZA DJEДЊIJI MR - NEURO",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 12:00",
+        "last_booked":  "12.03.2026. 11:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107169",
+        "specialist":  "KABINET ZA DJEДЊIJI MR BODY",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "29.12.2025. 09:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107209",
+        "specialist":  "KABINET ZA DJEДЊIJU MR -OPЕ TA ANESTEZIJA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "28.05.2022. 13:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510466",
+        "specialist":  "AMBULANTA ZA ZAKAZIVANJE KONZILIJUMA ZA MR",
+        "status":  "HAS_SLOTS",
+        "first_available":  "20.02.2026. 11:58",
+        "last_booked":  "17.02.2026. 10:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510325",
+        "specialist":  "MR BODY 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "28.06.2026. 16:00",
+        "last_booked":  "30.04.2026. 17:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510327",
+        "specialist":  "MR BODY 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "28.08.2026. 12:00",
+        "last_booked":  "04.05.2026. 14:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510315",
+        "specialist":  "MR BODY ONKOLOЕ KI 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.08.2026. 16:00",
+        "last_booked":  "07.05.2026. 15:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510317",
+        "specialist":  "MR BODY ONKOLOЕ KI 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "24.06.2026. 19:00",
+        "last_booked":  "27.04.2026. 14:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510367",
+        "specialist":  "MR DOJKI",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "24.02.2026. 19:20",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510337",
+        "specialist":  "MR ENTEROGRAFIJE",
+        "status":  "HAS_SLOTS",
+        "first_available":  "26.06.2026. 19:00",
+        "last_booked":  "20.02.2026. 19:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510335",
+        "specialist":  "MR MSK 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "24.06.2026. 19:00",
+        "last_booked":  "17.06.2026. 16:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510347",
+        "specialist":  "MR MSK 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "26.08.2026. 12:00",
+        "last_booked":  "15.07.2026. 12:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510320",
+        "specialist":  "MR MSK 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "31.05.2025. 15:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510345",
+        "specialist":  "MR NEURO 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.08.2026. 19:00",
+        "last_booked":  "25.07.2026. 11:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510357",
+        "specialist":  "MR NEURO 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.08.2026. 12:30",
+        "last_booked":  "16.02.2026. 10:30",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510319",
+        "specialist":  "MR NEURO 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "last_booked":  "25.05.2025. 11:00",
+        "source_pdf_date":  "11.02.2026",
+        "source_pdf_url":  "https://www.kccg.me/wp-content/uploads/2026/02/prvi-slobodan-termin-kccg-5.pdf"
+    }
+]

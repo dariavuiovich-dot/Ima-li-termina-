@@ -1,0 +1,2171 @@
+﻿[
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107130",
+        "specialist":  "CT DIJAGNOSTIKA 111111 Ljekar specijalista u amb. 30.12.2022. 10:30",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.12.2022. 10:30",
+        "raw_block":  "107130 CT DIJAGNOSTIKA 111111 Ljekar specijalista u amb. 30.12.2022. 10:30 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109238",
+        "specialist":  "CZA - AMBULANTA ZA DJEДЊIJU FIZIJATRIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "26.06.2025. 13:40",
+        "raw_block":  "109238 CZA - AMBULANTA ZA DJEДЊIJU FIZIJATRIJU 111111 Ljekar specijalista u amb. 26.06.2025. 13:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109219",
+        "specialist":  "CZA - KAB. DEFEKTOLOG -OLIGOFRENOLOG",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "25.02.2026. 13:15",
+        "raw_block":  "109219 CZA - KAB. DEFEKTOLOG -OLIGOFRENOLOG 111111 Ljekar specijalista u amb. 25.02.2026. 13:15 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109229",
+        "specialist":  "CZA - KAB. DEFEKTOLOG -SOMATOPED",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.12.2025. 20:15",
+        "raw_block":  "109229 CZA - KAB. DEFEKTOLOG -SOMATOPED 111111 Ljekar specijalista u amb. 31.12.2025. 20:15 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109209",
+        "specialist":  "CZA - KABINET DEFEKTOLOG -LOGOPED 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.10.2025. 20:15",
+        "raw_block":  "109209 CZA - KABINET DEFEKTOLOG -LOGOPED 1 111111 Ljekar specijalista u amb. 31.10.2025. 20:15 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109218",
+        "specialist":  "CZA - KABINET DEFEKTOLOG -LOGOPED 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.10.2025. 13:15",
+        "raw_block":  "109218 CZA - KABINET DEFEKTOLOG -LOGOPED 2 111111 Ljekar specijalista u amb. 31.10.2025. 13:15 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109217",
+        "specialist":  "CZA - KABINET DEFEKTOLOG -LOGOPED 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.10.2025. 20:15",
+        "raw_block":  "109217 CZA - KABINET DEFEKTOLOG -LOGOPED 3 111111 Ljekar specijalista u amb. 31.10.2025. 20:15 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109299",
+        "specialist":  "CZA - PSIHIJATRIJSKA AMBULANTA 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "29.04.2026. 10:00",
+        "raw_block":  "109299 CZA - PSIHIJATRIJSKA AMBULANTA 1 111111 Ljekar specijalista u amb. 29.04.2026. 10:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109297",
+        "specialist":  "CZA - PSIHIJATRIJSKA AMBULANTA 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "27.03.2026. 08:00",
+        "raw_block":  "109297 CZA - PSIHIJATRIJSKA AMBULANTA 2 111111 Ljekar specijalista u amb. 27.03.2026. 08:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109298",
+        "specialist":  "CZA - PSIHIJATRIJSKA AMBULANTA 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.03.2026. 10:00",
+        "raw_block":  "109298 CZA - PSIHIJATRIJSKA AMBULANTA 3 111111 Ljekar specijalista u amb. 31.03.2026. 10:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109249",
+        "specialist":  "CZA - PSIHOLOЕ KI KABINET 1 111111 Ljekar specijalista u amb. 03.03.2026. 15:15 30.04.2026. 20:15",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 20:15",
+        "raw_dates":  "03.03.2026. 15:15 | 30.04.2026. 20:15",
+        "raw_block":  "109249 CZA - PSIHOLOЕ KI KABINET 1 111111 Ljekar specijalista u amb. 03.03.2026. 15:15 30.04.2026. 20:15"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109259",
+        "specialist":  "CZA - PSIHOLOЕ KI KABINET 2 111111 Ljekar specijalista u amb. 03.03.2026. 07:30 30.04.2026. 13:15",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:15",
+        "raw_dates":  "03.03.2026. 07:30 | 30.04.2026. 13:15",
+        "raw_block":  "109259 CZA - PSIHOLOЕ KI KABINET 2 111111 Ljekar specijalista u amb. 03.03.2026. 07:30 30.04.2026. 13:15"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109279",
+        "specialist":  "CZA - PSIHOLOЕ KI KABINET 3 111111 Ljekar specijalista u amb. 13.12.2023. 13:15",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "13.12.2023. 13:15",
+        "raw_block":  "109279 CZA - PSIHOLOЕ KI KABINET 3 111111 Ljekar specijalista u amb. 13.12.2023. 13:15 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109280",
+        "specialist":  "CZA - PSIHOLOЕ KI KABINET 4 111111 Ljekar specijalista u amb. 23.04.2025. 09:45",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "23.04.2025. 09:45",
+        "raw_block":  "109280 CZA - PSIHOLOЕ KI KABINET 4 111111 Ljekar specijalista u amb. 23.04.2025. 09:45 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109269",
+        "specialist":  "CZA - PSIHOLOЕ KI KABINET 5 111111 Ljekar specijalista u amb. 04.03.2026. 07:30 30.03.2026. 20:15",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 20:15",
+        "raw_dates":  "04.03.2026. 07:30 | 30.03.2026. 20:15",
+        "raw_block":  "109269 CZA - PSIHOLOЕ KI KABINET 5 111111 Ljekar specijalista u amb. 04.03.2026. 07:30 30.03.2026. 20:15"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101609",
+        "specialist":  "DJEДЊIJA ALERGOLOЕ KA -IMUNOLOЕ KA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "29.04.2026. 13:30",
+        "raw_block":  "101609 DJEДЊIJA ALERGOLOЕ KA -IMUNOLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 29.04.2026. 13:30 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "105109",
+        "specialist":  "DJEДЊIJA ANESTEZIOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 16:50",
+        "raw_dates":  "11.02.2026. 16:30 | 30.04.2026. 16:50",
+        "raw_block":  "105109 DJEДЊIJA ANESTEZIOLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 11.02.2026. 16:30 30.04.2026. 16:50"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101209",
+        "specialist":  "DJEДЊIJA ENDOKRINOLOЕ KA AMBULANTA 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 12:20",
+        "raw_dates":  "28.04.2026. 11:20 | 30.04.2026. 12:20",
+        "raw_block":  "101209 DJEДЊIJA ENDOKRINOLOЕ KA AMBULANTA 1 111111 Ljekar specijalista u amb. 28.04.2026. 11:20 30.04.2026. 12:20"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101709",
+        "specialist":  "DJEДЊIJA ENDOKRINOLOЕ KA AMBULANTA 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.04.2026. 12:20",
+        "raw_dates":  "25.03.2026. 11:20 | 29.04.2026. 12:20",
+        "raw_block":  "101709 DJEДЊIJA ENDOKRINOLOЕ KA AMBULANTA 2 111111 Ljekar specijalista u amb. 25.03.2026. 11:20 29.04.2026. 12:20"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102419",
+        "specialist":  "DJEДЊIJA FIZIJATRIJSKA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "28.04.2026. 13:40",
+        "raw_dates":  "28.04.2026. 09:00 | 28.04.2026. 13:40",
+        "raw_block":  "102419 DJEДЊIJA FIZIJATRIJSKA AMBULANTA 111111 Ljekar specijalista u amb. 28.04.2026. 09:00 28.04.2026. 13:40"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101509",
+        "specialist":  "DJEДЊIJA GASTROENTEROLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:40",
+        "raw_dates":  "01.04.2026. 09:40 | 30.04.2026. 13:40",
+        "raw_block":  "101509 DJEДЊIJA GASTROENTEROLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 01.04.2026. 09:40 30.04.2026. 13:40"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101109",
+        "specialist":  "DJEДЊIJA HEMATOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:40",
+        "raw_dates":  "11.02.2026. 09:40 | 30.04.2026. 13:40",
+        "raw_block":  "101109 DJEДЊIJA HEMATOLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 11.02.2026. 09:40 30.04.2026. 13:40"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102108",
+        "specialist":  "DJEДЊIJA HIRURЕ KA AMBULANTA 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:50",
+        "raw_dates":  "11.02.2026. 11:20 | 30.04.2026. 13:50",
+        "raw_block":  "102108 DJEДЊIJA HIRURЕ KA AMBULANTA 1 111111 Ljekar specijalista u amb. 11.02.2026. 11:20 30.04.2026. 13:50"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102109",
+        "specialist":  "DJEДЊIJA HIRURЕ KA AMBULANTA 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.04.2026. 13:50",
+        "raw_dates":  "11.02.2026. 11:10 | 29.04.2026. 13:50",
+        "raw_block":  "102109 DJEДЊIJA HIRURЕ KA AMBULANTA 2 111111 Ljekar specijalista u amb. 11.02.2026. 11:10 29.04.2026. 13:50"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101119",
+        "specialist":  "DJEДЊIJA KARDIOLOЕ KA AMBULANTA 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:30",
+        "raw_dates":  "11.02.2026. 12:30 | 30.04.2026. 13:30",
+        "raw_block":  "101119 DJEДЊIJA KARDIOLOЕ KA AMBULANTA 1 111111 Ljekar specijalista u amb. 11.02.2026. 12:30 30.04.2026. 13:30"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102107",
+        "specialist":  "DJEДЊIJA KARDIOLOЕ KA AMBULANTA 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:30",
+        "raw_dates":  "16.02.2026. 11:30 | 30.04.2026. 13:30",
+        "raw_block":  "102107 DJEДЊIJA KARDIOLOЕ KA AMBULANTA 2 111111 Ljekar specijalista u amb. 16.02.2026. 11:30 30.04.2026. 13:30"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101219",
+        "specialist":  "DJEДЊIJA NEFROLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:40",
+        "raw_dates":  "11.02.2026. 09:00 | 30.04.2026. 13:40",
+        "raw_block":  "101219 DJEДЊIJA NEFROLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 11.02.2026. 09:00 30.04.2026. 13:40"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101329",
+        "specialist":  "DJEДЊIJA NEUROLOЕ KA AMBULANTA 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "28.04.2026. 13:30",
+        "raw_block":  "101329 DJEДЊIJA NEUROLOЕ KA AMBULANTA 1 111111 Ljekar specijalista u amb. 28.04.2026. 13:30 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101349",
+        "specialist":  "DJEДЊIJA NEUROLOЕ KA AMBULANTA 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.04.2026. 13:30",
+        "raw_block":  "101349 DJEДЊIJA NEUROLOЕ KA AMBULANTA 2 111111 Ljekar specijalista u amb. 30.04.2026. 13:30 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101359",
+        "specialist":  "DJEДЊIJA NEUROLOЕ KA AMBULANTA 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.09.2024. 13:30 | 25.03.2026. 09:00 | 30.04.2026. 13:40",
+        "raw_block":  "101359 DJEДЊIJA NEUROLOЕ KA AMBULANTA 3 111111 Ljekar specijalista u amb. 30.09.2024. 13:30 Nema slobodnih termina KliniДЌki centar Crne Gore Prvi slobodni termin za zakazivanje od datuma 11.02.2026. 111111 Ljekar specijalista u amb. 25.03.2026. 09:00 30.04.2026. 13:40"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102320",
+        "specialist":  "DJEДЊIJA OFTALMOLOЕ KA AMBULANTA 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:40",
+        "raw_dates":  "02.04.2026. 08:40 | 30.04.2026. 13:40",
+        "raw_block":  "102320 DJEДЊIJA OFTALMOLOЕ KA AMBULANTA 2 111111 Ljekar specijalista u amb. 02.04.2026. 08:40 30.04.2026. 13:40"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102209",
+        "specialist":  "DJEДЊIJA ORL AMBULANTA 111111 Ljekar specijalista u amb. 30.04.2026. 12:15",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.04.2026. 12:15",
+        "raw_block":  "102209 DJEДЊIJA ORL AMBULANTA 111111 Ljekar specijalista u amb. 30.04.2026. 12:15 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102409",
+        "specialist":  "DJEДЊIJA ORTOPEDSKA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "28.04.2026. 13:45",
+        "raw_dates":  "14.04.2026. 11:15 | 28.04.2026. 13:45",
+        "raw_block":  "102409 DJEДЊIJA ORTOPEDSKA AMBULANTA 111111 Ljekar specijalista u amb. 14.04.2026. 11:15 28.04.2026. 13:45"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101520",
+        "specialist":  "DJEДЊIJA ORTOPEDSKA AMBULANTA - TRAUMA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 19:45",
+        "raw_dates":  "03.03.2026. 19:15 | 30.04.2026. 19:45",
+        "raw_block":  "101520 DJEДЊIJA ORTOPEDSKA AMBULANTA - TRAUMA 111111 Ljekar specijalista u amb. 03.03.2026. 19:15 30.04.2026. 19:45"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "109239",
+        "specialist":  "DJEДЊIJA PSIHIJATRIJSKA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "28.06.2022. 17:30",
+        "raw_block":  "109239 DJEДЊIJA PSIHIJATRIJSKA AMBULANTA 111111 Ljekar specijalista u amb. 28.06.2022. 17:30 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101409",
+        "specialist":  "DJEДЊIJA PULMOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 12:40",
+        "raw_dates":  "13.03.2026. 10:00 | 30.04.2026. 12:40",
+        "raw_block":  "101409 DJEДЊIJA PULMOLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 13.03.2026. 10:00 30.04.2026. 12:40"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101411",
+        "specialist":  "DJEДЊIJA PULMOLOЕ KA AMBULANTA 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.04.2026. 12:40",
+        "raw_dates":  "02.03.2026. 09:00 | 27.04.2026. 12:40",
+        "raw_block":  "101411 DJEДЊIJA PULMOLOЕ KA AMBULANTA 2 111111 Ljekar specijalista u amb. 02.03.2026. 09:00 27.04.2026. 12:40"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "102509",
+        "specialist":  "DJEДЊIJA UROLOЕ KA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "20.04.2026. 19:40",
+        "raw_block":  "102509 DJEДЊIJA UROLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 20.04.2026. 19:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101328",
+        "specialist":  "DJEДЊIJI KABINET ZA EEG 111111 Ljekar specijalista u amb. 03.04.2026. 13:15 30.04.2026. 13:15",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:15",
+        "raw_dates":  "03.04.2026. 13:15 | 30.04.2026. 13:15",
+        "raw_block":  "101328 DJEДЊIJI KABINET ZA EEG 111111 Ljekar specijalista u amb. 03.04.2026. 13:15 30.04.2026. 13:15"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101128",
+        "specialist":  "DJEДЊIJI KABINET ZA ERGOMETRIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "28.04.2026. 12:30",
+        "raw_dates":  "17.02.2026. 10:00 | 28.04.2026. 12:30",
+        "raw_block":  "101128 DJEДЊIJI KABINET ZA ERGOMETRIJU 111111 Ljekar specijalista u amb. 17.02.2026. 10:00 28.04.2026. 12:30"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101118",
+        "specialist":  "DJEДЊIJI KABINET ZA HOLTER 111111 Ljekar specijalista u amb. 12.02.2026. 08:30 26.02.2026. 08:30",
+        "status":  "HAS_SLOTS",
+        "first_available":  "26.02.2026. 08:30",
+        "raw_dates":  "12.02.2026. 08:30 | 26.02.2026. 08:30",
+        "raw_block":  "101118 DJEДЊIJI KABINET ZA HOLTER 111111 Ljekar specijalista u amb. 12.02.2026. 08:30 26.02.2026. 08:30"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107189",
+        "specialist":  "DJEДЊIJI MR ENTEROGRAFIJE 111111 Ljekar specijalista u amb. 25.05.2022. 16:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "25.05.2022. 16:00",
+        "raw_block":  "107189 DJEДЊIJI MR ENTEROGRAFIJE 111111 Ljekar specijalista u amb. 25.05.2022. 16:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107199",
+        "specialist":  "DJEДЊIJI MR UROGRAFIJE 111111 Ljekar specijalista u amb. 25.12.2025. 13:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "25.12.2025. 13:00",
+        "raw_block":  "107199 DJEДЊIJI MR UROGRAFIJE 111111 Ljekar specijalista u amb. 25.12.2025. 13:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "108100",
+        "specialist":  "DNEVNA BOLNICA IBD 111111 Ljekar specijalista u amb. 31.12.2022. 13:45",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.12.2022. 13:45",
+        "raw_block":  "108100 DNEVNA BOLNICA IBD 111111 Ljekar specijalista u amb. 31.12.2022. 13:45 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107149",
+        "specialist":  "KABINET ZA DJEДЊIJI MR - MKS 111111 Ljekar specijalista u amb. 17.02.2026. 13:00 31.03.2026. 13:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 13:00",
+        "raw_dates":  "17.02.2026. 13:00 | 31.03.2026. 13:00",
+        "raw_block":  "107149 KABINET ZA DJEДЊIJI MR - MKS 111111 Ljekar specijalista u amb. 17.02.2026. 13:00 31.03.2026. 13:00"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107129",
+        "specialist":  "KABINET ZA DJEДЊIJI MR - NEURO 111111 Ljekar specijalista u amb. 12.02.2026. 09:00 30.03.2026. 13:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 13:00",
+        "raw_dates":  "12.02.2026. 09:00 | 30.03.2026. 13:00",
+        "raw_block":  "107129 KABINET ZA DJEДЊIJI MR - NEURO 111111 Ljekar specijalista u amb. 12.02.2026. 09:00 30.03.2026. 13:00"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107169",
+        "specialist":  "KABINET ZA DJEДЊIJI MR BODY 111111 Ljekar specijalista u amb. 25.12.2023. 10:45",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "25.12.2023. 10:45",
+        "raw_block":  "107169 KABINET ZA DJEДЊIJI MR BODY 111111 Ljekar specijalista u amb. 25.12.2023. 10:45 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107159",
+        "specialist":  "KABINET ZA DJEДЊIJI UZ KUKOVA 111111 Ljekar specijalista u amb. 16.02.2026. 15:30 31.03.2026. 16:45",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 16:45",
+        "raw_dates":  "16.02.2026. 15:30 | 31.03.2026. 16:45",
+        "raw_block":  "107159 KABINET ZA DJEДЊIJI UZ KUKOVA 111111 Ljekar specijalista u amb. 16.02.2026. 15:30 31.03.2026. 16:45"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107209",
+        "specialist":  "KABINET ZA DJEДЊIJU MR -OPЕ TA ANESTEZIJA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "28.05.2022. 10:00",
+        "raw_block":  "107209 KABINET ZA DJEДЊIJU MR -OPЕ TA ANESTEZIJA 111111 Ljekar specijalista u amb. 28.05.2022. 10:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107109",
+        "specialist":  "KABINET ZA DJEДЊIJU RTG DIJAGNOSTIKU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 12:50",
+        "raw_dates":  "11.02.2026. 10:50 | 31.03.2026. 12:50",
+        "raw_block":  "107109 KABINET ZA DJEДЊIJU RTG DIJAGNOSTIKU 111111 Ljekar specijalista u amb. 11.02.2026. 10:50 31.03.2026. 12:50"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107139",
+        "specialist":  "KABINET ZA DJEДЊIJU UZ DIJAGNOSTIKU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 13:30",
+        "raw_dates":  "13.03.2026. 13:30 | 31.03.2026. 13:30",
+        "raw_block":  "107139 KABINET ZA DJEДЊIJU UZ DIJAGNOSTIKU 111111 Ljekar specijalista u amb. 13.03.2026. 13:30 31.03.2026. 13:30"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "103209",
+        "specialist":  "NEONATOLOЕ KA AMBULANTA 1 IBD",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 12:40",
+        "raw_dates":  "19.02.2026. 08:40 | 30.04.2026. 12:40",
+        "raw_block":  "103209 NEONATOLOЕ KA AMBULANTA 1 IBD 111111 Ljekar specijalista u amb. 19.02.2026. 08:40 30.04.2026. 12:40"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "103210",
+        "specialist":  "NEONATOLOЕ KA AMBULANTA 2 IBD",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.04.2026. 12:40",
+        "raw_dates":  "24.02.2026. 11:40 | 27.04.2026. 12:40",
+        "raw_block":  "103210 NEONATOLOЕ KA AMBULANTA 2 IBD 111111 Ljekar specijalista u amb. 24.02.2026. 11:40 27.04.2026. 12:40"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "101519",
+        "specialist":  "PEDIJATRIJSKA REUMATOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.04.2026. 13:40",
+        "raw_dates":  "18.02.2026. 11:00 | 29.04.2026. 13:40",
+        "raw_block":  "101519 PEDIJATRIJSKA REUMATOLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 18.02.2026. 11:00 29.04.2026. 13:40 KliniДЌki centar Crne Gore Prvi slobodni termin za zakazivanje od datuma 11.02.2026."
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "114050",
+        "specialist":  "ALERGOLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 28.05.2026. 12:25",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "28.05.2026. 12:25",
+        "raw_block":  "114050 ALERGOLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 28.05.2026. 12:25 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "115029",
+        "specialist":  "AMBULANTA ZA KAPILAROSKOPIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "25.05.2026. 10:00",
+        "raw_block":  "115029 AMBULANTA ZA KAPILAROSKOPIJU 111111 Ljekar specijalista u amb. 25.05.2026. 10:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "111339",
+        "specialist":  "DNEVNA HEMATOLOЕ KA BOLNICA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 08:50",
+        "raw_dates":  "08.04.2026. 08:40 | 30.06.2026. 08:50",
+        "raw_block":  "111339 DNEVNA HEMATOLOЕ KA BOLNICA 111111 Ljekar specijalista u amb. 08.04.2026. 08:40 30.06.2026. 08:50"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "114009",
+        "specialist":  "ENDOKRINOLOЕ KA AMBULANTA 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "29.05.2026. 12:25",
+        "raw_block":  "114009 ENDOKRINOLOЕ KA AMBULANTA 1 111111 Ljekar specijalista u amb. 29.05.2026. 12:25 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "114019",
+        "specialist":  "ENDOKRINOLOЕ KA AMBULANTA 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "29.05.2026. 12:25",
+        "raw_block":  "114019 ENDOKRINOLOЕ KA AMBULANTA 2 111111 Ljekar specijalista u amb. 29.05.2026. 12:25 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "114029",
+        "specialist":  "ENDOKRINOLOЕ KA AMBULANTA 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "25.08.2025. 12:25",
+        "raw_block":  "114029 ENDOKRINOLOЕ KA AMBULANTA 3 111111 Ljekar specijalista u amb. 25.08.2025. 12:25 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "113010",
+        "specialist":  "GASTROENTEROHEPATOLOЕ KA AMBULANTA 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "25.03.2026. 12:25",
+        "raw_block":  "113010 GASTROENTEROHEPATOLOЕ KA AMBULANTA 2 111111 Ljekar specijalista u amb. 25.03.2026. 12:25 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "114039",
+        "specialist":  "GASTROENTEROLOЕ KA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "28.05.2026. 12:25",
+        "raw_block":  "114039 GASTROENTEROLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 28.05.2026. 12:25 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "111309",
+        "specialist":  "HEMATOLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 08.05.2026. 11:55 29.05.2026. 12:25",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.05.2026. 12:25",
+        "raw_dates":  "08.05.2026. 11:55 | 29.05.2026. 12:25",
+        "raw_block":  "111309 HEMATOLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 08.05.2026. 11:55 29.05.2026. 12:25"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "111320",
+        "specialist":  "HEMATOLOЕ KA AMBULANTA 2 111111 Ljekar specijalista u amb. 07.05.2026. 12:25 14.05.2026. 12:25",
+        "status":  "HAS_SLOTS",
+        "first_available":  "14.05.2026. 12:25",
+        "raw_dates":  "07.05.2026. 12:25 | 14.05.2026. 12:25",
+        "raw_block":  "111320 HEMATOLOЕ KA AMBULANTA 2 111111 Ljekar specijalista u amb. 07.05.2026. 12:25 14.05.2026. 12:25"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "111319",
+        "specialist":  "HEMATOLOЕ KI KONZILIJUM ZA BIOLOЕ KU TERAPIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "04.11.2022. 08:00 | 30.09.2024. 08:30 | 30.09.2024. 10:00",
+        "raw_block":  "111319 HEMATOLOЕ KI KONZILIJUM ZA BIOLOЕ KU TERAPIJU 111111 Ljekar specijalista u amb. 04.11.2022. 08:00 Nema slobodnih termina 113019. 2 INTERVENTNI KABINET ZA GASTROSKOPIJU 111111 Ljekar specijalista u amb. 30.09.2024. 08:30 Nema slobodnih termina 113129. 2 INTERVENTNI KABINET ZA KOLONOSKOPIJU 111111 Ljekar specijalista u amb. 30.09.2024. 10:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "113019",
+        "specialist":  "KABINET ZA GASTROSKOPIJU 111111 Ljekar specijalista u amb. 26.05.2026. 10:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "26.05.2026. 10:00",
+        "raw_block":  "113019 KABINET ZA GASTROSKOPIJU 111111 Ljekar specijalista u amb. 26.05.2026. 10:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "113020",
+        "specialist":  "KABINET ZA GASTROSKOPIJU 2 111111 Ljekar specijalista u amb. 29.03.2022. 13:30",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "29.03.2022. 13:30",
+        "raw_block":  "113020 KABINET ZA GASTROSKOPIJU 2 111111 Ljekar specijalista u amb. 29.03.2022. 13:30 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "113129",
+        "specialist":  "KABINET ZA KOLONOSKOPIJU 111111 Ljekar specijalista u amb. 27.05.2026. 09:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "27.05.2026. 09:00",
+        "raw_block":  "113129 KABINET ZA KOLONOSKOPIJU 111111 Ljekar specijalista u amb. 27.05.2026. 09:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "113128",
+        "specialist":  "KABINET ZA KOLONOSKOPIJU 2 111111 Ljekar specijalista u amb. 30.03.2022. 13:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.03.2022. 13:00",
+        "raw_block":  "113128 KABINET ZA KOLONOSKOPIJU 2 111111 Ljekar specijalista u amb. 30.03.2022. 13:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "115019",
+        "specialist":  "KABINET ZA OSTEODENZITOMETRIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "28.05.2026. 10:00",
+        "raw_block":  "115019 KABINET ZA OSTEODENZITOMETRIJU 111111 Ljekar specijalista u amb. 28.05.2026. 10:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "115059",
+        "specialist":  "KABINET ZA UZ LOKOMO. SISTEMA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "27.03.2025. 13:30",
+        "raw_block":  "115059 KABINET ZA UZ LOKOMO. SISTEMA 111111 Ljekar specijalista u amb. 27.03.2025. 13:30 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "130156",
+        "specialist":  "KONZILIJUM ALERGOLOGA I KLINIДЊKIH IMUNOLOGA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "13.02.2025. 13:55 | 03.07.2024. 08:15",
+        "raw_block":  "130156 KONZILIJUM ALERGOLOGA I KLINIДЊKIH IMUNOLOGA 111111 Ljekar specijalista u amb. 13.02.2025. 13:55 Nema slobodnih termina 130152 KONZILIJUM GASTROEROENTEROHEPATOLO GA ZA BIOLOЕ KU TERAPIJU 111111 Ljekar specijalista u amb. 03.07.2024. 08:15 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "116009",
+        "specialist":  "PULMOLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 26.05.2026. 12:25",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "26.05.2026. 12:25",
+        "raw_block":  "116009 PULMOLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 26.05.2026. 12:25 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "115009",
+        "specialist":  "REUMATOLOЕ KA AMBULANTA 1 111111 Ljekar specijalista u amb. 28.05.2026. 19:25",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "28.05.2026. 19:25",
+        "raw_block":  "115009 REUMATOLOЕ KA AMBULANTA 1 111111 Ljekar specijalista u amb. 28.05.2026. 19:25 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "115039",
+        "specialist":  "REUMATOLOЕ KA AMBULANTA 2 111111 Ljekar specijalista u amb. 12.05.2026. 12:25",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "12.05.2026. 12:25",
+        "raw_block":  "115039 REUMATOLOЕ KA AMBULANTA 2 111111 Ljekar specijalista u amb. 12.05.2026. 12:25 Nema slobodnih termina"
+    },
+    {
+        "section":  "INTERNA KLINIKA",
+        "code":  "115049",
+        "specialist":  "REUMATOLOЕ KI KONZILIJUM ZA BIOLOЕ KU TERAPIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "09.12.2022. 08:00",
+        "raw_block":  "115049 REUMATOLOЕ KI KONZILIJUM ZA BIOLOЕ KU TERAPIJU 111111 Ljekar specijalista u amb. 09.12.2022. 08:00 Nema slobodnih termina KliniДЌki centar Crne Gore Prvi slobodni termin za zakazivanje od datuma 11.02.2026."
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "121109",
+        "specialist":  "AMBULANTA ZA DIGESTIVNU HIRURGIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "25.02.2026. 13:50",
+        "raw_dates":  "23.02.2026. 11:40 | 25.02.2026. 13:50",
+        "raw_block":  "121109 AMBULANTA ZA DIGESTIVNU HIRURGIJU 111111 Ljekar specijalista u amb. 23.02.2026. 11:40 25.02.2026. 13:50"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "121119",
+        "specialist":  "AMBULANTA ZA DIGESTIVNU HIRURGIJU 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "26.02.2026. 13:50",
+        "raw_dates":  "17.02.2026. 13:50 | 26.02.2026. 13:50",
+        "raw_block":  "121119 AMBULANTA ZA DIGESTIVNU HIRURGIJU 2 111111 Ljekar specijalista u amb. 17.02.2026. 13:50 26.02.2026. 13:50"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "124109",
+        "specialist":  "AMBULANTA ZA ENDOKRINU HIRURGIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 10:10",
+        "raw_dates":  "13.02.2026. 11:30 | 30.03.2026. 10:10",
+        "raw_block":  "124109 AMBULANTA ZA ENDOKRINU HIRURGIJU 111111 Ljekar specijalista u amb. 13.02.2026. 11:30 30.03.2026. 10:10"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "122209",
+        "specialist":  "AMBULANTA ZA HIRURGIJU DOJKE",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.02.2026. 13:50",
+        "raw_dates":  "11.02.2026. 12:00 | 27.02.2026. 13:50",
+        "raw_block":  "122209 AMBULANTA ZA HIRURGIJU DOJKE 111111 Ljekar specijalista u amb. 11.02.2026. 12:00 27.02.2026. 13:50"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "120109",
+        "specialist":  "AMBULANTA ZA OPЕ TU HIRURGIJU 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "20.02.2026. 13:50",
+        "raw_block":  "120109 AMBULANTA ZA OPЕ TU HIRURGIJU 1 111111 Ljekar specijalista u amb. 20.02.2026. 13:50 Nema slobodnih termina"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "120117",
+        "specialist":  "AMBULANTA ZA OPЕ TU HIRURGIJU 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "25.02.2026. 13:50",
+        "raw_dates":  "25.02.2026. 13:00 | 25.02.2026. 13:50",
+        "raw_block":  "120117 AMBULANTA ZA OPЕ TU HIRURGIJU 2 111111 Ljekar specijalista u amb. 25.02.2026. 13:00 25.02.2026. 13:50"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "123209",
+        "specialist":  "AMBULANTA ZA PLASTIДЊNU HIRURGIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "26.02.2026. 13:50",
+        "raw_block":  "123209 AMBULANTA ZA PLASTIДЊNU HIRURGIJU 111111 Ljekar specijalista u amb. 26.02.2026. 13:50 Nema slobodnih termina"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "123300",
+        "specialist":  "AMBULANTA ZA PLASTIДЊNU HIRURGIJU 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "25.02.2026. 10:50",
+        "raw_block":  "123300 AMBULANTA ZA PLASTIДЊNU HIRURGIJU 2 111111 Ljekar specijalista u amb. 25.02.2026. 10:50 Nema slobodnih termina"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "122109",
+        "specialist":  "AMBULANTA ZA TORAKALNU I EZOFAGEALNU HIRURGIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.02.2026. 12:50",
+        "raw_dates":  "12.02.2026. 12:20 | 27.02.2026. 12:50",
+        "raw_block":  "122109 AMBULANTA ZA TORAKALNU I EZOFAGEALNU HIRURGIJU 111111 Ljekar specijalista u amb. 12.02.2026. 12:20 27.02.2026. 12:50"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "123420",
+        "specialist":  "AMBULANTA ZA VASKULARNU HIRURGIJU 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "25.02.2026. 19:50",
+        "raw_block":  "123420 AMBULANTA ZA VASKULARNU HIRURGIJU 2 111111 Ljekar specijalista u amb. 25.02.2026. 19:50 Nema slobodnih termina"
+    },
+    {
+        "section":  "HIRURЕ KA KLINIKA",
+        "code":  "124209",
+        "specialist":  "AMBULANTA ZA VASKULARNU HIRURGIJU 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "27.02.2026. 13:50 | 28.12.2022. 16:50",
+        "raw_block":  "124209 AMBULANTA ZA VASKULARNU HIRURGIJU 1 111111 Ljekar specijalista u amb. 27.02.2026. 13:50 Nema slobodnih termina 124040 KONZILIJUM VASKULARNIH HIRURGA I INTERVENTNIH RADIOLOGA 111111 Ljekar specijalista u amb. 28.12.2022. 16:50 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA ORTOPEDIJU I TRAUMATOLOGIJU",
+        "code":  "130159",
+        "specialist":  "INTERVENTNA ORTOP.AMB-KONT.",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 10:40",
+        "raw_dates":  "09.03.2026. 10:00 | 31.03.2026. 10:40",
+        "raw_block":  "130159 INTERVENTNA ORTOP.AMB-KONT. 111111 Ljekar specijalista u amb. 09.03.2026. 10:00 31.03.2026. 10:40"
+    },
+    {
+        "section":  "KLINIKA ZA ORTOPEDIJU I TRAUMATOLOGIJU",
+        "code":  "130109",
+        "specialist":  "ORTOPEDSKA AMBULANTA I 111111 Ljekar specijalista u amb. 25.03.2026. 12:45 31.03.2026. 13:45",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 13:45",
+        "raw_dates":  "25.03.2026. 12:45 | 31.03.2026. 13:45",
+        "raw_block":  "130109 ORTOPEDSKA AMBULANTA I 111111 Ljekar specijalista u amb. 25.03.2026. 12:45 31.03.2026. 13:45"
+    },
+    {
+        "section":  "KLINIKA ZA ORTOPEDIJU I TRAUMATOLOGIJU",
+        "code":  "130119",
+        "specialist":  "ORTOPEDSKA AMBULANTA II 111111 Ljekar specijalista u amb. 27.03.2026. 09:30 31.03.2026. 13:45",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 13:45",
+        "raw_dates":  "27.03.2026. 09:30 | 31.03.2026. 13:45",
+        "raw_block":  "130119 ORTOPEDSKA AMBULANTA II 111111 Ljekar specijalista u amb. 27.03.2026. 09:30 31.03.2026. 13:45"
+    },
+    {
+        "section":  "KLINIKA ZA ORTOPEDIJU I TRAUMATOLOGIJU",
+        "code":  "130149",
+        "specialist":  "ORTOPEDSKA AMBULANTA III 111111 Ljekar specijalista u amb. 25.03.2026. 12:30 30.03.2026. 13:45",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 13:45",
+        "raw_dates":  "25.03.2026. 12:30 | 30.03.2026. 13:45",
+        "raw_block":  "130149 ORTOPEDSKA AMBULANTA III 111111 Ljekar specijalista u amb. 25.03.2026. 12:30 30.03.2026. 13:45"
+    },
+    {
+        "section":  "KLINIKA ZA UROLOGIJU",
+        "code":  "140109",
+        "specialist":  "UROLOЕ KA AMBULANTA I 111111 Ljekar specijalista u amb. 02.04.2026. 13:30 30.04.2026. 13:45",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:45",
+        "raw_dates":  "02.04.2026. 13:30 | 30.04.2026. 13:45",
+        "raw_block":  "140109 UROLOЕ KA AMBULANTA I 111111 Ljekar specijalista u amb. 02.04.2026. 13:30 30.04.2026. 13:45"
+    },
+    {
+        "section":  "KLINIKA ZA UROLOGIJU",
+        "code":  "140129",
+        "specialist":  "UROLOЕ KA AMBULANTA II 111111 Ljekar specijalista u amb. 02.04.2026. 13:15 30.04.2026. 13:45",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:45",
+        "raw_dates":  "02.04.2026. 13:15 | 30.04.2026. 13:45",
+        "raw_block":  "140129 UROLOЕ KA AMBULANTA II 111111 Ljekar specijalista u amb. 02.04.2026. 13:15 30.04.2026. 13:45"
+    },
+    {
+        "section":  "KLINIKA ZA UROLOGIJU",
+        "code":  "140119",
+        "specialist":  "UROLOЕ KA INTERVENTNA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "18.11.2022. 08:00",
+        "raw_block":  "140119 UROLOЕ KA INTERVENTNA AMBULANTA 111111 Ljekar specijalista u amb. 18.11.2022. 08:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROHIRURGIJU",
+        "code":  "150809",
+        "specialist":  "NEUROHIRUSKA AMBULANTA 111111 Ljekar specijalista u amb. 31.03.2026. 13:40",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.03.2026. 13:40",
+        "raw_block":  "150809 NEUROHIRUSKA AMBULANTA 111111 Ljekar specijalista u amb. 31.03.2026. 13:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROHIRURGIJU",
+        "code":  "150119",
+        "specialist":  "NEUROHIRURЕ KA INTERVENTNA 111111 Ljekar specijalista u amb. 17.02.2026. 09:00 31.03.2026. 11:40 KliniДЌki centar Crne Gore Prvi slobodni termin za zakazivanje od datuma 11.02.2026.",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 11:40",
+        "raw_dates":  "17.02.2026. 09:00 | 31.03.2026. 11:40",
+        "raw_block":  "150119 NEUROHIRURЕ KA INTERVENTNA 111111 Ljekar specijalista u amb. 17.02.2026. 09:00 31.03.2026. 11:40 KliniДЌki centar Crne Gore Prvi slobodni termin za zakazivanje od datuma 11.02.2026."
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160260",
+        "specialist":  "DEFEKTOLOЕ KO - LOGOPEDSKA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "28.12.2022. 17:45",
+        "raw_block":  "160260 DEFEKTOLOЕ KO - LOGOPEDSKA AMBULANTA 111111 Ljekar specijalista u amb. 28.12.2022. 17:45 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160218",
+        "specialist":  "DISPANZER ZA EPILEPSIJU 111111 Ljekar specijalista u amb. 26.03.2026. 12:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "26.03.2026. 12:00",
+        "raw_block":  "160218 DISPANZER ZA EPILEPSIJU 111111 Ljekar specijalista u amb. 26.03.2026. 12:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160229",
+        "specialist":  "EEG AMBULANTA 111111 Ljekar specijalista u amb. 11.02.2026. 13:00 31.03.2026. 13:30",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 13:30",
+        "raw_dates":  "11.02.2026. 13:00 | 31.03.2026. 13:30",
+        "raw_block":  "160229 EEG AMBULANTA 111111 Ljekar specijalista u amb. 11.02.2026. 13:00 31.03.2026. 13:30"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160239",
+        "specialist":  "EMNG AMBULANTA 111111 Ljekar specijalista u amb. 28.08.2025. 13:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "28.08.2025. 13:00",
+        "raw_block":  "160239 EMNG AMBULANTA 111111 Ljekar specijalista u amb. 28.08.2025. 13:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160309",
+        "specialist":  "INTERVENTNA NEUROLOЕ KA AMB I",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.10.2022. 08:30",
+        "raw_block":  "160309 INTERVENTNA NEUROLOЕ KA AMB I 111111 Ljekar specijalista u amb. 31.10.2022. 08:30 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160279",
+        "specialist":  "INTERVENTNA NEUROLOЕ KA AMB II",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "15.12.2021. 12:30",
+        "raw_block":  "160279 INTERVENTNA NEUROLOЕ KA AMB II 111111 Ljekar specijalista u amb. 15.12.2021. 12:30 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160249",
+        "specialist":  "KABINET ZA EVOCIRANE POTENCIJALE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "09.06.2025. 17:00",
+        "raw_block":  "160249 KABINET ZA EVOCIRANE POTENCIJALE 111111 Ljekar specijalista u amb. 09.06.2025. 17:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160109",
+        "specialist":  "NEUROLOЕ KA AMBULANTA I 111111 Ljekar specijalista u amb. 31.03.2026. 12:20",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.03.2026. 12:20",
+        "raw_block":  "160109 NEUROLOЕ KA AMBULANTA I 111111 Ljekar specijalista u amb. 31.03.2026. 12:20 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160119",
+        "specialist":  "NEUROLOЕ KA AMBULANTA II 111111 Ljekar specijalista u amb. 31.03.2026. 12:20",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.03.2026. 12:20",
+        "raw_block":  "160119 NEUROLOЕ KA AMBULANTA II 111111 Ljekar specijalista u amb. 31.03.2026. 12:20 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA NEUROLOGIJU",
+        "code":  "160259",
+        "specialist":  "NEUROLOЕ KO-PSIHOLOЕ KI KABINET",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "10.06.2022. 15:00",
+        "raw_block":  "160259 NEUROLOЕ KO-PSIHOLOЕ KI KABINET 111111 Ljekar specijalista u amb. 10.06.2022. 15:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA PSIHIJATRIJU",
+        "code":  "170700",
+        "specialist":  "AMBULANTA SUPSTITUCIONOJ TERAPIJI",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "26.03.2023. 13:40",
+        "raw_block":  "170700 AMBULANTA SUPSTITUCIONOJ TERAPIJI 111111 Ljekar specijalista u amb. 26.03.2023. 13:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA PSIHIJATRIJU",
+        "code":  "170509",
+        "specialist":  "PSIHIJATRIJSKA AMBULANTA 1 111111 Ljekar specijalista u amb. 13.03.2026. 10:00 31.03.2026. 12:40",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 12:40",
+        "raw_dates":  "13.03.2026. 10:00 | 31.03.2026. 12:40",
+        "raw_block":  "170509 PSIHIJATRIJSKA AMBULANTA 1 111111 Ljekar specijalista u amb. 13.03.2026. 10:00 31.03.2026. 12:40"
+    },
+    {
+        "section":  "KLINIKA ZA PSIHIJATRIJU",
+        "code":  "170519",
+        "specialist":  "PSIHIJATRIJSKA AMBULANTA 2 111111 Ljekar specijalista u amb. 16.03.2026. 08:40 31.03.2026. 12:40",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 12:40",
+        "raw_dates":  "16.03.2026. 08:40 | 31.03.2026. 12:40",
+        "raw_block":  "170519 PSIHIJATRIJSKA AMBULANTA 2 111111 Ljekar specijalista u amb. 16.03.2026. 08:40 31.03.2026. 12:40"
+    },
+    {
+        "section":  "KLINIKA ZA PSIHIJATRIJU",
+        "code":  "170699",
+        "specialist":  "PSIHIJATRIJSKA AMBULANTA 3 111111 Ljekar specijalista u amb. 12.03.2026. 10:20 31.03.2026. 12:40",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 12:40",
+        "raw_dates":  "12.03.2026. 10:20 | 31.03.2026. 12:40",
+        "raw_block":  "170699 PSIHIJATRIJSKA AMBULANTA 3 111111 Ljekar specijalista u amb. 12.03.2026. 10:20 31.03.2026. 12:40"
+    },
+    {
+        "section":  "KLINIKA ZA PSIHIJATRIJU",
+        "code":  "170902",
+        "specialist":  "PSIHOLOЕ KI KABINET I 111111 Ljekar specijalista u amb. 23.02.2026. 11:00 30.03.2026. 18:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 18:00",
+        "raw_dates":  "23.02.2026. 11:00 | 30.03.2026. 18:00",
+        "raw_block":  "170902 PSIHOLOЕ KI KABINET I 111111 Ljekar specijalista u amb. 23.02.2026. 11:00 30.03.2026. 18:00"
+    },
+    {
+        "section":  "KLINIKA ZA PSIHIJATRIJU",
+        "code":  "170899",
+        "specialist":  "PSIHOLOЕ KI KABINET II 111111 Ljekar specijalista u amb. 11.02.2026. 16:30 31.03.2026. 12:30",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 12:30",
+        "raw_dates":  "11.02.2026. 16:30 | 31.03.2026. 12:30",
+        "raw_block":  "170899 PSIHOLOЕ KI KABINET II 111111 Ljekar specijalista u amb. 11.02.2026. 16:30 31.03.2026. 12:30"
+    },
+    {
+        "section":  "KLINIKA ZA GINEKOLOGIJU I AKUЕ ERSTVO",
+        "code":  "111111",
+        "specialist":  "Ljekar specijalista u amb. 11.02.2026. 10:00 30.04.2026. 13:45",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:45",
+        "raw_dates":  "11.02.2026. 10:00 | 30.04.2026. 13:45",
+        "raw_block":  "111111 Ljekar specijalista u amb. 11.02.2026. 10:00 30.04.2026. 13:45"
+    },
+    {
+        "section":  "KLINIKA ZA GINEKOLOGIJU I AKUЕ ERSTVO",
+        "code":  "180120",
+        "specialist":  "DNEVNA BOLNICA GAK 111111 Ljekar specijalista u amb. 04.02.2025. 00:30",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "04.02.2025. 00:30",
+        "raw_block":  "180120 DNEVNA BOLNICA GAK 111111 Ljekar specijalista u amb. 04.02.2025. 00:30 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA GINEKOLOGIJU I AKUЕ ERSTVO",
+        "code":  "180189",
+        "specialist":  "GINEKOLOЕ KA AMBULANTA ZA INFERTILITET",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.04.2026. 13:45",
+        "raw_dates":  "16.02.2026. 08:45 | 27.04.2026. 13:45",
+        "raw_block":  "180189 GINEKOLOЕ KA AMBULANTA ZA INFERTILITET 111111 Ljekar specijalista u amb. 16.02.2026. 08:45 27.04.2026. 13:45"
+    },
+    {
+        "section":  "KLINIKA ZA GINEKOLOGIJU I AKUЕ ERSTVO",
+        "code":  "180199",
+        "specialist":  "GINEKOLOЕ KO ENDOKRINOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "24.04.2026. 13:40",
+        "raw_dates":  "13.02.2026. 13:00 | 24.04.2026. 13:40",
+        "raw_block":  "180199 GINEKOLOЕ KO ENDOKRINOLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 13.02.2026. 13:00 24.04.2026. 13:40"
+    },
+    {
+        "section":  "KLINIKA ZA GINEKOLOGIJU I AKUЕ ERSTVO",
+        "code":  "180169",
+        "specialist":  "GINEKOLOЕ KO ONKOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 10:15",
+        "raw_dates":  "17.02.2026. 09:30 | 30.04.2026. 10:15",
+        "raw_block":  "180169 GINEKOLOЕ KO ONKOLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 17.02.2026. 09:30 30.04.2026. 10:15"
+    },
+    {
+        "section":  "KLINIKA ZA GINEKOLOGIJU I AKUЕ ERSTVO",
+        "code":  "180179",
+        "specialist":  "GINEKOLOЕ KO PERINATOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.04.2026. 13:40",
+        "raw_dates":  "11.02.2026. 12:00 | 29.04.2026. 13:40",
+        "raw_block":  "180179 GINEKOLOЕ KO PERINATOLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 11.02.2026. 12:00 29.04.2026. 13:40"
+    },
+    {
+        "section":  "KLINIKA ZA GINEKOLOGIJU I AKUЕ ERSTVO",
+        "code":  "180109",
+        "specialist":  "GINEKOLOЕ KO-AKUЕ ERSKA AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "20.10.2022. 07:00",
+        "raw_block":  "180109 GINEKOLOЕ KO-AKUЕ ERSKA AMBULANTA 111111 Ljekar specijalista u amb. 20.10.2022. 07:00 Nema slobodnih termina KliniДЌki centar Crne Gore Prvi slobodni termin za zakazivanje od datuma 11.02.2026."
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190230",
+        "specialist":  "KABINET ZA BRAHITERAPIJU 111111 Ljekar specijalista u amb. 11.02.2026. 08:00 01.07.2026. 13:15",
+        "status":  "HAS_SLOTS",
+        "first_available":  "01.07.2026. 13:15",
+        "raw_dates":  "11.02.2026. 08:00 | 01.07.2026. 13:15 | 04.06.2026. 10:00 | 01.07.2026. 11:30",
+        "raw_block":  "190230 KABINET ZA BRAHITERAPIJU 111111 Ljekar specijalista u amb. 11.02.2026. 08:00 01.07.2026. 13:15 190309 AMBULANTA NUKLEARNE MEDICINE ZA Е TITASTU I PARAЕ TITASTE ЕЅLIJEZDE 111111 Ljekar specijalista u amb. 04.06.2026. 10:00 01.07.2026. 11:30"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190310",
+        "specialist":  "AMBULANTA ZA NUKLEARNU MEDICINU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 11:50",
+        "raw_dates":  "27.03.2026. 08:10 | 30.03.2026. 11:50",
+        "raw_block":  "190310 AMBULANTA ZA NUKLEARNU MEDICINU 111111 Ljekar specijalista u amb. 27.03.2026. 08:10 30.03.2026. 11:50"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190018",
+        "specialist":  "INTERVENTNA AMBULANTA ZA HEMIOTERAPIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.10.2025. 13:20",
+        "raw_block":  "190018 INTERVENTNA AMBULANTA ZA HEMIOTERAPIJU 111111 Ljekar specijalista u amb. 31.10.2025. 13:20 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190800",
+        "specialist":  "KONZILIJUM ZA PET/CT 111111 Ljekar specijalista u amb. 02.10.2025. 12:05",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "02.10.2025. 12:05",
+        "raw_block":  "190800 KONZILIJUM ZA PET/CT 111111 Ljekar specijalista u amb. 02.10.2025. 12:05 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190109",
+        "specialist":  "ONKOLOЕ KA AMBULANTA ZA HEMIOTERAPIJU 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "01.07.2026. 16:20",
+        "raw_block":  "190109 ONKOLOЕ KA AMBULANTA ZA HEMIOTERAPIJU 1 111111 Ljekar specijalista u amb. 01.07.2026. 16:20 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190119",
+        "specialist":  "ONKOLOЕ KA AMBULANTA ZA HEMIOTERAPIJU 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.10.2025. 14:00",
+        "raw_block":  "190119 ONKOLOЕ KA AMBULANTA ZA HEMIOTERAPIJU 2 111111 Ljekar specijalista u amb. 30.10.2025. 14:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190129",
+        "specialist":  "ONKOLOЕ KA AMBULANTA ZA HEMIOTERAPIJU 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.10.2025. 14:20",
+        "raw_block":  "190129 ONKOLOЕ KA AMBULANTA ZA HEMIOTERAPIJU 3 111111 Ljekar specijalista u amb. 31.10.2025. 14:20 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190139",
+        "specialist":  "ONKOLOЕ KA AMBULANTA ZA HEMIOTERAPIJU 4",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.10.2025. 14:20",
+        "raw_block":  "190139 ONKOLOЕ KA AMBULANTA ZA HEMIOTERAPIJU 4 111111 Ljekar specijalista u amb. 31.10.2025. 14:20 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190209",
+        "specialist":  "ONKOLOЕ KA AMBULANTA ZA RADIOTERAPIJU 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "01.07.2026. 13:45",
+        "raw_dates":  "12.02.2026. 13:00 | 01.07.2026. 13:45",
+        "raw_block":  "190209 ONKOLOЕ KA AMBULANTA ZA RADIOTERAPIJU 1 111111 Ljekar specijalista u amb. 12.02.2026. 13:00 01.07.2026. 13:45"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190219",
+        "specialist":  "ONKOLOЕ KA AMBULANTA ZA RADIOTERAPIJU 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "01.07.2026. 13:45",
+        "raw_dates":  "12.02.2026. 12:30 | 01.07.2026. 13:45",
+        "raw_block":  "190219 ONKOLOЕ KA AMBULANTA ZA RADIOTERAPIJU 2 111111 Ljekar specijalista u amb. 12.02.2026. 12:30 01.07.2026. 13:45"
+    },
+    {
+        "section":  "KLINIKA ZA ONKOLOGIJU I RADIO TERAPIJU",
+        "code":  "190700",
+        "specialist":  "ONKOLOЕ KI KONZILIJUM 111111 Ljekar specijalista u amb. 29.12.2023. 13:50",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "29.12.2023. 13:50",
+        "raw_block":  "190700 ONKOLOЕ KI KONZILIJUM 111111 Ljekar specijalista u amb. 29.12.2023. 13:50 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200119",
+        "specialist":  "ALERGOLOЕ KA AMBULANTA ORL",
+        "status":  "HAS_SLOTS",
+        "first_available":  "24.02.2026. 13:40",
+        "raw_dates":  "17.02.2026. 10:20 | 24.02.2026. 13:40",
+        "raw_block":  "200119 ALERGOLOЕ KA AMBULANTA ORL 111111 Ljekar specijalista u amb. 17.02.2026. 10:20 24.02.2026. 13:40"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200625",
+        "specialist":  "INTERVENTNA ORL AMB. KCCG 111111 Ljekar specijalista u amb. 31.12.2025. 23:20",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.12.2025. 23:20",
+        "raw_block":  "200625 INTERVENTNA ORL AMB. KCCG 111111 Ljekar specijalista u amb. 31.12.2025. 23:20 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200129",
+        "specialist":  "KONZILIJUM ORL 111111 Ljekar specijalista u amb. 16.11.2022. 08:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "16.11.2022. 08:00",
+        "raw_block":  "200129 KONZILIJUM ORL 111111 Ljekar specijalista u amb. 16.11.2022. 08:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200130",
+        "specialist":  "KONZILIJUM ZA SLUЕ NA POMAGALA I LJEKOVE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "27.06.2025. 13:40",
+        "raw_block":  "200130 KONZILIJUM ZA SLUЕ NA POMAGALA I LJEKOVE 111111 Ljekar specijalista u amb. 27.06.2025. 13:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200630",
+        "specialist":  "SPECIJALISTIДЊKA ORL 2 111111 Ljekar specijalista u amb. 24.02.2026. 09:45",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "24.02.2026. 09:45",
+        "raw_block":  "200630 SPECIJALISTIДЊKA ORL 2 111111 Ljekar specijalista u amb. 24.02.2026. 09:45 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200109",
+        "specialist":  "SPECIJALISTIДЊKA ORL AMBULANTA I",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "27.02.2026. 13:45",
+        "raw_block":  "200109 SPECIJALISTIДЊKA ORL AMBULANTA I 111111 Ljekar specijalista u amb. 27.02.2026. 13:45 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200319",
+        "specialist":  "SUBSPEC. AUDIOLOЕ KA ORL AMBULANTA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "27.02.2026. 13:40",
+        "raw_block":  "200319 SUBSPEC. AUDIOLOЕ KA ORL AMBULANTA 111111 Ljekar specijalista u amb. 27.02.2026. 13:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200219",
+        "specialist":  "SUBSPEC. FONIJATRISKA ORL AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "26.03.2026. 13:40",
+        "raw_dates":  "05.03.2026. 11:20 | 26.03.2026. 13:40",
+        "raw_block":  "200219 SUBSPEC. FONIJATRISKA ORL AMBULANTA 111111 Ljekar specijalista u amb. 05.03.2026. 11:20 26.03.2026. 13:40"
+    },
+    {
+        "section":  "KLINIKA ZA OTORINOLARINGOLOGIJU",
+        "code":  "200519",
+        "specialist":  "SUBSPEC. ORL AMBULANTA ZA PLASTIДЊNU HIRURGIJU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.12.2025. 09:40",
+        "raw_block":  "200519 SUBSPEC. ORL AMBULANTA ZA PLASTIДЊNU HIRURGIJU 111111 Ljekar specijalista u amb. 30.12.2025. 09:40 Nema slobodnih termina KliniДЌki centar Crne Gore Prvi slobodni termin za zakazivanje od datuma 11.02.2026."
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210179",
+        "specialist":  "KABINET ZA DIJAGNOSTIKU (KVP I OCT)",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.03.2026. 18:40",
+        "raw_dates":  "19.03.2026. 16:40 | 27.03.2026. 18:40",
+        "raw_block":  "210179 KABINET ZA DIJAGNOSTIKU (KVP I OCT) 111111 Ljekar specijalista u amb. 19.03.2026. 16:40 27.03.2026. 18:40"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210199",
+        "specialist":  "KABINET ZA FLUORESCINSKU ANGIOGRAFIJU - FA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "13.01.2026. 13:00",
+        "raw_block":  "210199 KABINET ZA FLUORESCINSKU ANGIOGRAFIJU - FA 111111 Ljekar specijalista u amb. 13.01.2026. 13:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210139",
+        "specialist":  "KABINET ZA GLAUKOM 111111 Ljekar specijalista u amb. 24.03.2026. 12:15",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "24.03.2026. 12:15",
+        "raw_block":  "210139 KABINET ZA GLAUKOM 111111 Ljekar specijalista u amb. 24.03.2026. 12:15 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210119",
+        "specialist":  "KABINET ZA KONTAKTNA SOДЊIVA I BOLESTI ROЕЅNJAДЊE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "24.03.2026. 13:30",
+        "raw_block":  "210119 KABINET ZA KONTAKTNA SOДЊIVA I BOLESTI ROЕЅNJAДЊE 111111 Ljekar specijalista u amb. 24.03.2026. 13:30 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210129",
+        "specialist":  "KABINET ZA LASER I OCT 111111 Ljekar specijalista u amb. 31.03.2026. 13:30",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.03.2026. 13:30",
+        "raw_block":  "210129 KABINET ZA LASER I OCT 111111 Ljekar specijalista u amb. 31.03.2026. 13:30 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210110",
+        "specialist":  "KABINET ZA OKULOPLASTIДЊNU HIRURGIJU I SUZNE PUTEVE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "27.03.2026. 12:40",
+        "raw_block":  "210110 KABINET ZA OKULOPLASTIДЊNU HIRURGIJU I SUZNE PUTEVE 111111 Ljekar specijalista u amb. 27.03.2026. 12:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210149",
+        "specialist":  "KABINET ZA ULTRAZVUK OKA 111111 Ljekar specijalista u amb. 23.03.2026. 13:40",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "23.03.2026. 13:40",
+        "raw_block":  "210149 KABINET ZA ULTRAZVUK OKA 111111 Ljekar specijalista u amb. 23.03.2026. 13:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210008",
+        "specialist":  "KABINET ZA UVEITISE 111111 Ljekar specijalista u amb. 16.03.2026. 13:30",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "16.03.2026. 13:30",
+        "raw_block":  "210008 KABINET ZA UVEITISE 111111 Ljekar specijalista u amb. 16.03.2026. 13:30 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210169",
+        "specialist":  "OFTALMOLOЕ KA INTERVENTA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 13:15",
+        "raw_dates":  "03.03.2026. 12:15 | 31.03.2026. 13:15",
+        "raw_block":  "210169 OFTALMOLOЕ KA INTERVENTA AMBULANTA 111111 Ljekar specijalista u amb. 03.03.2026. 12:15 31.03.2026. 13:15"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210180",
+        "specialist":  "OFTALMOLOЕ KA INTERVENTNA AMB. 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "15.08.2022. 08:00",
+        "raw_block":  "210180 OFTALMOLOЕ KA INTERVENTNA AMB. 2 111111 Ljekar specijalista u amb. 15.08.2022. 08:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210109",
+        "specialist":  "OFTALMOLOЕ KA OPЕ TA AMBULANTA 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.03.2026. 09:50",
+        "raw_block":  "210109 OFTALMOLOЕ KA OPЕ TA AMBULANTA 1 111111 Ljekar specijalista u amb. 30.03.2026. 09:50 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210159",
+        "specialist":  "OFTALMOLOЕ KA OPЕ TA AMBULANTA 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "24.03.2026. 13:40",
+        "raw_block":  "210159 OFTALMOLOЕ KA OPЕ TA AMBULANTA 2 111111 Ljekar specijalista u amb. 24.03.2026. 13:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA OДЊNE BOLESTI",
+        "code":  "210007",
+        "specialist":  "OFTALMOLOЕ KA OPЕ TA AMBULANTA 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "20.03.2026. 13:40",
+        "raw_block":  "210007 OFTALMOLOЕ KA OPЕ TA AMBULANTA 3 111111 Ljekar specijalista u amb. 20.03.2026. 13:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA INFEKTIVNE BOLESTI",
+        "code":  "220109",
+        "specialist":  "AMBULANTA ZA INFEKTIVNE BOLESTI",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 13:45",
+        "raw_dates":  "12.02.2026. 13:15 | 31.03.2026. 13:45",
+        "raw_block":  "220109 AMBULANTA ZA INFEKTIVNE BOLESTI 111111 Ljekar specijalista u amb. 12.02.2026. 13:15 31.03.2026. 13:45"
+    },
+    {
+        "section":  "KLINIKA ZA INFEKTIVNE BOLESTI",
+        "code":  "220900",
+        "specialist":  "DNEVNA BOLNICA INFEKTIVNE KLINIKE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.10.2022. 13:45",
+        "raw_block":  "220900 DNEVNA BOLNICA INFEKTIVNE KLINIKE 111111 Ljekar specijalista u amb. 31.10.2022. 13:45 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA DERMATOVENEROLOGIJU",
+        "code":  "230409",
+        "specialist":  "AMBULANTA ZA DERMATOVENEROLOGIJU 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:45",
+        "raw_dates":  "08.04.2026. 13:00 | 30.04.2026. 13:45",
+        "raw_block":  "230409 AMBULANTA ZA DERMATOVENEROLOGIJU 1 111111 Ljekar specijalista u amb. 08.04.2026. 13:00 30.04.2026. 13:45"
+    },
+    {
+        "section":  "KLINIKA ZA DERMATOVENEROLOGIJU",
+        "code":  "230419",
+        "specialist":  "AMBULANTA ZA DERMATOVENEROLOGIJU 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 13:45",
+        "raw_dates":  "09.04.2026. 08:45 | 30.04.2026. 13:45",
+        "raw_block":  "230419 AMBULANTA ZA DERMATOVENEROLOGIJU 2 111111 Ljekar specijalista u amb. 09.04.2026. 08:45 30.04.2026. 13:45"
+    },
+    {
+        "section":  "KLINIKA ZA DERMATOVENEROLOGIJU",
+        "code":  "230229",
+        "specialist":  "INTERVENTNA AMBULANTA ZA DERMATOVENEROLOGIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 10:15",
+        "raw_dates":  "20.02.2026. 09:30 | 31.03.2026. 10:15",
+        "raw_block":  "230229 INTERVENTNA AMBULANTA ZA DERMATOVENEROLOGIJU 111111 Ljekar specijalista u amb. 20.02.2026. 09:30 31.03.2026. 10:15"
+    },
+    {
+        "section":  "KLINIKA ZA DERMATOVENEROLOGIJU",
+        "code":  "230109",
+        "specialist":  "KABINET ZA ALERGIJSKO -EPIKUTANO TESTIRANJE",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "29.09.2025. 10:00",
+        "raw_block":  "230109 KABINET ZA ALERGIJSKO -EPIKUTANO TESTIRANJE 111111 Ljekar specijalista u amb. 29.09.2025. 10:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA DERMATOVENEROLOGIJU",
+        "code":  "230119",
+        "specialist":  "KABINET ZA PATCH TESTIRANJE 111111 Ljekar specijalista u amb. 29.09.2025. 13:30",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "29.09.2025. 13:30",
+        "raw_block":  "230119 KABINET ZA PATCH TESTIRANJE 111111 Ljekar specijalista u amb. 29.09.2025. 13:30 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA DERMATOVENEROLOGIJU",
+        "code":  "230009",
+        "specialist":  "KONZILIJUM DERMATOVENEROLOGA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "25.03.2026. 13:45",
+        "raw_dates":  "11.03.2026. 13:30 | 25.03.2026. 13:45",
+        "raw_block":  "230009 KONZILIJUM DERMATOVENEROLOGA 111111 Ljekar specijalista u amb. 11.03.2026. 13:30 25.03.2026. 13:45 KliniДЌki centar Crne Gore Prvi slobodni termin za zakazivanje od datuma 11.02.2026."
+    },
+    {
+        "section":  "KLINIKA ZA ANESTEZIJU I INTEZIVNU TERAPIJU BOLA",
+        "code":  "240109",
+        "specialist":  "ANESTEZILOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 27.02.2026. 12:45",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "27.02.2026. 12:45 | 30.12.2022. 13:45",
+        "raw_block":  "240109 ANESTEZILOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 27.02.2026. 12:45 Nema slobodnih termina 240600 KONZILIJUM ZA ODOBRAVANJE LJEKOVA KOJI NISU NA OSNOVNOJ LISTI LJEKOVA 111111 Ljekar specijalista u amb. 30.12.2022. 13:45 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "270610",
+        "specialist":  "AMBULANTA ZA KARDIOHIRURGIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 14:40",
+        "raw_dates":  "11.02.2026. 08:20 | 31.03.2026. 14:40",
+        "raw_block":  "270610 AMBULANTA ZA KARDIOHIRURGIJU 111111 Ljekar specijalista u amb. 11.02.2026. 08:20 31.03.2026. 14:40"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "290580",
+        "specialist":  "ELEKTROFIZIOLOЕ KA AMBULANTA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 12:45",
+        "raw_dates":  "16.03.2026. 12:15 | 30.06.2026. 12:45",
+        "raw_block":  "290580 ELEKTROFIZIOLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 16.03.2026. 12:15 30.06.2026. 12:45"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260539",
+        "specialist":  "KABINET ZA EHO SRCA 111111 Ljekar specijalista u amb. 20.05.2026. 09:45 30.06.2026. 10:15",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 10:15",
+        "raw_dates":  "20.05.2026. 09:45 | 30.06.2026. 10:15",
+        "raw_block":  "260539 KABINET ZA EHO SRCA 111111 Ljekar specijalista u amb. 20.05.2026. 09:45 30.06.2026. 10:15"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260549",
+        "specialist":  "KABINET ZA ERGOMETRIJU 111111 Ljekar specijalista u amb. 16.04.2026. 09:00 29.06.2026. 11:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.06.2026. 11:00",
+        "raw_dates":  "16.04.2026. 09:00 | 29.06.2026. 11:00",
+        "raw_block":  "260549 KABINET ZA ERGOMETRIJU 111111 Ljekar specijalista u amb. 16.04.2026. 09:00 29.06.2026. 11:00"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "280589",
+        "specialist":  "KABINET ZA HOLTER KRVNOG PRITISKA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 08:20",
+        "raw_dates":  "12.03.2026. 08:00 | 30.06.2026. 08:20",
+        "raw_block":  "280589 KABINET ZA HOLTER KRVNOG PRITISKA 111111 Ljekar specijalista u amb. 12.03.2026. 08:00 30.06.2026. 08:20"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260559",
+        "specialist":  "KABINET ZA HOLTER MONITORING",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.06.2026. 08:40",
+        "raw_block":  "260559 KABINET ZA HOLTER MONITORING 111111 Ljekar specijalista u amb. 30.06.2026. 08:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260320",
+        "specialist":  "KABINET ZA HUMEDS HOLTER 111111 Ljekar specijalista u amb. 11.05.2026. 12:00 29.06.2026. 12:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.06.2026. 12:00",
+        "raw_dates":  "11.05.2026. 12:00 | 29.06.2026. 12:00",
+        "raw_block":  "260320 KABINET ZA HUMEDS HOLTER 111111 Ljekar specijalista u amb. 11.05.2026. 12:00 29.06.2026. 12:00"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260308",
+        "specialist":  "KABINET ZA PRAД†ENJE RADA PACE MAKERA",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.07.2026. 10:50",
+        "raw_dates":  "29.04.2026. 10:50 | 31.07.2026. 10:50",
+        "raw_block":  "260308 KABINET ZA PRAД†ENJE RADA PACE MAKERA 111111 Ljekar specijalista u amb. 29.04.2026. 10:50 31.07.2026. 10:50"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "280569",
+        "specialist":  "KABINET ZA STRES EHO TEST 111111 Ljekar specijalista u amb. 30.06.2026. 11:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.06.2026. 11:00",
+        "raw_block":  "280569 KABINET ZA STRES EHO TEST 111111 Ljekar specijalista u amb. 30.06.2026. 11:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "280579",
+        "specialist":  "KABINET ZA TE UZV SRCA 111111 Ljekar specijalista u amb. 23.06.2026. 13:00 30.06.2026. 13:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 13:00",
+        "raw_dates":  "23.06.2026. 13:00 | 30.06.2026. 13:00",
+        "raw_block":  "280579 KABINET ZA TE UZV SRCA 111111 Ljekar specijalista u amb. 23.06.2026. 13:00 30.06.2026. 13:00"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "270799",
+        "specialist":  "KARDIO ANESTEZIOLOЕ KA AMB 111111 Ljekar specijalista u amb. 11.02.2026. 07:00 31.03.2026. 14:45",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 14:45",
+        "raw_dates":  "11.02.2026. 07:00 | 31.03.2026. 14:45",
+        "raw_block":  "270799 KARDIO ANESTEZIOLOЕ KA AMB 111111 Ljekar specijalista u amb. 11.02.2026. 07:00 31.03.2026. 14:45"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "270801",
+        "specialist":  "KARDIOLOЕ KA KONTROLA NAKON KARD.HIR. OP.",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.12.2025. 14:45",
+        "raw_block":  "270801 KARDIOLOЕ KA KONTROLA NAKON KARD.HIR. OP. 111111 Ljekar specijalista u amb. 31.12.2025. 14:45 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260509",
+        "specialist":  "KARDIOLOЕ KA AMBULANTA 1 111111 Ljekar specijalista u amb. 30.06.2026. 12:40",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.06.2026. 12:40",
+        "raw_block":  "260509 KARDIOLOЕ KA AMBULANTA 1 111111 Ljekar specijalista u amb. 30.06.2026. 12:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260510",
+        "specialist":  "KardioloЕЎka ambulanta 1 - kontrolni pregled",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.09.2024. 11:55",
+        "raw_block":  "260510 KardioloЕЎka ambulanta 1 - kontrolni pregled 111111 Ljekar specijalista u amb. 30.09.2024. 11:55 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260529",
+        "specialist":  "KARDIOLOЕ KA AMBULANTA 2 111111 Ljekar specijalista u amb. 29.08.2025. 17:45",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "29.08.2025. 17:45",
+        "raw_block":  "260529 KARDIOLOЕ KA AMBULANTA 2 111111 Ljekar specijalista u amb. 29.08.2025. 17:45 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "260519",
+        "specialist":  "KARDIOLOЕ KA AMBULANTA 3 111111 Ljekar specijalista u amb. 07.10.2025. 17:45",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "07.10.2025. 17:45",
+        "raw_block":  "260519 KARDIOLOЕ KA AMBULANTA 3 111111 Ljekar specijalista u amb. 07.10.2025. 17:45 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "290101",
+        "specialist":  "KARDIOLOЕ KA INTERVENTNA AMB",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.12.2021. 07:48",
+        "raw_block":  "290101 KARDIOLOЕ KA INTERVENTNA AMB 111111 Ljekar specijalista u amb. 31.12.2021. 07:48 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA BOLESTI SRCA",
+        "code":  "290600",
+        "specialist":  "KONZILIJUM ZA UPUД†IVANJE PACIJENATA U INOSTRANSTVO",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "25.10.2022. 13:45",
+        "raw_block":  "290600 KONZILIJUM ZA UPUД†IVANJE PACIJENATA U INOSTRANSTVO 111111 Ljekar specijalista u amb. 25.10.2022. 13:45 Nema slobodnih termina KliniДЌki centar Crne Gore Prvi slobodni termin za zakazivanje od datuma 11.02.2026."
+    },
+    {
+        "section":  "STOMATOLOЕ KA POLIKLINIKA",
+        "code":  "300100",
+        "specialist":  "ODJELJENJE ORALNE HIRURGIJE 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.10.2022. 10:40",
+        "raw_block":  "300100 ODJELJENJE ORALNE HIRURGIJE 1 111111 Ljekar specijalista u amb. 31.10.2022. 10:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "STOMATOLOЕ KA POLIKLINIKA",
+        "code":  "300500",
+        "specialist":  "ODJELJENJE STOMATOLOЕ KE PROTETIKE SA LABORATORIJOM",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.11.2022. 20:45",
+        "raw_block":  "300500 ODJELJENJE STOMATOLOЕ KE PROTETIKE SA LABORATORIJOM 111111 Ljekar specijalista u amb. 30.11.2022. 20:45 Nema slobodnih termina"
+    },
+    {
+        "section":  "STOMATOLOЕ KA POLIKLINIKA",
+        "code":  "300600",
+        "specialist":  "ODJELJENJE ZA BOLESTI ZUBA SA ENDODONCIJOM",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.10.2022. 13:40",
+        "raw_block":  "300600 ODJELJENJE ZA BOLESTI ZUBA SA ENDODONCIJOM 111111 Ljekar specijalista u amb. 31.10.2022. 13:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "STOMATOLOЕ KA POLIKLINIKA",
+        "code":  "300300",
+        "specialist":  "ODJELJENJE ZA ORTOPEDIJU VILICE SA LABORATORIJOM 1",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.10.2022. 13:40",
+        "raw_block":  "300300 ODJELJENJE ZA ORTOPEDIJU VILICE SA LABORATORIJOM 1 111111 Ljekar specijalista u amb. 31.10.2022. 13:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "STOMATOLOЕ KA POLIKLINIKA",
+        "code":  "300301",
+        "specialist":  "ODJELJENJE ZA ORTOPEDIJU VILICE SA LABORATORIJOM 2",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.09.2022. 20:20 | 31.10.2022. 13:40",
+        "raw_block":  "300301 ODJELJENJE ZA ORTOPEDIJU VILICE SA LABORATORIJOM 2 111111 Ljekar specijalista u amb. 30.09.2022. 20:20 Nema slobodnih termina 300400 ODJELJENJE ZA PARODONTOLOGIJU I ORALNU MEDICINU 111111 Ljekar specijalista u amb. 31.10.2022. 13:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "KLINIKA ZA NEFROLOGIJU",
+        "code":  "140319",
+        "specialist":  "AMBULANTA ZA TRANSPLANTIRANE PACIJENTE",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.06.2026. 17:45",
+        "raw_dates":  "16.02.2026. 15:45 | 29.06.2026. 17:45",
+        "raw_block":  "140319 AMBULANTA ZA TRANSPLANTIRANE PACIJENTE 111111 Ljekar specijalista u amb. 16.02.2026. 15:45 29.06.2026. 17:45"
+    },
+    {
+        "section":  "KLINIKA ZA NEFROLOGIJU",
+        "code":  "140309",
+        "specialist":  "NEFROLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 05.03.2026. 13:45 30.06.2026. 17:45",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 17:45",
+        "raw_dates":  "05.03.2026. 13:45 | 30.06.2026. 17:45",
+        "raw_block":  "140309 NEFROLOЕ KA AMBULANTA 111111 Ljekar specijalista u amb. 05.03.2026. 13:45 30.06.2026. 17:45"
+    },
+    {
+        "section":  "KLINIKA ZA MAKSILOFACIJALNU HIRURGIJU",
+        "code":  "320109",
+        "specialist":  "AMBULANTA ZA MAKSILOFACIJALNU HIRURGIJU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.08.2026. 12:40",
+        "raw_dates":  "11.02.2026. 12:20 | 31.08.2026. 12:40",
+        "raw_block":  "320109 AMBULANTA ZA MAKSILOFACIJALNU HIRURGIJU 111111 Ljekar specijalista u amb. 11.02.2026. 12:20 31.08.2026. 12:40"
+    },
+    {
+        "section":  "KLINIKA ZA MAKSILOFACIJALNU HIRURGIJU",
+        "code":  "250800",
+        "specialist":  "KONZILIJUM ZA MFH 111111 Ljekar specijalista u amb. 29.12.2025. 12:40",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "29.12.2025. 12:40",
+        "raw_block":  "250800 KONZILIJUM ZA MFH 111111 Ljekar specijalista u amb. 29.12.2025. 12:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA FIZIKALNU MEDICINU I REHABILITACIJU",
+        "code":  "500109",
+        "specialist":  "AMBULANTA ZA FIZIKALNU MEDICINU 1",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.05.2026. 13:45",
+        "raw_dates":  "18.05.2026. 09:15 | 29.05.2026. 13:45",
+        "raw_block":  "500109 AMBULANTA ZA FIZIKALNU MEDICINU 1 111111 Ljekar specijalista u amb. 18.05.2026. 09:15 29.05.2026. 13:45"
+    },
+    {
+        "section":  "CENTAR ZA FIZIKALNU MEDICINU I REHABILITACIJU",
+        "code":  "500119",
+        "specialist":  "AMBULANTA ZA FIZIKALNU MEDICINU 2",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.05.2026. 13:45",
+        "raw_dates":  "15.05.2026. 13:45 | 29.05.2026. 13:45",
+        "raw_block":  "500119 AMBULANTA ZA FIZIKALNU MEDICINU 2 111111 Ljekar specijalista u amb. 15.05.2026. 13:45 29.05.2026. 13:45"
+    },
+    {
+        "section":  "CENTAR ZA FIZIKALNU MEDICINU I REHABILITACIJU",
+        "code":  "500129",
+        "specialist":  "AMBULANTA ZA FIZIKALNU MEDICINU 3",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.09.2022. 13:45",
+        "raw_block":  "500129 AMBULANTA ZA FIZIKALNU MEDICINU 3 111111 Ljekar specijalista u amb. 30.09.2022. 13:45 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA FIZIKALNU MEDICINU I REHABILITACIJU",
+        "code":  "500139",
+        "specialist":  "INTERVENTNA AMBULANTA ZA FIZIKALNU MEDICINU",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "05.11.2025. 18:45",
+        "raw_block":  "500139 INTERVENTNA AMBULANTA ZA FIZIKALNU MEDICINU 111111 Ljekar specijalista u amb. 05.11.2025. 18:45 Nema slobodnih termina KliniДЌki centar Crne Gore Prvi slobodni termin za zakazivanje od datuma 11.02.2026."
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510466",
+        "specialist":  "AMBULANTA ZA ZAKAZIVANJE KONZILIJUMA ZA MR",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.02.2026. 11:58",
+        "raw_dates":  "27.02.2026. 11:20 | 27.02.2026. 11:58",
+        "raw_block":  "510466 AMBULANTA ZA ZAKAZIVANJE KONZILIJUMA ZA MR 111111 Ljekar specijalista u amb. 27.02.2026. 11:20 27.02.2026. 11:58"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510640",
+        "specialist":  "CT ANGIO BODY 111111 Ljekar specijalista u amb. 11.02.2026. 19:30 24.06.2026. 19:30",
+        "status":  "HAS_SLOTS",
+        "first_available":  "24.06.2026. 19:30",
+        "raw_dates":  "11.02.2026. 19:30 | 24.06.2026. 19:30",
+        "raw_block":  "510640 CT ANGIO BODY 111111 Ljekar specijalista u amb. 11.02.2026. 19:30 24.06.2026. 19:30"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510630",
+        "specialist":  "CT ANGIO GLAVE I VRATA 111111 Ljekar specijalista u amb. 04.03.2026. 15:00 24.06.2026. 16:30",
+        "status":  "HAS_SLOTS",
+        "first_available":  "24.06.2026. 16:30",
+        "raw_dates":  "04.03.2026. 15:00 | 24.06.2026. 16:30",
+        "raw_block":  "510630 CT ANGIO GLAVE I VRATA 111111 Ljekar specijalista u amb. 04.03.2026. 15:00 24.06.2026. 16:30"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510324",
+        "specialist":  "CT BODY 1 111111 Ljekar specijalista u amb. 16.06.2026. 16:00 30.06.2026. 19:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 19:00",
+        "raw_dates":  "16.06.2026. 16:00 | 30.06.2026. 19:00",
+        "raw_block":  "510324 CT BODY 1 111111 Ljekar specijalista u amb. 16.06.2026. 16:00 30.06.2026. 19:00"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510336",
+        "specialist":  "CT BODY 2 111111 Ljekar specijalista u amb. 05.06.2026. 16:00 30.06.2026. 19:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.06.2026. 19:00",
+        "raw_dates":  "05.06.2026. 16:00 | 30.06.2026. 19:00",
+        "raw_block":  "510336 CT BODY 2 111111 Ljekar specijalista u amb. 05.06.2026. 16:00 30.06.2026. 19:00"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510316",
+        "specialist":  "CT BODY ONKOLOЕ KI 111111 Ljekar specijalista u amb. 09.05.2026. 09:30 31.12.2026. 19:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.12.2026. 19:00",
+        "raw_dates":  "09.05.2026. 09:30 | 31.12.2026. 19:00",
+        "raw_block":  "510316 CT BODY ONKOLOЕ KI 111111 Ljekar specijalista u amb. 09.05.2026. 09:30 31.12.2026. 19:00"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510366",
+        "specialist":  "CT KOLONOSKOPIJE 111111 Ljekar specijalista u amb. 19.02.2026. 08:15 25.06.2026. 08:15",
+        "status":  "HAS_SLOTS",
+        "first_available":  "25.06.2026. 08:15",
+        "raw_dates":  "19.02.2026. 08:15 | 25.06.2026. 08:15",
+        "raw_block":  "510366 CT KOLONOSKOPIJE 111111 Ljekar specijalista u amb. 19.02.2026. 08:15 25.06.2026. 08:15"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510326",
+        "specialist":  "CT KORONOGRAFIJE 111111 Ljekar specijalista u amb. 28.06.2026. 14:40 30.08.2026. 16:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.08.2026. 16:00",
+        "raw_dates":  "28.06.2026. 14:40 | 30.08.2026. 16:00",
+        "raw_block":  "510326 CT KORONOGRAFIJE 111111 Ljekar specijalista u amb. 28.06.2026. 14:40 30.08.2026. 16:00"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510346",
+        "specialist":  "CT MSK 111111 Ljekar specijalista u amb. 25.02.2026. 11:30 24.06.2026. 13:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "24.06.2026. 13:00",
+        "raw_dates":  "25.02.2026. 11:30 | 24.06.2026. 13:00",
+        "raw_block":  "510346 CT MSK 111111 Ljekar specijalista u amb. 25.02.2026. 11:30 24.06.2026. 13:00"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510314",
+        "specialist":  "CT NEURO 1 111111 Ljekar specijalista u amb. 05.06.2026. 17:45 26.06.2026. 19:30",
+        "status":  "HAS_SLOTS",
+        "first_available":  "26.06.2026. 19:30",
+        "raw_dates":  "05.06.2026. 17:45 | 26.06.2026. 19:30",
+        "raw_block":  "510314 CT NEURO 1 111111 Ljekar specijalista u amb. 05.06.2026. 17:45 26.06.2026. 19:30"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510356",
+        "specialist":  "CT NEURO 2 111111 Ljekar specijalista u amb. 25.05.2026. 18:20 29.06.2026. 19:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.06.2026. 19:00",
+        "raw_dates":  "25.05.2026. 18:20 | 29.06.2026. 19:00",
+        "raw_block":  "510356 CT NEURO 2 111111 Ljekar specijalista u amb. 25.05.2026. 18:20 29.06.2026. 19:00"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510138",
+        "specialist":  "KABINET ZA DIGITALNI MAMOGRAF",
+        "status":  "HAS_SLOTS",
+        "first_available":  "27.02.2026. 11:30",
+        "raw_dates":  "11.02.2026. 11:00 | 27.02.2026. 11:30",
+        "raw_block":  "510138 KABINET ZA DIGITALNI MAMOGRAF 111111 Ljekar specijalista u amb. 11.02.2026. 11:00 27.02.2026. 11:30"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510158",
+        "specialist":  "KABINET ZA EKSPERTSKI UZ DOJKI SA CORE BIOPSIJOM",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.03.2026. 09:30",
+        "raw_block":  "510158 KABINET ZA EKSPERTSKI UZ DOJKI SA CORE BIOPSIJOM 111111 Ljekar specijalista u amb. 31.03.2026. 09:30 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510218",
+        "specialist":  "KABINET ZA ULTRAZVUДЊNU DIJAGNOSTIKU",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.12.2026. 12:40",
+        "raw_dates":  "11.08.2026. 08:00 | 31.12.2026. 12:40",
+        "raw_block":  "510218 KABINET ZA ULTRAZVUДЊNU DIJAGNOSTIKU 111111 Ljekar specijalista u amb. 11.08.2026. 08:00 31.12.2026. 12:40"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510155",
+        "specialist":  "KONZILIJUM RADIOLOGA ZA DIJAGNOSTIKU BOLESTI DOJKE",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.04.2026. 10:55",
+        "raw_dates":  "09.04.2026. 09:35 | 30.04.2026. 10:55",
+        "raw_block":  "510155 KONZILIJUM RADIOLOGA ZA DIJAGNOSTIKU BOLESTI DOJKE 111111 Ljekar specijalista u amb. 09.04.2026. 09:35 30.04.2026. 10:55"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510325",
+        "specialist":  "MR BODY 1 111111 Ljekar specijalista u amb. 27.02.2025. 18:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "27.02.2025. 18:00",
+        "raw_block":  "510325 MR BODY 1 111111 Ljekar specijalista u amb. 27.02.2025. 18:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510327",
+        "specialist":  "MR BODY 2 111111 Ljekar specijalista u amb. 30.05.2025. 10:40",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.05.2025. 10:40",
+        "raw_block":  "510327 MR BODY 2 111111 Ljekar specijalista u amb. 30.05.2025. 10:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510315",
+        "specialist":  "MR BODY ONKOLOЕ KI 1 111111 Ljekar specijalista u amb. 23.02.2025. 10:40",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "23.02.2025. 10:40",
+        "raw_block":  "510315 MR BODY ONKOLOЕ KI 1 111111 Ljekar specijalista u amb. 23.02.2025. 10:40 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510317",
+        "specialist":  "MR BODY ONKOLOЕ KI 2 111111 Ljekar specijalista u amb. 26.02.2025. 18:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "26.02.2025. 18:00",
+        "raw_block":  "510317 MR BODY ONKOLOЕ KI 2 111111 Ljekar specijalista u amb. 26.02.2025. 18:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510367",
+        "specialist":  "MR DOJKI 111111 Ljekar specijalista u amb. 25.02.2025. 18:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "25.02.2025. 18:00",
+        "raw_block":  "510367 MR DOJKI 111111 Ljekar specijalista u amb. 25.02.2025. 18:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510337",
+        "specialist":  "MR ENTEROGRAFIJE 111111 Ljekar specijalista u amb. 28.02.2025. 18:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "28.02.2025. 18:00",
+        "raw_block":  "510337 MR ENTEROGRAFIJE 111111 Ljekar specijalista u amb. 28.02.2025. 18:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510335",
+        "specialist":  "MR MSK 1 111111 Ljekar specijalista u amb. 26.02.2025. 18:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "26.02.2025. 18:00",
+        "raw_block":  "510335 MR MSK 1 111111 Ljekar specijalista u amb. 26.02.2025. 18:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510347",
+        "specialist":  "MR MSK 2 111111 Ljekar specijalista u amb. 28.05.2025. 12:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "28.05.2025. 12:00",
+        "raw_block":  "510347 MR MSK 2 111111 Ljekar specijalista u amb. 28.05.2025. 12:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510320",
+        "specialist":  "MR MSK 3 111111 Ljekar specijalista u amb. 22.02.2025. 15:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "22.02.2025. 15:00",
+        "raw_block":  "510320 MR MSK 3 111111 Ljekar specijalista u amb. 22.02.2025. 15:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510345",
+        "specialist":  "MR NEURO 1 111111 Ljekar specijalista u amb. 30.05.2025. 12:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "30.05.2025. 12:00",
+        "raw_block":  "510345 MR NEURO 1 111111 Ljekar specijalista u amb. 30.05.2025. 12:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510357",
+        "specialist":  "MR NEURO 2 111111 Ljekar specijalista u amb. 26.05.2025. 12:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "26.05.2025. 12:00",
+        "raw_block":  "510357 MR NEURO 2 111111 Ljekar specijalista u amb. 26.05.2025. 12:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510319",
+        "specialist":  "MR NEURO 3 111111 Ljekar specijalista u amb. 23.02.2025. 11:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "23.02.2025. 11:00",
+        "raw_block":  "510319 MR NEURO 3 111111 Ljekar specijalista u amb. 23.02.2025. 11:00 Nema slobodnih termina KliniДЌki centar Crne Gore Prvi slobodni termin za zakazivanje od datuma 11.02.2026."
+    },
+    {
+        "section":  "CENTAR ZA MEDICINSKU GENETIKU I IMUNOLOGIJU",
+        "code":  "101309",
+        "specialist":  "GENETSKA AMBULANTA 1 111111 Ljekar specijalista u amb. 02.03.2026. 11:00 30.03.2026. 18:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 18:00",
+        "raw_dates":  "02.03.2026. 11:00 | 30.03.2026. 18:00",
+        "raw_block":  "101309 GENETSKA AMBULANTA 1 111111 Ljekar specijalista u amb. 02.03.2026. 11:00 30.03.2026. 18:00"
+    },
+    {
+        "section":  "CENTAR ZA MEDICINSKU GENETIKU I IMUNOLOGIJU",
+        "code":  "101420",
+        "specialist":  "GENETSKA AMBULANTA 2 - ZA TRUDNICE",
+        "status":  "HAS_SLOTS",
+        "first_available":  "26.03.2026. 13:30",
+        "raw_dates":  "11.02.2026. 09:00 | 26.03.2026. 13:30",
+        "raw_block":  "101420 GENETSKA AMBULANTA 2 - ZA TRUDNICE 111111 Ljekar specijalista u amb. 11.02.2026. 09:00 26.03.2026. 13:30"
+    },
+    {
+        "section":  "CENTAR ZA MEDICINSKU GENETIKU I IMUNOLOGIJU",
+        "code":  "101339",
+        "specialist":  "GENETSKA AMBULANTA 3 111111 Ljekar specijalista u amb. 23.02.2026. 15:45 25.03.2026. 18:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "25.03.2026. 18:00",
+        "raw_dates":  "23.02.2026. 15:45 | 25.03.2026. 18:00",
+        "raw_block":  "101339 GENETSKA AMBULANTA 3 111111 Ljekar specijalista u amb. 23.02.2026. 15:45 25.03.2026. 18:00"
+    },
+    {
+        "section":  "CENTAR ZA MEDICINSKU GENETIKU I IMUNOLOGIJU",
+        "code":  "101430",
+        "specialist":  "GENETSKA AMBULANTA 4 111111 Ljekar specijalista u amb. 23.02.2026. 15:45 25.03.2026. 18:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "23.02.2026. 15:45 | 25.03.2026. 18:00 | 29.10.2021. 13:45",
+        "raw_block":  "101430 GENETSKA AMBULANTA 4 111111 Ljekar specijalista u amb. 23.02.2026. 15:45 25.03.2026. 18:00 KliniДЌki liniДЌki centar Crne Gore 111111 Ljekar specijalista u amb. 29.10.2021. 13:45 Nema slobodnih termina KliniДЌki centar Crne Gore Prvi slobodni termin za zakazivanje od datuma 11.02.2026."
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107189",
+        "specialist":  "DJEДЊIJI MR ENTEROGRAFIJE 111111 Ljekar specijalista u amb. 25.05.2022. 18:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "25.05.2022. 18:00",
+        "raw_block":  "107189 DJEДЊIJI MR ENTEROGRAFIJE 111111 Ljekar specijalista u amb. 25.05.2022. 18:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107149",
+        "specialist":  "KABINET ZA DJEДЊIJI MR - MKS 111111 Ljekar specijalista u amb. 17.02.2026. 09:00 31.03.2026. 12:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.03.2026. 12:00",
+        "raw_dates":  "17.02.2026. 09:00 | 31.03.2026. 12:00",
+        "raw_block":  "107149 KABINET ZA DJEДЊIJI MR - MKS 111111 Ljekar specijalista u amb. 17.02.2026. 09:00 31.03.2026. 12:00"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107129",
+        "specialist":  "KABINET ZA DJEДЊIJI MR - NEURO 111111 Ljekar specijalista u amb. 12.03.2026. 11:00 30.03.2026. 12:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "30.03.2026. 12:00",
+        "raw_dates":  "12.03.2026. 11:00 | 30.03.2026. 12:00",
+        "raw_block":  "107129 KABINET ZA DJEДЊIJI MR - NEURO 111111 Ljekar specijalista u amb. 12.03.2026. 11:00 30.03.2026. 12:00"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107169",
+        "specialist":  "KABINET ZA DJEДЊIJI MR BODY 111111 Ljekar specijalista u amb. 29.12.2025. 09:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "29.12.2025. 09:00",
+        "raw_block":  "107169 KABINET ZA DJEДЊIJI MR BODY 111111 Ljekar specijalista u amb. 29.12.2025. 09:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "INSTITUT ZA BOLESTI DJECE",
+        "code":  "107209",
+        "specialist":  "KABINET ZA DJEДЊIJU MR -OPЕ TA ANESTEZIJA",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "28.05.2022. 13:00",
+        "raw_block":  "107209 KABINET ZA DJEДЊIJU MR -OPЕ TA ANESTEZIJA 111111 Ljekar specijalista u amb. 28.05.2022. 13:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510466",
+        "specialist":  "AMBULANTA ZA ZAKAZIVANJE KONZILIJUMA ZA MR",
+        "status":  "HAS_SLOTS",
+        "first_available":  "20.02.2026. 11:58",
+        "raw_dates":  "17.02.2026. 10:00 | 20.02.2026. 11:58",
+        "raw_block":  "510466 AMBULANTA ZA ZAKAZIVANJE KONZILIJUMA ZA MR 111111 Ljekar specijalista u amb. 17.02.2026. 10:00 20.02.2026. 11:58"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510325",
+        "specialist":  "MR BODY 1 111111 Ljekar specijalista u amb. 30.04.2026. 17:00 28.06.2026. 16:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "28.06.2026. 16:00",
+        "raw_dates":  "30.04.2026. 17:00 | 28.06.2026. 16:00",
+        "raw_block":  "510325 MR BODY 1 111111 Ljekar specijalista u amb. 30.04.2026. 17:00 28.06.2026. 16:00"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510327",
+        "specialist":  "MR BODY 2 111111 Ljekar specijalista u amb. 04.05.2026. 14:00 28.08.2026. 12:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "28.08.2026. 12:00",
+        "raw_dates":  "04.05.2026. 14:00 | 28.08.2026. 12:00",
+        "raw_block":  "510327 MR BODY 2 111111 Ljekar specijalista u amb. 04.05.2026. 14:00 28.08.2026. 12:00"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510315",
+        "specialist":  "MR BODY ONKOLOЕ KI 1 111111 Ljekar specijalista u amb. 07.05.2026. 15:20 29.08.2026. 16:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "29.08.2026. 16:00",
+        "raw_dates":  "07.05.2026. 15:20 | 29.08.2026. 16:00",
+        "raw_block":  "510315 MR BODY ONKOLOЕ KI 1 111111 Ljekar specijalista u amb. 07.05.2026. 15:20 29.08.2026. 16:00"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510317",
+        "specialist":  "MR BODY ONKOLOЕ KI 2 111111 Ljekar specijalista u amb. 27.04.2026. 14:00 24.06.2026. 19:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "24.06.2026. 19:00",
+        "raw_dates":  "27.04.2026. 14:00 | 24.06.2026. 19:00",
+        "raw_block":  "510317 MR BODY ONKOLOЕ KI 2 111111 Ljekar specijalista u amb. 27.04.2026. 14:00 24.06.2026. 19:00"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510367",
+        "specialist":  "MR DOJKI 111111 Ljekar specijalista u amb. 24.02.2026. 19:20",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "24.02.2026. 19:20",
+        "raw_block":  "510367 MR DOJKI 111111 Ljekar specijalista u amb. 24.02.2026. 19:20 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510337",
+        "specialist":  "MR ENTEROGRAFIJE 111111 Ljekar specijalista u amb. 20.02.2026. 19:00 26.06.2026. 19:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "26.06.2026. 19:00",
+        "raw_dates":  "20.02.2026. 19:00 | 26.06.2026. 19:00",
+        "raw_block":  "510337 MR ENTEROGRAFIJE 111111 Ljekar specijalista u amb. 20.02.2026. 19:00 26.06.2026. 19:00"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510335",
+        "specialist":  "MR MSK 1 111111 Ljekar specijalista u amb. 17.06.2026. 16:00 24.06.2026. 19:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "24.06.2026. 19:00",
+        "raw_dates":  "17.06.2026. 16:00 | 24.06.2026. 19:00",
+        "raw_block":  "510335 MR MSK 1 111111 Ljekar specijalista u amb. 17.06.2026. 16:00 24.06.2026. 19:00"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510347",
+        "specialist":  "MR MSK 2 111111 Ljekar specijalista u amb. 15.07.2026. 12:00 26.08.2026. 12:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "26.08.2026. 12:00",
+        "raw_dates":  "15.07.2026. 12:00 | 26.08.2026. 12:00",
+        "raw_block":  "510347 MR MSK 2 111111 Ljekar specijalista u amb. 15.07.2026. 12:00 26.08.2026. 12:00"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510320",
+        "specialist":  "MR MSK 3 111111 Ljekar specijalista u amb. 31.05.2025. 15:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "31.05.2025. 15:00",
+        "raw_block":  "510320 MR MSK 3 111111 Ljekar specijalista u amb. 31.05.2025. 15:00 Nema slobodnih termina"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510345",
+        "specialist":  "MR NEURO 1 111111 Ljekar specijalista u amb. 25.07.2026. 11:30 31.08.2026. 19:00",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.08.2026. 19:00",
+        "raw_dates":  "25.07.2026. 11:30 | 31.08.2026. 19:00",
+        "raw_block":  "510345 MR NEURO 1 111111 Ljekar specijalista u amb. 25.07.2026. 11:30 31.08.2026. 19:00"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510357",
+        "specialist":  "MR NEURO 2 111111 Ljekar specijalista u amb. 16.02.2026. 10:30 31.08.2026. 12:30",
+        "status":  "HAS_SLOTS",
+        "first_available":  "31.08.2026. 12:30",
+        "raw_dates":  "16.02.2026. 10:30 | 31.08.2026. 12:30",
+        "raw_block":  "510357 MR NEURO 2 111111 Ljekar specijalista u amb. 16.02.2026. 10:30 31.08.2026. 12:30"
+    },
+    {
+        "section":  "CENTAR ZA RADIOLOSKU DIJAGNOSTIKU",
+        "code":  "510319",
+        "specialist":  "MR NEURO 3 111111 Ljekar specijalista u amb. 25.05.2025. 11:00",
+        "status":  "NO_SLOTS",
+        "first_available":  null,
+        "raw_dates":  "25.05.2025. 11:00",
+        "raw_block":  "510319 MR NEURO 3 111111 Ljekar specijalista u amb. 25.05.2025. 11:00 Nema slobodnih termina"
+    }
+]
