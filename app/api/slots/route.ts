@@ -191,6 +191,23 @@ function expandNeedleVariants(rawQuery: string): string[] {
     add("dermatovenerologija");
   }
 
+  if (
+    /(osteodenzitomet|dxa|dexa|dex|denzitomet|densitomet|gustina kost|bone density)/.test(
+      latin
+    )
+  ) {
+    add("osteodenzitometrij");
+    add("osteodenzitometriju");
+    add("kabinet za osteodenzitometriju");
+    add("dxa");
+    add("dexa");
+    add("dex");
+    add("denzitometrij");
+    add("densitometrij");
+    add("gustina kostiju");
+    add("gustina kosti");
+  }
+
   return [...out];
 }
 
@@ -261,7 +278,7 @@ function containsCardiologyIntent(query: string): boolean {
 
 function hasInvestigationIntent(query: string): boolean {
   const q = normalizeQueryLatin(query);
-  return /(ct|mr|mri|mrt|eeg|emng|echo|eho|dopler|doppler|gastroskop|kolono|uz|ultrazv|dijagnost|kabinet|test)/.test(
+  return /(ct|mr|mri|mrt|eeg|emng|echo|eho|dopler|doppler|gastroskop|kolono|uz|ultrazv|dijagnost|kabinet|test|dxa|dexa|dex|denzitomet|densitomet|osteodenzito|gustina kost)/.test(
     q
   );
 }
@@ -406,7 +423,14 @@ function detectSlotKind(item: Pick<ApiSlotItem, "section" | "specialist">):
     "holter",
     "endoskop",
     "kabinet",
-    "dijagnost"
+    "dijagnost",
+    "dxa",
+    "dexa",
+    "dex",
+    "denzitomet",
+    "densitomet",
+    "osteodenzit",
+    "gustina kost"
   ];
 
   if (investigationPatterns.some((pattern) => text.includes(pattern))) {
