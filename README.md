@@ -84,3 +84,9 @@ Then open `http://localhost:3000`.
    - `POST /api/push/test`
    - Header: `Authorization: Bearer <ADMIN_API_TOKEN>`
    - Optional JSON body: `{ "userId": "demo-user", "title": "Test", "message": "Push works" }`
+
+## Install On Phone (PWA)
+
+1. Open deployed app URL in mobile browser (HTTPS).
+2. Android Chrome: menu -> `Add to Home screen`.
+3. iPhone Safari: share -> `Add to Home Screen`.
