@@ -15,6 +15,7 @@ MVP web app for:
 - `DELETE /api/subscriptions?id=...` disable subscription
 - `GET /api/notifications?userId=...` get user notifications
 - `GET /api/push/public-key` returns VAPID public key for browser push
+- `POST /api/push/test` send test push to `web_push` subscriptions (admin token)
 - Simple UI on `/` for search + subscriptions + notifications
 
 ## Data source
@@ -79,3 +80,7 @@ Then open `http://localhost:3000`.
    - `VAPID_PRIVATE_KEY`
    - `VAPID_SUBJECT` (for example `mailto:you@example.com`)
 3. In UI select `channel=web_push` and save a subscription.
+4. Send test push:
+   - `POST /api/push/test`
+   - Header: `Authorization: Bearer <ADMIN_API_TOKEN>`
+   - Optional JSON body: `{ "userId": "demo-user", "title": "Test", "message": "Push works" }`
