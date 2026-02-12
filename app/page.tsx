@@ -41,9 +41,9 @@ export default function HomePage() {
 
   const [userId, setUserId] = useState("demo-user");
   const [subQuery, setSubQuery] = useState("");
-  const [channel, setChannel] = useState<"in_app" | "webhook" | "telegram">(
-    "in_app"
-  );
+  const [channel, setChannel] = useState<
+    "in_app" | "webhook" | "telegram" | "web_push"
+  >("in_app");
   const [webhookUrl, setWebhookUrl] = useState("");
   const [telegramChatId, setTelegramChatId] = useState("");
   const [subMessage, setSubMessage] = useState<string | null>(null);
@@ -79,6 +79,56 @@ export default function HomePage() {
     }
 
     throw new Error(fallbackMessage);
+  }
+
+  function urlBase64ToUint8Array(base64String: string): Uint8Array {
+    const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+    const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+    for (let i = 0; i < rawData.length; i += 1) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  }
+
+  async function ensureWebPushSubscription(): Promise<Record<string, unknown>> {
+    if (typeof window === "undefined") {
+      throw new Error("Web push is only available in browser");
+    }
+    if (
+      !("serviceWorker" in navigator) ||
+      !("PushManager" in window) ||
+      !("Notification" in window)
+    ) {
+      throw new Error("This browser does not support push notifications");
+    }
+
+    const permission = await Notification.requestPermission();
+    if (permission !== "granted") {
+      throw new Error("Push notifications permission is required");
+    }
+
+    const keyRes = await fetch("/api/push/public-key");
+    const keyData = await readJsonOrThrow(
+      keyRes,
+      "Failed to load push public key"
+    );
+    const publicKey = String(keyData?.publicKey ?? "").trim();
+    if (!publicKey) {
+      throw new Error("Push public key is not configured");
+    }
+
+    const registration = await navigator.serviceWorker.register("/push-sw.js");
+    let subscription = await registration.pushManager.getSubscription();
+    if (!subscription) {
+      subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(publicKey) as unknown as BufferSource
+      });
+    }
+
+    return subscription.toJSON() as Record<string, unknown>;
   }
 
   async function runSearch(rawQuery: string) {
@@ -121,13 +171,16 @@ export default function HomePage() {
     e.preventDefault();
     setSubMessage(null);
 
-    const payload: Record<string, string> = {
+    const payload: Record<string, unknown> = {
       userId,
       query: subQuery,
       channel
     };
     if (channel === "webhook") payload.webhookUrl = webhookUrl;
     if (channel === "telegram") payload.telegramChatId = telegramChatId;
+    if (channel === "web_push") {
+      payload.pushSubscription = await ensureWebPushSubscription();
+    }
 
     const res = await fetch("/api/subscriptions", {
       method: "POST",
@@ -320,12 +373,15 @@ export default function HomePage() {
           <select
             value={channel}
             onChange={(e) =>
-              setChannel(e.target.value as "in_app" | "webhook" | "telegram")
+              setChannel(
+                e.target.value as "in_app" | "webhook" | "telegram" | "web_push"
+              )
             }
           >
             <option value="in_app">in_app</option>
             <option value="webhook">webhook</option>
             <option value="telegram">telegram</option>
+            <option value="web_push">web_push</option>
           </select>
         </div>
         {channel === "webhook" ? (
@@ -345,6 +401,11 @@ export default function HomePage() {
               onChange={(e) => setTelegramChatId(e.target.value)}
             />
           </div>
+        ) : null}
+        {channel === "web_push" ? (
+          <p className="meta">
+            Browser will ask permission and register push subscription on save.
+          </p>
         ) : null}
         <div className="row">
           <button type="submit">Save Subscription</button>

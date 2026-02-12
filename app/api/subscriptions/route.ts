@@ -1,10 +1,41 @@
 import { disableSubscription, listSubscriptions, upsertSubscription } from "@/lib/storage";
-import { DeliveryChannel, Subscription } from "@/lib/types";
+import { DeliveryChannel, Subscription, WebPushSubscriptionData } from "@/lib/types";
 import { nowIso, randomId } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 function isChannel(value: string): value is DeliveryChannel {
-  return value === "in_app" || value === "webhook" || value === "telegram";
+  return (
+    value === "in_app" ||
+    value === "webhook" ||
+    value === "telegram" ||
+    value === "web_push"
+  );
+}
+
+function toWebPushSubscription(value: unknown): WebPushSubscriptionData | null {
+  if (!value || typeof value !== "object") return null;
+  const item = value as Record<string, unknown>;
+  const endpoint = String(item.endpoint ?? "").trim();
+  if (!endpoint) return null;
+
+  const keysRaw =
+    item.keys && typeof item.keys === "object"
+      ? (item.keys as Record<string, unknown>)
+      : undefined;
+
+  return {
+    endpoint,
+    expirationTime:
+      typeof item.expirationTime === "number" || item.expirationTime === null
+        ? (item.expirationTime as number | null)
+        : undefined,
+    keys: keysRaw
+      ? {
+          p256dh: String(keysRaw.p256dh ?? "").trim() || undefined,
+          auth: String(keysRaw.auth ?? "").trim() || undefined
+        }
+      : undefined
+  };
 }
 
 export async function GET(req: NextRequest) {
@@ -31,6 +62,7 @@ export async function POST(req: NextRequest) {
   const channel = String(body.channel ?? "in_app").trim();
   const webhookUrl = String(body.webhookUrl ?? "").trim();
   const telegramChatId = String(body.telegramChatId ?? "").trim();
+  const pushSubscription = toWebPushSubscription(body.pushSubscription);
   const id = String(body.id ?? "").trim();
 
   if (!userId || !query) {
@@ -41,7 +73,7 @@ export async function POST(req: NextRequest) {
   }
   if (!isChannel(channel)) {
     return NextResponse.json(
-      { error: "channel must be one of: in_app, webhook, telegram" },
+      { error: "channel must be one of: in_app, webhook, telegram, web_push" },
       { status: 400 }
     );
   }
@@ -57,6 +89,12 @@ export async function POST(req: NextRequest) {
       { status: 400 }
     );
   }
+  if (channel === "web_push" && !pushSubscription) {
+    return NextResponse.json(
+      { error: "pushSubscription is required for web_push channel" },
+      { status: 400 }
+    );
+  }
 
   const now = nowIso();
   const subscription: Subscription = {
@@ -66,6 +104,7 @@ export async function POST(req: NextRequest) {
     channel,
     webhookUrl: webhookUrl || undefined,
     telegramChatId: telegramChatId || undefined,
+    pushSubscription: pushSubscription ?? undefined,
     active: true,
     createdAt: now,
     updatedAt: now

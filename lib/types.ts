@@ -45,7 +45,16 @@ export interface SlotChange {
   currentFirstAvailable: string | null;
 }
 
-export type DeliveryChannel = "in_app" | "webhook" | "telegram";
+export interface WebPushSubscriptionData {
+  endpoint: string;
+  expirationTime?: number | null;
+  keys?: {
+    p256dh?: string;
+    auth?: string;
+  };
+}
+
+export type DeliveryChannel = "in_app" | "webhook" | "telegram" | "web_push";
 
 export interface Subscription {
   id: string;
@@ -54,6 +63,7 @@ export interface Subscription {
   channel: DeliveryChannel;
   webhookUrl?: string;
   telegramChatId?: string;
+  pushSubscription?: WebPushSubscriptionData;
   active: boolean;
   createdAt: string;
   updatedAt: string;

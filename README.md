@@ -14,6 +14,7 @@ MVP web app for:
 - `GET /api/subscriptions?userId=...` list user subscriptions
 - `DELETE /api/subscriptions?id=...` disable subscription
 - `GET /api/notifications?userId=...` get user notifications
+- `GET /api/push/public-key` returns VAPID public key for browser push
 - Simple UI on `/` for search + subscriptions + notifications
 
 ## Data source
@@ -40,6 +41,8 @@ Required in production:
 Optional:
 
 - `TELEGRAM_BOT_TOKEN`: required only for telegram delivery channel
+- `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT`:
+  required only for browser `web_push` delivery channel
 
 ## Local run
 
@@ -66,3 +69,13 @@ Then open `http://localhost:3000`.
 - PDF text from the source may contain malformed characters due to encoding quality on the source side.
 - Matching uses normalized text search and may not be perfect for all variants.
 - For production scale, replace naive subscription matching with indexed search and dedicated queueing for notification delivery.
+
+## Browser Push Setup
+
+1. Generate VAPID keys:
+   - `npx web-push generate-vapid-keys`
+2. Add to Vercel env:
+   - `VAPID_PUBLIC_KEY`
+   - `VAPID_PRIVATE_KEY`
+   - `VAPID_SUBJECT` (for example `mailto:you@example.com`)
+3. In UI select `channel=web_push` and save a subscription.

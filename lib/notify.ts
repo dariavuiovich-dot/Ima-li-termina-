@@ -2,7 +2,8 @@ import {
   SlotChange,
   SlotsSnapshot,
   Subscription,
-  UserNotification
+  UserNotification,
+  WebPushSubscriptionData
 } from "@/lib/types";
 import { normalizeForSearch, parseSlotDate, randomId } from "@/lib/utils";
 
@@ -150,6 +151,39 @@ async function sendTelegram(
   });
 }
 
+let webPushConfigured = false;
+
+async function sendWebPush(
+  subscription: WebPushSubscriptionData,
+  notification: UserNotification
+): Promise<void> {
+  const publicKey =
+    process.env.VAPID_PUBLIC_KEY ?? process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+  const privateKey = process.env.VAPID_PRIVATE_KEY;
+  const subject = process.env.VAPID_SUBJECT ?? "mailto:no-reply@example.com";
+  if (!publicKey || !privateKey) return;
+
+  const module = await import("web-push");
+  const webPush = (module.default ?? module) as typeof module.default;
+
+  if (!webPushConfigured) {
+    webPush.setVapidDetails(subject, publicKey, privateKey);
+    webPushConfigured = true;
+  }
+
+  await webPush.sendNotification(
+    subscription as unknown as Parameters<typeof webPush.sendNotification>[0],
+    JSON.stringify({
+      title: notification.title,
+      body: notification.message,
+      data: {
+        id: notification.id,
+        userId: notification.userId
+      }
+    })
+  );
+}
+
 export async function fanoutNotifications(
   subscriptions: Subscription[],
   changes: SlotChange[]
@@ -169,6 +203,9 @@ export async function fanoutNotifications(
         }
         if (sub.channel === "telegram" && sub.telegramChatId) {
           await sendTelegram(sub.telegramChatId, notification);
+        }
+        if (sub.channel === "web_push" && sub.pushSubscription) {
+          await sendWebPush(sub.pushSubscription, notification);
         }
       } catch {
         // Delivery failures are ignored so sync stays resilient.
