@@ -8,7 +8,6 @@ type SlotRow = {
   specialist: string;
   status: "HAS_SLOTS" | "NO_SLOTS";
   firstAvailable: string | null;
-  codes: string[];
   slotKind?: "INVESTIGATION" | "SPECIALIST_VISIT";
 };
 
@@ -51,6 +50,36 @@ export default function HomePage() {
   const [notifications, setNotifications] = useState<NotificationRow[]>([]);
 
   const hasResults = useMemo(() => rows.length > 0, [rows]);
+  const statusLabel = (status: "HAS_SLOTS" | "NO_SLOTS") =>
+    status === "HAS_SLOTS" ? "IMA TERMINA" : "NEMA TERMINA";
+
+  async function readJsonOrThrow(
+    res: Response,
+    fallbackMessage: string
+  ): Promise<any> {
+    const contentType = res.headers.get("content-type") ?? "";
+    const isJson = contentType.includes("application/json");
+
+    if (isJson) {
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data?.error ?? fallbackMessage);
+      }
+      return data;
+    }
+
+    const body = await res.text();
+    const looksLikeHtml =
+      body.trimStart().startsWith("<!DOCTYPE") || body.includes("<html");
+
+    if (looksLikeHtml) {
+      throw new Error(
+        "Server returned HTML error page. Restart localhost server (stop node, remove .next, run npm run dev)."
+      );
+    }
+
+    throw new Error(fallbackMessage);
+  }
 
   async function runSearch(rawQuery: string) {
     setError(null);
@@ -61,8 +90,7 @@ export default function HomePage() {
       qs.set("limit", "50");
 
       const res = await fetch(`/api/slots?${qs.toString()}`);
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error ?? "Failed to load slots");
+      const data = await readJsonOrThrow(res, "Failed to load slots");
 
       setRows(data.items ?? []);
       setRelatedRows(data.relatedItems ?? []);
@@ -70,6 +98,9 @@ export default function HomePage() {
       setSourceUrl(data.sourcePdfUrl ?? null);
       setAnswer(data.answer ?? null);
     } catch (err) {
+      setRows([]);
+      setRelatedRows([]);
+      setAnswer(null);
       setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
       setLoading(false);
@@ -103,11 +134,13 @@ export default function HomePage() {
       headers: { "content-type": "application/json" },
       body: JSON.stringify(payload)
     });
-    const data = await res.json();
-    if (!res.ok) {
-      setSubMessage(data?.error ?? "Subscription failed");
+    try {
+      await readJsonOrThrow(res, "Subscription failed");
+    } catch (err) {
+      setSubMessage(err instanceof Error ? err.message : "Subscription failed");
       return;
     }
+
     setSubMessage("Subscription saved");
     setSubQuery("");
   }
@@ -115,12 +148,13 @@ export default function HomePage() {
   async function loadNotifications() {
     const qs = new URLSearchParams({ userId, limit: "20" });
     const res = await fetch(`/api/notifications?${qs.toString()}`);
-    const data = await res.json();
-    if (!res.ok) {
-      setSubMessage(data?.error ?? "Failed to load notifications");
+    try {
+      const data = await readJsonOrThrow(res, "Failed to load notifications");
+      setNotifications(data.items ?? []);
+    } catch (err) {
+      setSubMessage(err instanceof Error ? err.message : "Failed to load notifications");
       return;
     }
-    setNotifications(data.items ?? []);
   }
 
   return (
@@ -203,11 +237,9 @@ export default function HomePage() {
             <thead>
               <tr>
                 <th>Status</th>
-                <th>First Available</th>
-                <th>Specialist</th>
-                <th>Section</th>
-                <th>Type</th>
-                <th>Codes</th>
+                <th>Prvi dostupni termin</th>
+                <th>Specijalista</th>
+                <th>Organizaciona jedinica</th>
               </tr>
             </thead>
             <tbody>
@@ -223,25 +255,11 @@ export default function HomePage() {
                   }
                 >
                   <td className={row.status === "HAS_SLOTS" ? "status-ok" : "status-no"}>
-                    {row.status}
+                    {statusLabel(row.status)}
                   </td>
                   <td>{row.firstAvailable ?? "-"}</td>
                   <td>{row.specialist}</td>
                   <td>{row.section}</td>
-                  <td>
-                    <span
-                      className={
-                        row.slotKind === "INVESTIGATION"
-                          ? "kind-badge kind-investigation"
-                          : "kind-badge kind-visit"
-                      }
-                    >
-                      {row.slotKind === "INVESTIGATION"
-                        ? "Investigation"
-                        : "Specialist Visit"}
-                    </span>
-                  </td>
-                  <td>{Array.isArray(row.codes) ? row.codes.join(", ") : "-"}</td>
                 </tr>
               ))}
             </tbody>
@@ -255,11 +273,9 @@ export default function HomePage() {
               <thead>
                 <tr>
                   <th>Status</th>
-                  <th>First Available</th>
-                  <th>Specialist</th>
-                  <th>Section</th>
-                  <th>Type</th>
-                  <th>Codes</th>
+                  <th>Prvi dostupni termin</th>
+                  <th>Specijalista</th>
+                  <th>Organizaciona jedinica</th>
                 </tr>
               </thead>
               <tbody>
@@ -275,25 +291,11 @@ export default function HomePage() {
                     }
                   >
                     <td className={row.status === "HAS_SLOTS" ? "status-ok" : "status-no"}>
-                      {row.status}
+                      {statusLabel(row.status)}
                     </td>
                     <td>{row.firstAvailable ?? "-"}</td>
                     <td>{row.specialist}</td>
                     <td>{row.section}</td>
-                    <td>
-                      <span
-                        className={
-                          row.slotKind === "INVESTIGATION"
-                            ? "kind-badge kind-investigation"
-                            : "kind-badge kind-visit"
-                        }
-                      >
-                        {row.slotKind === "INVESTIGATION"
-                          ? "Investigation"
-                          : "Specialist Visit"}
-                      </span>
-                    </td>
-                    <td>{Array.isArray(row.codes) ? row.codes.join(", ") : "-"}</td>
                   </tr>
                 ))}
               </tbody>
