@@ -1,4 +1,5 @@
 import { Redis } from "@upstash/redis";
+import { createClient } from "redis";
 import { SlotsSnapshot, Subscription, UserNotification } from "@/lib/types";
 
 const LATEST_SNAPSHOT_KEY = "kccg:snapshot:latest";
@@ -40,7 +41,82 @@ function createRedisClient(): Redis | null {
   return new Redis({ url, token });
 }
 
-const redis = createRedisClient();
+type RedisMode =
+  | { kind: "upstash"; client: Redis }
+  | { kind: "tcp"; client: ReturnType<typeof createClient>; ready: Promise<unknown> }
+  | null;
+
+function normalizeRedisUrl(raw: string): string {
+  const value = raw.trim();
+  if (!value) return value;
+  if (value.startsWith("redis://") || value.startsWith("rediss://")) return value;
+
+  // Allow plain host:port from Redis Cloud UI.
+  const useTls = process.env.REDIS_TLS !== "false";
+  const protocol = useTls ? "rediss" : "redis";
+  const username = encodeURIComponent(process.env.REDIS_USERNAME ?? "default");
+  const password = process.env.REDIS_PASSWORD
+    ? `:${encodeURIComponent(process.env.REDIS_PASSWORD)}`
+    : "";
+  const auth = `${username}${password}@`;
+  return `${protocol}://${auth}${value}`;
+}
+
+function createRedisMode(): RedisMode {
+  const upstash = createRedisClient();
+  if (upstash) return { kind: "upstash", client: upstash };
+
+  const redisUrl = process.env.REDIS_URL;
+  if (!redisUrl) return null;
+
+  try {
+    const client = createClient({ url: normalizeRedisUrl(redisUrl) });
+    client.on("error", (error) => {
+      console.error("Redis TCP client error:", error);
+    });
+
+    const ready = client.connect();
+    return { kind: "tcp", client, ready };
+  } catch (error) {
+    console.error("Invalid REDIS_URL. Falling back to in-memory storage.", error);
+    return null;
+  }
+}
+
+const redis = createRedisMode();
+
+async function redisGet<T>(key: string): Promise<T | null> {
+  if (!redis) return null;
+
+  if (redis.kind === "upstash") {
+    return (await redis.client.get<T>(key)) ?? null;
+  }
+
+  try {
+    await redis.ready;
+    const value = await redis.client.get(key);
+    if (!value) return null;
+    return JSON.parse(value) as T;
+  } catch {
+    return null;
+  }
+}
+
+async function redisSet<T>(key: string, value: T): Promise<void> {
+  if (!redis) return;
+
+  if (redis.kind === "upstash") {
+    await redis.client.set(key, value);
+    return;
+  }
+
+  try {
+    await redis.ready;
+    await redis.client.set(key, JSON.stringify(value));
+  } catch {
+    // Ignore transient Redis errors and keep app responsive.
+  }
+}
 
 export function usingRedis(): boolean {
   return Boolean(redis);
@@ -48,7 +124,7 @@ export function usingRedis(): boolean {
 
 export async function getLatestSnapshot(): Promise<SlotsSnapshot | null> {
   if (redis) {
-    const value = await redis.get<SlotsSnapshot>(LATEST_SNAPSHOT_KEY);
+    const value = await redisGet<SlotsSnapshot>(LATEST_SNAPSHOT_KEY);
     return value ?? null;
   }
   return getMemoryStore().latestSnapshot;
@@ -56,8 +132,8 @@ export async function getLatestSnapshot(): Promise<SlotsSnapshot | null> {
 
 export async function saveSnapshot(snapshot: SlotsSnapshot): Promise<void> {
   if (redis) {
-    await redis.set(LATEST_SNAPSHOT_KEY, snapshot);
-    await redis.set(`${SNAPSHOT_BY_DATE_PREFIX}${snapshot.sourcePdfDate}`, snapshot);
+    await redisSet(LATEST_SNAPSHOT_KEY, snapshot);
+    await redisSet(`${SNAPSHOT_BY_DATE_PREFIX}${snapshot.sourcePdfDate}`, snapshot);
     return;
   }
 
@@ -68,7 +144,7 @@ export async function saveSnapshot(snapshot: SlotsSnapshot): Promise<void> {
 
 export async function listSubscriptions(userId?: string): Promise<Subscription[]> {
   if (redis) {
-    const value = (await redis.get<Subscription[]>(SUBSCRIPTIONS_KEY)) ?? [];
+    const value = (await redisGet<Subscription[]>(SUBSCRIPTIONS_KEY)) ?? [];
     if (!userId) return value;
     return value.filter((x) => x.userId === userId);
   }
@@ -85,7 +161,7 @@ export async function upsertSubscription(subscription: Subscription): Promise<vo
   else all.push(subscription);
 
   if (redis) {
-    await redis.set(SUBSCRIPTIONS_KEY, all);
+    await redisSet(SUBSCRIPTIONS_KEY, all);
     return;
   }
   getMemoryStore().subscriptions = all;
@@ -106,7 +182,7 @@ export async function disableSubscription(
   all[idx] = updated;
 
   if (redis) {
-    await redis.set(SUBSCRIPTIONS_KEY, all);
+    await redisSet(SUBSCRIPTIONS_KEY, all);
   } else {
     getMemoryStore().subscriptions = all;
   }
@@ -128,9 +204,9 @@ export async function pushNotifications(
 
     for (const [userId, list] of groups.entries()) {
       const key = `${NOTIFICATION_PREFIX}${userId}`;
-      const existing = (await redis.get<UserNotification[]>(key)) ?? [];
+      const existing = (await redisGet<UserNotification[]>(key)) ?? [];
       const merged = [...list, ...existing].slice(0, MAX_NOTIFICATIONS_PER_USER);
-      await redis.set(key, merged);
+      await redisSet(key, merged);
     }
     return;
   }
@@ -152,7 +228,7 @@ export async function getNotifications(
   const safeLimit = Math.max(1, Math.min(limit, 200));
   if (redis) {
     const key = `${NOTIFICATION_PREFIX}${userId}`;
-    const value = (await redis.get<UserNotification[]>(key)) ?? [];
+    const value = (await redisGet<UserNotification[]>(key)) ?? [];
     return value.slice(0, safeLimit);
   }
 

@@ -35,6 +35,7 @@ Required in production:
 - `ADMIN_API_TOKEN`: secures `/api/sync` (optional; falls back to `CRON_SECRET`)
 - `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`
   - or `KV_REST_API_URL` and `KV_REST_API_TOKEN`
+  - or `REDIS_URL` (Redis Cloud integration)
 
 Optional:
 
