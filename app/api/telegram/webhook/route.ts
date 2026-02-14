@@ -21,6 +21,30 @@ type TelegramMessage = {
   from?: { id: number; username?: string; first_name?: string; last_name?: string };
 };
 
+type SlotsApiResponse = {
+  query: string;
+  sourcePdfDate?: string | null;
+  answer?: {
+    kind?: string;
+    status?: "HAS_SLOTS" | "NO_SLOTS";
+    firstAvailable?: string | null;
+    specialist?: string;
+  };
+  items?: Array<{
+    status: "HAS_SLOTS" | "NO_SLOTS";
+    firstAvailable: string | null;
+    specialist: string;
+    section: string;
+  }>;
+  relatedItems?: Array<{
+    status: "HAS_SLOTS" | "NO_SLOTS";
+    firstAvailable: string | null;
+    specialist: string;
+    section: string;
+  }>;
+  total?: number;
+};
+
 async function telegramSendMessage(chatId: number, text: string): Promise<void> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   if (!token) return;
@@ -40,6 +64,59 @@ async function telegramSendMessage(chatId: number, text: string): Promise<void> 
   }
 }
 
+async function fetchSlotsForQuery(req: NextRequest, query: string): Promise<SlotsApiResponse | null> {
+  const origin = new URL(req.url).origin;
+  const url = `${origin}/api/slots?q=${encodeURIComponent(query)}&limit=50`;
+  const res = await fetch(url, {
+    method: "GET",
+    headers: { "content-type": "application/json" },
+    cache: "no-store",
+    next: { revalidate: 0 }
+  });
+  if (!res.ok) return null;
+  const data = (await res.json().catch(() => null)) as SlotsApiResponse | null;
+  return data ?? null;
+}
+
+function formatNowAnswer(query: string, data: SlotsApiResponse): string {
+  const source = data.sourcePdfDate ? `Izvjestaj: ${data.sourcePdfDate}` : null;
+
+  const statusFromAnswer = data.answer?.status;
+  const firstFromAnswer = data.answer?.firstAvailable ?? null;
+  const specialistFromAnswer = data.answer?.specialist ?? null;
+
+  // Prefer explicit answer status when available (endo/cardio/neuro combined logic).
+  if (statusFromAnswer === "HAS_SLOTS") {
+    const first = firstFromAnswer ?? "nepoznato";
+    const line2 = specialistFromAnswer ? `Prvi dostupni termin: ${first} (${specialistFromAnswer})` : `Prvi dostupni termin: ${first}`;
+    return [ "IMA TERMINA", line2, source ].filter(Boolean).join("\n");
+  }
+
+  if (statusFromAnswer === "NO_SLOTS") {
+    return [ "NEMA TERMINA", source ].filter(Boolean).join("\n");
+  }
+
+  const items = Array.isArray(data.items) ? data.items : [];
+  if (!items.length) {
+    return [ `Nijesam nasao rezultate za: ${query}`, source ].filter(Boolean).join("\n");
+  }
+
+  const withSlots = items.filter((x) => x.status === "HAS_SLOTS" && x.firstAvailable);
+  if (withSlots.length) {
+    // Pick the earliest date lexicographically (format is dd.mm.yyyy. hh:mm), so use answer from API if present,
+    // otherwise fall back to simple string sort which is "good enough" for a human summary.
+    const best = [...withSlots].sort((a, b) => String(a.firstAvailable).localeCompare(String(b.firstAvailable)))[0];
+    return [
+      "IMA TERMINA",
+      `Prvi dostupni termin: ${best.firstAvailable} (${best.specialist})`,
+      source,
+      items.length > 1 ? "Ako zelis preciznije, posalji naziv ambulante iz liste na sajtu." : null
+    ].filter(Boolean).join("\n");
+  }
+
+  return [ "NEMA TERMINA", source ].filter(Boolean).join("\n");
+}
+
 function startText(): string {
   return [
     "Ima li terminaaa!?",
@@ -49,8 +126,8 @@ function startText(): string {
     "2) /list (vidi pretplate)",
     "3) /unsub <id> ili /unsuball (odjava)",
     "",
-    "Tip: mozes poslati samo rijec (npr. reumatolog) i racuna se kao /sub.",
-    "Test odmah: /sync"
+    "Provjera: samo posalji rijec (npr. reumatolog).",
+    "Test odmah: /sync (pokreni provjeru sad)"
   ].join("\n");
 }
 
@@ -216,26 +293,45 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true });
     }
 
-    // /sub or plain text -> create a subscription.
-    const query = cmd === "/sub" ? args : text;
-    if (!query.trim()) {
-      await telegramSendMessage(chatId, "Usage: /sub <query>");
+    // /sub -> save subscription + show current status
+    if (cmd === "/sub") {
+      const query = args.trim();
+      if (!query) {
+        await telegramSendMessage(chatId, "Usage: /sub <specijalista>");
+        return NextResponse.json({ ok: true });
+      }
+
+      await telegramSendMessage(chatId, "Treba mi 10 sekundi.");
+      const data = await fetchSlotsForQuery(req, query);
+
+      const now = nowIso();
+      const sub: Subscription = {
+        id: randomId("sub"),
+        userId,
+        query,
+        channel: "telegram",
+        telegramChatId: String(chatId),
+        active: true,
+        createdAt: now,
+        updatedAt: now
+      };
+      await upsertSubscription(sub);
+
+      const statusText = data ? formatNowAnswer(query, data) : `Nijesam uspio da provjerim trenutno stanje za: ${query}`;
+      await telegramSendMessage(chatId, `${statusText}\n\nPretplata sacuvana: ${sub.id}`);
       return NextResponse.json({ ok: true });
     }
 
-    const now = nowIso();
-    const sub: Subscription = {
-      id: randomId("sub"),
-      userId,
-      query: query.trim(),
-      channel: "telegram",
-      telegramChatId: String(chatId),
-      active: true,
-      createdAt: now,
-      updatedAt: now
-    };
-    await upsertSubscription(sub);
-    await telegramSendMessage(chatId, `Saved subscription:\n${sub.id}\nQuery: ${sub.query}`);
+    // Plain text -> check "right now" status (no auto-subscribe).
+    const query = text.trim();
+    await telegramSendMessage(chatId, "Treba mi 10 sekundi.");
+    const data = await fetchSlotsForQuery(req, query);
+    if (!data) {
+      await telegramSendMessage(chatId, `Nijesam uspio da provjerim trenutno stanje za: ${query}`);
+      return NextResponse.json({ ok: true });
+    }
+
+    await telegramSendMessage(chatId, formatNowAnswer(query, data));
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("telegram webhook error:", error);
