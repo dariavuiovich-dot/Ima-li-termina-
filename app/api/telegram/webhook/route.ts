@@ -61,6 +61,17 @@ function normalizeCommand(raw: string): { cmd: string; args: string } {
   return { cmd, args };
 }
 
+export async function GET() {
+  // Simple reachability check for debugging webhook URL.
+  return NextResponse.json({
+    ok: true,
+    vercelEnv: process.env.VERCEL_ENV ?? null,
+    vercelGitCommitSha: process.env.VERCEL_GIT_COMMIT_SHA ?? null,
+    secretConfigured: Boolean(process.env.TELEGRAM_WEBHOOK_SECRET?.trim()),
+    botTokenConfigured: Boolean(process.env.TELEGRAM_BOT_TOKEN?.trim())
+  });
+}
+
 export async function POST(req: NextRequest) {
   const expectedSecret = process.env.TELEGRAM_WEBHOOK_SECRET;
   if (expectedSecret) {
