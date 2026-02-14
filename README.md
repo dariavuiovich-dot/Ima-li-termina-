@@ -85,6 +85,28 @@ Then open `http://localhost:3000`.
    - Header: `Authorization: Bearer <ADMIN_API_TOKEN>`
    - Optional JSON body: `{ "userId": "demo-user", "title": "Test", "message": "Push works" }`
 
+## Telegram Bot Setup (optional)
+
+1. Create a bot via @BotFather and copy the bot token.
+2. Add env vars in Vercel:
+   - `TELEGRAM_BOT_TOKEN`
+   - (recommended) `TELEGRAM_WEBHOOK_SECRET` (any long random string)
+3. Configure webhook:
+
+```powershell
+$botToken = "<TELEGRAM_BOT_TOKEN>"
+$url = "https://ima-li-termina.vercel.app/api/telegram/webhook"
+$secret = "<TELEGRAM_WEBHOOK_SECRET>"
+Invoke-RestMethod -Method Post -Uri "https://api.telegram.org/bot$botToken/setWebhook" -ContentType "application/json" -Body (@{ url=$url; secret_token=$secret } | ConvertTo-Json)
+```
+
+4. Open the bot chat and send `/start`.
+5. Create subscriptions from Telegram:
+   - `/sub reumatolog`
+   - `/list`
+   - `/unsub <id>`
+   - `/unsuball`
+
 ## Install On Phone (PWA)
 
 1. Open deployed app URL in mobile browser (HTTPS).
