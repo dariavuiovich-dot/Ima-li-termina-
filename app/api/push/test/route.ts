@@ -2,9 +2,36 @@ import { hasAdminAccess } from "@/lib/auth";
 import { listSubscriptions } from "@/lib/storage";
 import { NextRequest, NextResponse } from "next/server";
 
+function getBearerToken(value: string | null): string | null {
+  if (!value) return null;
+  const match = value.match(/^Bearer\s+(.+)$/i);
+  return match?.[1]?.trim() ?? null;
+}
+
 export async function POST(req: NextRequest) {
   if (!hasAdminAccess(req)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const expected =
+      (process.env.ADMIN_API_TOKEN ?? process.env.CRON_SECRET)?.trim() ?? "";
+    const auth = req.headers.get("authorization");
+    const bearer = getBearerToken(auth);
+    const direct = req.headers.get("x-admin-token");
+
+    return NextResponse.json(
+      {
+        error: "Unauthorized",
+        vercelEnv: process.env.VERCEL_ENV ?? null,
+        vercelGitCommitSha: process.env.VERCEL_GIT_COMMIT_SHA ?? null,
+        hint: "Provide x-admin-token: <ADMIN_API_TOKEN> or Authorization: Bearer <ADMIN_API_TOKEN>",
+        expectedTokenLength: expected ? expected.length : null,
+        received: {
+          hasAuthorization: !!auth,
+          authorizationLength: auth ? auth.length : null,
+          bearerLength: bearer ? bearer.length : null,
+          xAdminTokenLength: direct ? direct.trim().length : null
+        }
+      },
+      { status: 401 }
+    );
   }
 
   try {

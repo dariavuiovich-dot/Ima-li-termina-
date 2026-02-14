@@ -29,6 +29,10 @@ export async function GET() {
     storage: usingRedis() ? "upstash-redis" : "in-memory",
     now: new Date().toISOString(),
     vercelEnv: process.env.VERCEL_ENV ?? null,
+    vercelGit: {
+      commitSha: process.env.VERCEL_GIT_COMMIT_SHA ?? null,
+      commitRef: process.env.VERCEL_GIT_COMMIT_REF ?? null
+    },
     adminAuth: {
       adminTokenConfigured: !!adminRaw,
       adminTokenRawLength: adminRaw ? adminRaw.trim().length : null,
