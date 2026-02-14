@@ -89,7 +89,12 @@ async function redisGet<T>(key: string): Promise<T | null> {
   if (!redis) return null;
 
   if (redis.kind === "upstash") {
-    return (await redis.client.get<T>(key)) ?? null;
+    try {
+      return (await redis.client.get<T>(key)) ?? null;
+    } catch (error) {
+      console.error("Upstash redis get error:", error);
+      return null;
+    }
   }
 
   try {
@@ -106,7 +111,11 @@ async function redisSet<T>(key: string, value: T): Promise<void> {
   if (!redis) return;
 
   if (redis.kind === "upstash") {
-    await redis.client.set(key, value);
+    try {
+      await redis.client.set(key, value);
+    } catch (error) {
+      console.error("Upstash redis set error:", error);
+    }
     return;
   }
 
