@@ -40,22 +40,23 @@ async function telegramSendMessage(chatId: number, text: string): Promise<void> 
   }
 }
 
-function helpText(): string {
+function startText(): string {
   return [
-    "Ima li terminaaa!? (Telegram bot)",
+    "Ima li terminaaa!?",
     "",
-    "Commands:",
-    "/start - show this help",
-    "/id - show your chat id",
-    "/test - send a test message",
-    "/sync - run sync now (fetch latest KCCG PDF and send notifications)",
-    "/sub <query> - subscribe to updates (example: /sub reumatolog)",
-    "/list - list your subscriptions",
-    "/unsub <id> - disable subscription by id",
-    "/unsuball - disable all subscriptions",
+    "Kako da dobijas obavjestenja:",
+    "1) /sub <specijalista> (npr. /sub reumatolog)",
+    "2) /list (vidi pretplate)",
+    "3) /unsub <id> ili /unsuball (odjava)",
     "",
-    "Tip: you can also just send a word (example: reumatolog) and it will be treated as /sub."
+    "Tip: mozes poslati samo rijec (npr. reumatolog) i racuna se kao /sub.",
+    "Test odmah: /sync"
   ].join("\n");
+}
+
+function helpText(): string {
+  // Keep it short (same as /start) to reduce confusion for non-technical users.
+  return startText();
 }
 
 function normalizeCommand(raw: string): { cmd: string; args: string } {
@@ -134,7 +135,12 @@ export async function POST(req: NextRequest) {
   const { cmd, args } = normalizeCommand(text);
 
   try {
-    if (cmd === "/start" || cmd === "/help") {
+    if (cmd === "/start") {
+      await telegramSendMessage(chatId, startText());
+      return NextResponse.json({ ok: true });
+    }
+
+    if (cmd === "/help") {
       await telegramSendMessage(chatId, helpText());
       return NextResponse.json({ ok: true });
     }
