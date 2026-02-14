@@ -1,4 +1,9 @@
-import { disableSubscription, listSubscriptions, upsertSubscription } from "@/lib/storage";
+import {
+  disableSubscription,
+  listSubscriptions,
+  setDebugValue,
+  upsertSubscription
+} from "@/lib/storage";
 import { runDailySync } from "@/lib/sync";
 import { Subscription } from "@/lib/types";
 import { nowIso, randomId } from "@/lib/utils";
@@ -20,14 +25,19 @@ async function telegramSendMessage(chatId: number, text: string): Promise<void> 
   const token = process.env.TELEGRAM_BOT_TOKEN;
   if (!token) return;
 
-  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text
-    })
-  });
+  try {
+    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text
+      })
+    });
+  } catch (error) {
+    console.error("telegram sendMessage failed:", error);
+    // Don't throw; webhook must stay fast and always 200 OK.
+  }
 }
 
 function helpText(): string {
@@ -81,10 +91,39 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  const update = (await req.json().catch(() => null)) as TelegramUpdate | null;
+  const receivedAt = nowIso();
+  const raw = await req.text().catch(() => "");
+
+  let update: TelegramUpdate | null = null;
+  let parseError: string | null = null;
+  try {
+    update = (raw ? (JSON.parse(raw) as TelegramUpdate) : null) ?? null;
+  } catch (error) {
+    parseError = error instanceof Error ? error.message : String(error);
+  }
+
   const msg = update?.message;
   const text = String(msg?.text ?? "").trim();
   const chatId = msg?.chat?.id;
+
+  // Save last update for debugging "bot is silent" situations.
+  await setDebugValue("telegram:last", {
+    receivedAt,
+    parseOk: Boolean(update),
+    parseError,
+    rawLength: raw.length,
+    updateId: update?.update_id ?? null,
+    chatId: chatId ?? null,
+    text: text || null,
+    from: msg?.from
+      ? {
+          id: msg.from.id,
+          username: msg.from.username ?? null,
+          first_name: msg.from.first_name ?? null,
+          last_name: msg.from.last_name ?? null
+        }
+      : null
+  });
 
   if (!chatId || !text) {
     // Telegram expects 200 OK for webhooks even if we ignore the update.

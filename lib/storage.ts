@@ -7,12 +7,14 @@ const SNAPSHOT_BY_DATE_PREFIX = "kccg:snapshot:date:";
 const SUBSCRIPTIONS_KEY = "kccg:subscriptions";
 const NOTIFICATION_PREFIX = "kccg:notifications:user:";
 const MAX_NOTIFICATIONS_PER_USER = 200;
+const DEBUG_PREFIX = "kccg:debug:";
 
 type MemoryStore = {
   latestSnapshot: SlotsSnapshot | null;
   snapshotsByDate: Record<string, SlotsSnapshot>;
   subscriptions: Subscription[];
   notificationsByUser: Record<string, UserNotification[]>;
+  debugByKey: Record<string, unknown>;
 };
 
 declare global {
@@ -26,7 +28,8 @@ function getMemoryStore(): MemoryStore {
       latestSnapshot: null,
       snapshotsByDate: {},
       subscriptions: [],
-      notificationsByUser: {}
+      notificationsByUser: {},
+      debugByKey: {}
     };
   }
   return globalThis.__kccgMemoryStore;
@@ -242,4 +245,21 @@ export async function getNotifications(
   }
 
   return (getMemoryStore().notificationsByUser[userId] ?? []).slice(0, safeLimit);
+}
+
+export async function setDebugValue(key: string, value: unknown): Promise<void> {
+  const k = `${DEBUG_PREFIX}${key}`;
+  if (redis) {
+    await redisSet(k, value);
+    return;
+  }
+  getMemoryStore().debugByKey[k] = value;
+}
+
+export async function getDebugValue<T>(key: string): Promise<T | null> {
+  const k = `${DEBUG_PREFIX}${key}`;
+  if (redis) {
+    return (await redisGet<T>(k)) ?? null;
+  }
+  return (getMemoryStore().debugByKey[k] as T | null) ?? null;
 }
