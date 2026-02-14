@@ -1,4 +1,5 @@
 import { disableSubscription, listSubscriptions, upsertSubscription } from "@/lib/storage";
+import { runDailySync } from "@/lib/sync";
 import { Subscription } from "@/lib/types";
 import { nowIso, randomId } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
@@ -36,6 +37,8 @@ function helpText(): string {
     "Commands:",
     "/start - show this help",
     "/id - show your chat id",
+    "/test - send a test message",
+    "/sync - run sync now (fetch latest KCCG PDF and send notifications)",
     "/sub <query> - subscribe to updates (example: /sub reumatolog)",
     "/list - list your subscriptions",
     "/unsub <id> - disable subscription by id",
@@ -83,6 +86,29 @@ export async function POST(req: NextRequest) {
   try {
     if (cmd === "/start" || cmd === "/help") {
       await telegramSendMessage(chatId, helpText());
+      return NextResponse.json({ ok: true });
+    }
+
+    if (cmd === "/test") {
+      await telegramSendMessage(chatId, "OK. Bot is alive.");
+      return NextResponse.json({ ok: true });
+    }
+
+    if (cmd === "/sync") {
+      await telegramSendMessage(chatId, "Running sync... (this can take ~10-30s)");
+      const result = await runDailySync("telegram");
+      await telegramSendMessage(
+        chatId,
+        result.ok
+          ? [
+              "Sync done.",
+              `sourcePdfDate: ${result.sourcePdfDate ?? "-"}`,
+              `changes: ${result.changesCount}`,
+              `notifications: ${result.notificationsCount}`,
+              result.skipped ? `skipped: yes (${result.reason ?? "no changes"})` : "skipped: no"
+            ].join("\n")
+          : `Sync failed: ${result.reason ?? "unknown error"}`
+      );
       return NextResponse.json({ ok: true });
     }
 
@@ -165,4 +191,3 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 }
-

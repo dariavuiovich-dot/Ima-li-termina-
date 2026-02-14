@@ -4,3 +4,7 @@ node_modules
 .env.local
 .vercel
 *.log
+
+# local-only notes
+private_notes/
+
