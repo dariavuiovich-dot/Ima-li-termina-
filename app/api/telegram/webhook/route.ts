@@ -95,7 +95,8 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
   const statusLabel = (s: "HAS_SLOTS" | "NO_SLOTS") => (s === "HAS_SLOTS" ? "IMA TERMINA" : "NEMA TERMINA");
   const fmtRow = (x: { status: "HAS_SLOTS" | "NO_SLOTS"; firstAvailable: string | null; specialist: string; section: string }) =>
     `- ${statusLabel(x.status)} | ${x.firstAvailable ?? "-"} | ${x.specialist} (${x.section})`;
-  const primaryListLabel = isOct ? "OCT:" : "CT:";
+  const primaryListLabel =
+    isOct ? "OCT:" : isCt ? `${data.answer?.specialist ?? "CT"}:` : "Rezultati:";
   const relatedListLabel = data.relatedTitle ? `${data.relatedTitle}:` : "Related:";
 
   // Prefer explicit answer status when available (endo/cardio/neuro combined logic).

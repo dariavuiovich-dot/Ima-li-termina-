@@ -302,6 +302,23 @@ function containsCtNeuroIntent(query: string): boolean {
   );
 }
 
+function containsCtBodyIntent(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  if (!q.includes("ct")) return false;
+
+  // Exclude other CT subtypes.
+  if (/(angio|neuro|koronograf|kolonoskop|kolono|msk)/.test(q)) return false;
+
+  // Abdomen / pelvis / chest / adrenal / urography keywords.
+  return (
+    /\bbody\b/.test(q) ||
+    /(abdom|abdomena|karlic|male karlic|pelv)/.test(q) ||
+    /(nadbubrez|adrenal)/.test(q) ||
+    /(thorax|thorak|toraks|toraksa|toraxa|grud|pluc)/.test(q) ||
+    /(urograf|urografija|urotrakt|urotrakta|uro)/.test(q)
+  );
+}
+
 function containsUltrasoundQuery(query: string): boolean {
   const q = normalizeQueryLatin(query);
   const tokens = q.split(/\s+/).filter(Boolean);
@@ -320,6 +337,15 @@ function isUltrasoundItem(item: ApiSlotItem): boolean {
   if (/(^|\\s)uzv($|\\s)/.test(text)) return true;
   if (/(^|\\s)uz($|\\s)/.test(text)) return true;
   return false;
+}
+
+function isCtNeuroItem(item: ApiSlotItem): boolean {
+  return normalizeForSearch(item.specialist).includes("ct neuro");
+}
+
+function isCtBodyItem(item: ApiSlotItem): boolean {
+  const sp = normalizeForSearch(item.specialist);
+  return sp.includes("ct body") || sp.includes("urograf") || sp.includes("urotrakt") || sp.includes("ct uro");
 }
 
 function createCombinedInvestigationAnswer(
@@ -856,18 +882,22 @@ export async function GET(req: NextRequest) {
       forcedAnswer = createCombinedInvestigationAnswer("OCT", octItems);
     } else if (ctIntent) {
       const ctNeuroIntent = containsCtNeuroIntent(q);
+      const ctBodyIntent = !ctNeuroIntent && containsCtBodyIntent(q);
 
-      if (ctNeuroIntent) {
-        // For CT neuro intent, ignore extra words (mozga/glave/kicme/etc) and show CT NEURO 1/2.
+      if (ctNeuroIntent || ctBodyIntent) {
+        // For CT subtype intents, ignore extra words (mozga/abdomena/toraksa/etc) and show the matching CT subgroup.
         const ctUniverse = sortByStatusAndDate(visibleItems.filter(isCtItem));
-        const neuro = ctUniverse.filter((x) =>
-          normalizeForSearch(x.specialist).includes("ct neuro")
-        );
 
-        items = neuro;
-        forcedAnswer = createCombinedInvestigationAnswer("CT NEURO", neuro);
+        const primary = ctNeuroIntent
+          ? ctUniverse.filter(isCtNeuroItem)
+          : ctUniverse.filter(isCtBodyItem);
 
-        relatedItems = sortByStatusAndDate(ctUniverse.filter((x) => !neuro.includes(x)));
+        const label = ctNeuroIntent ? "CT NEURO" : "CT BODY";
+
+        items = primary;
+        forcedAnswer = createCombinedInvestigationAnswer(label, primary);
+
+        relatedItems = sortByStatusAndDate(ctUniverse.filter((x) => !primary.includes(x)));
         relatedTitle = relatedItems.length ? "Ostali CT" : null;
       } else {
         const ctItems = sortByStatusAndDate(
