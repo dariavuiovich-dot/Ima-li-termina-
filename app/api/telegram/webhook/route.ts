@@ -36,12 +36,16 @@ type SlotsApiResponse = {
     firstAvailable: string | null;
     specialist: string;
     section: string;
+    note?: string;
+    noteUrl?: string;
   }>;
   relatedItems?: Array<{
     status: "HAS_SLOTS" | "NO_SLOTS";
     firstAvailable: string | null;
     specialist: string;
     section: string;
+    note?: string;
+    noteUrl?: string;
   }>;
   total?: number;
 };
@@ -89,13 +93,18 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
   const upperTokens = (value: string) =>
     (value.toUpperCase().match(/[A-Z0-9]+/g) ?? []).filter(Boolean);
   const qTokens = upperTokens(query);
-  const isCt = qTokens.includes("CT") && !qTokens.includes("OCT");
+  const isCt = (qTokens.includes("CT") || qTokens.includes("MSCT")) && !qTokens.includes("OCT");
   const isOct = qTokens.includes("OCT");
   const isOnko = qTokens.some((t) => t.startsWith("ONKO") || t.startsWith("ONKOL")) || qTokens.includes("HEMOTERAPIJA") || qTokens.includes("RADIOTERAPIJA");
 
   const statusLabel = (s: "HAS_SLOTS" | "NO_SLOTS") => (s === "HAS_SLOTS" ? "IMA TERMINA" : "NEMA TERMINA");
-  const fmtRow = (x: { status: "HAS_SLOTS" | "NO_SLOTS"; firstAvailable: string | null; specialist: string; section: string }) =>
-    `- ${statusLabel(x.status)} | ${x.firstAvailable ?? "-"} | ${x.specialist} (${x.section})`;
+  const fmtRow = (x: { status: "HAS_SLOTS" | "NO_SLOTS"; firstAvailable: string | null; specialist: string; section: string; note?: string; noteUrl?: string }) => {
+    const base = `- ${statusLabel(x.status)} | ${x.firstAvailable ?? "-"} | ${x.specialist} (${x.section})`;
+    if (!x.note) return base;
+    const noteLine = `  Napomena: ${x.note}`;
+    const urlLine = x.noteUrl ? `  ${x.noteUrl}` : null;
+    return [base, noteLine, urlLine].filter(Boolean).join("\n");
+  };
   const primaryListLabel =
     isOct
       ? "OCT:"

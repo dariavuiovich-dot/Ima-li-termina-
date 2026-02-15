@@ -9,6 +9,8 @@ type SlotRow = {
   status: "HAS_SLOTS" | "NO_SLOTS";
   firstAvailable: string | null;
   slotKind?: "INVESTIGATION" | "SPECIALIST_VISIT";
+  note?: string;
+  noteUrl?: string;
 };
 
 type NotificationRow = {
@@ -314,7 +316,22 @@ export default function HomePage() {
                     {statusLabel(row.status)}
                   </td>
                   <td>{row.firstAvailable ?? "-"}</td>
-                  <td>{row.specialist}</td>
+                  <td>
+                    <div>{row.specialist}</div>
+                    {row.note ? (
+                      <div className="note">
+                        <span>{row.note}</span>
+                        {row.noteUrl ? (
+                          <>
+                            {" "}
+                            <a href={row.noteUrl} target="_blank" rel="noreferrer">
+                              (detalji)
+                            </a>
+                          </>
+                        ) : null}
+                      </div>
+                    ) : null}
+                  </td>
                   <td>{row.section}</td>
                 </tr>
               ))}
@@ -350,7 +367,22 @@ export default function HomePage() {
                       {statusLabel(row.status)}
                     </td>
                     <td>{row.firstAvailable ?? "-"}</td>
-                    <td>{row.specialist}</td>
+                    <td>
+                      <div>{row.specialist}</div>
+                      {row.note ? (
+                        <div className="note">
+                          <span>{row.note}</span>
+                          {row.noteUrl ? (
+                            <>
+                              {" "}
+                              <a href={row.noteUrl} target="_blank" rel="noreferrer">
+                                (detalji)
+                              </a>
+                            </>
+                          ) : null}
+                        </div>
+                      ) : null}
+                    </td>
                     <td>{row.section}</td>
                   </tr>
                 ))}

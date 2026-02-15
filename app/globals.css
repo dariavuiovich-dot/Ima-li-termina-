@@ -120,6 +120,18 @@ td {
   font-size: 13px;
 }
 
+.note {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.25;
+}
+
+.note a {
+  color: inherit;
+  text-decoration: underline;
+}
+
 .answer-banner {
   margin: 0 0 12px;
   padding: 10px 12px;

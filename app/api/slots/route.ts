@@ -11,6 +11,8 @@ type ApiSlotItem = {
   firstAvailable: string | null;
   codes: string[];
   slotKind: "INVESTIGATION" | "SPECIALIST_VISIT";
+  note?: string;
+  noteUrl?: string;
 };
 
 type NarrowSuggestion = {
@@ -255,7 +257,7 @@ function upperTokens(value: string): string[] {
 
 function isCtItem(item: ApiSlotItem): boolean {
   const tokens = upperTokens(`${item.specialist} ${item.section}`);
-  return tokens.includes("CT");
+  return tokens.includes("CT") || tokens.includes("MSCT");
 }
 
 function isOctItem(item: ApiSlotItem): boolean {
@@ -271,7 +273,13 @@ function isOphthalmologyClinic(item: ApiSlotItem): boolean {
 function containsCtQuery(query: string): boolean {
   const q = normalizeQueryLatin(query);
   const tokens = q.split(/\s+/).filter(Boolean);
-  return tokens.includes("ct");
+  return tokens.includes("ct") || tokens.includes("msct");
+}
+
+function containsCtAngioIntent(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  if (!(q.includes("ct") || q.includes("msct"))) return false;
+  return /(angio|angiograf)/.test(q);
 }
 
 function containsOctQuery(query: string): boolean {
@@ -288,7 +296,7 @@ function isOnlyCtQuery(query: string): boolean {
 
 function containsCtNeuroIntent(query: string): boolean {
   const q = normalizeQueryLatin(query);
-  if (!q.includes("ct")) return false;
+  if (!(q.includes("ct") || q.includes("msct"))) return false;
 
   // Do not treat CT angio/body/etc as "CT neuro" just because it contains "glave".
   if (/(angio|body|koronograf|kolonoskop|kolono|msk)/.test(q)) return false;
@@ -304,7 +312,7 @@ function containsCtNeuroIntent(query: string): boolean {
 
 function containsCtBodyIntent(query: string): boolean {
   const q = normalizeQueryLatin(query);
-  if (!q.includes("ct")) return false;
+  if (!(q.includes("ct") || q.includes("msct"))) return false;
 
   // Exclude other CT subtypes.
   if (/(angio|neuro|koronograf|kolonoskop|kolono|msk)/.test(q)) return false;
@@ -346,6 +354,28 @@ function isCtNeuroItem(item: ApiSlotItem): boolean {
 function isCtBodyItem(item: ApiSlotItem): boolean {
   const sp = normalizeForSearch(item.specialist);
   return sp.includes("ct body") || sp.includes("urograf") || sp.includes("urotrakt") || sp.includes("ct uro");
+}
+
+function isCtAngioItem(item: ApiSlotItem): boolean {
+  const sp = normalizeForSearch(item.specialist);
+  return sp.includes("ct angio") || sp.includes("angiograf");
+}
+
+function getItemNote(item: Pick<ApiSlotItem, "specialist" | "section">): { note: string; noteUrl?: string } | null {
+  const sp = normalizeForSearch(item.specialist);
+  // MSCT/CT coronarography needs cardiology council approval.
+  if (sp.includes("koronograf") || sp.includes("koronarograf")) {
+    return {
+      note: [
+        "Potrebno odobrenje Konzilijuma kardiologa.",
+        "Lokacija: Poliklinika KCCG - Kardioloska ambulanta (prizemlje).",
+        "Konzilijum: svake srijede u 12h. Dokumentacija: 8-9h.",
+        "Prisustvo pacijenta je obavezno."
+      ].join(" "),
+      noteUrl: "https://www.kccg.me/poliklinika/poliklinika-kccg/"
+    };
+  }
+  return null;
 }
 
 function createCombinedInvestigationAnswer(
@@ -940,7 +970,8 @@ export async function GET(req: NextRequest) {
       slotKind: detectSlotKind({
         section: item.section,
         specialist: item.specialist
-      })
+      }),
+      ...(getItemNote({ specialist: item.specialist, section: item.section }) ?? {})
     }));
 
     const searchableItems = childIntent
@@ -988,18 +1019,21 @@ export async function GET(req: NextRequest) {
       items = octItems;
       forcedAnswer = createCombinedInvestigationAnswer("OCT", octItems);
     } else if (ctIntent) {
+      const ctAngioIntent = containsCtAngioIntent(q);
       const ctNeuroIntent = containsCtNeuroIntent(q);
-      const ctBodyIntent = !ctNeuroIntent && containsCtBodyIntent(q);
+      const ctBodyIntent = !ctAngioIntent && !ctNeuroIntent && containsCtBodyIntent(q);
 
-      if (ctNeuroIntent || ctBodyIntent) {
+      if (ctAngioIntent || ctNeuroIntent || ctBodyIntent) {
         // For CT subtype intents, ignore extra words (mozga/abdomena/toraksa/etc) and show the matching CT subgroup.
         const ctUniverse = sortByStatusAndDate(visibleItems.filter(isCtItem));
 
-        const primary = ctNeuroIntent
-          ? ctUniverse.filter(isCtNeuroItem)
-          : ctUniverse.filter(isCtBodyItem);
+        const primary = ctAngioIntent
+          ? ctUniverse.filter(isCtAngioItem)
+          : ctNeuroIntent
+            ? ctUniverse.filter(isCtNeuroItem)
+            : ctUniverse.filter(isCtBodyItem);
 
-        const label = ctNeuroIntent ? "CT NEURO" : "CT BODY";
+        const label = ctAngioIntent ? "CT ANGIOGRAFIJA" : ctNeuroIntent ? "CT NEURO" : "CT BODY";
 
         items = primary;
         forcedAnswer = createCombinedInvestigationAnswer(label, primary);
