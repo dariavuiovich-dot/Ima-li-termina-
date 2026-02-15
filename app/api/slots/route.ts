@@ -286,6 +286,19 @@ function isOnlyCtQuery(query: string): boolean {
   return tokens.length === 1 && tokens[0] === "ct";
 }
 
+function containsCtNeuroIntent(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  if (!q.includes("ct")) return false;
+
+  // Common ways users describe "CT neuro" (head/brain/skull/spine).
+  return (
+    /(mozg|mozga|glav|endokran|endokranij|endocran|encephal|cerebr)/.test(q) ||
+    /(kicm|kicme|kicma|cervikal|cervik|vratn|torakal|lumbosakral|lumbal|ls\b|th\b|\bc\b|krst|krsta)/.test(
+      q
+    )
+  );
+}
+
 function containsUltrasoundQuery(query: string): boolean {
   const q = normalizeQueryLatin(query);
   const tokens = q.split(/\s+/).filter(Boolean);
@@ -844,8 +857,22 @@ export async function GET(req: NextRequest) {
           .filter(isCtItem)
           .filter((item) => looseTextMatch(`${item.specialist} ${item.section}`, q))
       );
-      items = ctItems;
-      forcedAnswer = createCombinedInvestigationAnswer("CT", ctItems);
+      let primaryCtItems = ctItems;
+      let primaryLabel = "CT";
+
+      // If user intent clearly points to "CT neuro", narrow to CT NEURO 1/2.
+      if (containsCtNeuroIntent(q)) {
+        const neuro = ctItems.filter((x) => normalizeForSearch(x.specialist).includes("ct neuro"));
+        if (neuro.length) {
+          primaryCtItems = neuro;
+          primaryLabel = "CT NEURO";
+          relatedItems = sortByStatusAndDate(ctItems.filter((x) => !neuro.includes(x)));
+          relatedTitle = relatedItems.length ? "Ostali CT" : null;
+        }
+      }
+
+      items = primaryCtItems;
+      forcedAnswer = createCombinedInvestigationAnswer(primaryLabel, primaryCtItems);
 
       if (isOnlyCtQuery(q)) {
         relatedItems = sortByStatusAndDate(
