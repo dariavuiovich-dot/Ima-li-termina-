@@ -91,12 +91,19 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
   const qTokens = upperTokens(query);
   const isCt = qTokens.includes("CT") && !qTokens.includes("OCT");
   const isOct = qTokens.includes("OCT");
+  const isOnko = qTokens.some((t) => t.startsWith("ONKO") || t.startsWith("ONKOL")) || qTokens.includes("HEMOTERAPIJA") || qTokens.includes("RADIOTERAPIJA");
 
   const statusLabel = (s: "HAS_SLOTS" | "NO_SLOTS") => (s === "HAS_SLOTS" ? "IMA TERMINA" : "NEMA TERMINA");
   const fmtRow = (x: { status: "HAS_SLOTS" | "NO_SLOTS"; firstAvailable: string | null; specialist: string; section: string }) =>
     `- ${statusLabel(x.status)} | ${x.firstAvailable ?? "-"} | ${x.specialist} (${x.section})`;
   const primaryListLabel =
-    isOct ? "OCT:" : isCt ? `${data.answer?.specialist ?? "CT"}:` : "Rezultati:";
+    isOct
+      ? "OCT:"
+      : isCt
+        ? `${data.answer?.specialist ?? "CT"}:`
+        : isOnko
+          ? "ONKOLOGIJA:"
+          : "Rezultati:";
   const relatedListLabel = data.relatedTitle ? `${data.relatedTitle}:` : "Related:";
 
   // Prefer explicit answer status when available (endo/cardio/neuro combined logic).
@@ -105,7 +112,7 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
     const line2 = specialistFromAnswer ? `Prvi dostupni termin: ${first} (${specialistFromAnswer})` : `Prvi dostupni termin: ${first}`;
     const header = [ "IMA TERMINA", line2, source ].filter(Boolean).join("\n");
 
-    if (isCt || isOct) {
+    if (isCt || isOct || isOnko) {
       const items = Array.isArray(data.items) ? data.items : [];
       const related = Array.isArray(data.relatedItems) ? data.relatedItems : [];
       const lines = items.slice(0, 25).map(fmtRow);
@@ -124,7 +131,7 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
   if (statusFromAnswer === "NO_SLOTS") {
     const header = [ "NEMA TERMINA", source ].filter(Boolean).join("\n");
 
-    if (isCt || isOct) {
+    if (isCt || isOct || isOnko) {
       const items = Array.isArray(data.items) ? data.items : [];
       const related = Array.isArray(data.relatedItems) ? data.relatedItems : [];
       const lines = items.slice(0, 25).map(fmtRow);
@@ -154,7 +161,7 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
       source
     ].filter(Boolean).join("\n");
 
-    if (isCt || isOct) {
+    if (isCt || isOct || isOnko) {
       const related = Array.isArray(data.relatedItems) ? data.relatedItems : [];
       const lines = items.slice(0, 25).map(fmtRow);
       const relLines = related.slice(0, 25).map(fmtRow);

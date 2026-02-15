@@ -450,6 +450,13 @@ function containsCardiologyIntent(query: string): boolean {
   return /(kardiolog|cardiolog|kardiolo|cardiolo|kardiologija|kardio)/.test(q);
 }
 
+function containsOncologyIntent(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  return /(onko|onkolog|onkolo|hemoterap|radioterap|brahi|brahio|brachy|citostat|citostatik)/.test(
+    q
+  );
+}
+
 function hasInvestigationIntent(query: string): boolean {
   const q = normalizeQueryLatin(query);
   return /(ct|mr|mri|mrt|eeg|emng|echo|eho|dopler|doppler|gastroskop|kolono|uz|ultrazv|ultrzv|ultrazvuc|dijagnost|kabinet|test|dxa|dexa|dex|denzitomet|densitomet|osteodenzito|gustina kost)/.test(
@@ -504,6 +511,68 @@ function isCardiologyUniverseItem(item: ApiSlotItem): boolean {
 
   if (section.includes("klinika za bolesti srca")) return true;
   return specialist.includes("kardio") || specialist.includes("kardiol");
+}
+
+function isOncologyUniverseItem(item: ApiSlotItem): boolean {
+  const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
+  if (/(onko|onkolog|onkolo)/.test(combined)) return true;
+  if (/(hemoterap|radioterap|brahi|brahio|brachy|citostat)/.test(combined)) return true;
+  // Catch CT/MR "onkološki" naming.
+  if ((combined.includes("ct") || combined.includes("mr")) && /onkol/.test(combined)) return true;
+  return false;
+}
+
+function rankOncologyPrimary(item: ApiSlotItem): number {
+  const sp = normalizeForSearch(item.specialist);
+
+  // 1) ambulanta za hemoterapiju 1-5 + interventna
+  if (sp.includes("ambulanta") && sp.includes("hemoterap")) {
+    const upper = item.specialist.toUpperCase();
+    if (upper.includes("INTERVENT")) return 160;
+    if (/\b1\b|\bI\b/.test(upper)) return 110;
+    if (/\b2\b|\bII\b/.test(upper)) return 120;
+    if (/\b3\b|\bIII\b/.test(upper)) return 130;
+    if (/\b4\b|\bIV\b/.test(upper)) return 140;
+    if (/\b5\b|\bV\b/.test(upper)) return 150;
+    return 155;
+  }
+
+  // 2) ambulanta za radioterapiju 1-2
+  if (sp.includes("ambulanta") && sp.includes("radioterap")) {
+    const upper = item.specialist.toUpperCase();
+    if (/\b1\b|\bI\b/.test(upper)) return 210;
+    if (/\b2\b|\bII\b/.test(upper)) return 220;
+    return 230;
+  }
+
+  // 3) brahio, CT onko, MR onko 1/2
+  if (/(brahi|brahio|brachy)/.test(sp)) return 310;
+  if (sp.includes("ct") && /onkol/.test(sp)) return 320;
+  if (sp.includes("mr") && /onkol/.test(sp)) {
+    const upper = item.specialist.toUpperCase();
+    if (/\b1\b|\bI\b/.test(upper)) return 330;
+    if (/\b2\b|\bII\b/.test(upper)) return 340;
+    return 345;
+  }
+
+  return 999;
+}
+
+function isOncologyPrimaryItem(item: ApiSlotItem): boolean {
+  return rankOncologyPrimary(item) < 999;
+}
+
+function sortOncologyOrdered(items: ApiSlotItem[]): ApiSlotItem[] {
+  return [...items].sort((a, b) => {
+    const ra = rankOncologyPrimary(a);
+    const rb = rankOncologyPrimary(b);
+    if (ra !== rb) return ra - rb;
+    if (a.status !== b.status) return a.status === "HAS_SLOTS" ? -1 : 1;
+    const da = parseSlotDate(a.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    const db = parseSlotDate(b.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    if (da !== db) return da - db;
+    return a.specialist.localeCompare(b.specialist);
+  });
 }
 
 function sortByStatusAndDate(items: ApiSlotItem[]): ApiSlotItem[] {
@@ -774,6 +843,33 @@ function createCardiologyCombinedAnswer(primary: ApiSlotItem[]): SlotAnswer {
   };
 }
 
+function createOncologyCombinedAnswer(primary: ApiSlotItem[]): SlotAnswer {
+  const hasSlots = primary.some((item) => item.status === "HAS_SLOTS");
+  if (!hasSlots) {
+    return {
+      kind: "single",
+      text: "NEMA TERMINA",
+      specialist: "ONKOLOGIJA",
+      section: "",
+      status: "NO_SLOTS",
+      firstAvailable: null,
+      bannerTone: "danger"
+    };
+  }
+
+  // Keep "order intent" first, but the earliest available is still what matters for the banner.
+  const best = sortByStatusAndDate(primary.filter((x) => x.status === "HAS_SLOTS"))[0];
+  return {
+    kind: "single",
+    text: `IMA TERMINA\nPrvi dostupni termin: ${best.firstAvailable ?? "nepoznato"} (${best.specialist})`,
+    specialist: "ONKOLOGIJA",
+    section: best.section,
+    status: "HAS_SLOTS",
+    firstAvailable: best.firstAvailable,
+    bannerTone: "success"
+  };
+}
+
 function buildAnswer(
   query: string,
   items: ApiSlotItem[],
@@ -826,6 +922,7 @@ export async function GET(req: NextRequest) {
     const ctIntent = containsCtQuery(q) && !containsOctQuery(q);
     const octIntent = containsOctQuery(q);
     const ultrasoundIntent = containsUltrasoundQuery(q) && !ctIntent && !octIntent;
+    const oncologyIntent = containsOncologyIntent(q);
 
     let snapshot = await getLatestSnapshot();
     if (!snapshot) {
@@ -872,7 +969,17 @@ export async function GET(req: NextRequest) {
     // - CT: show only CT items (radiology), but also show OCT from Ophthalmology clinic as related.
     // - OCT: show only OCT items (do not mix CT radiology).
     // - Ultrasound/Doppler: restrict to UZ/UZV/ultrazv/dopler items to avoid matching all radiology diagnostics.
-    if (octIntent) {
+    // - Oncology: show chemo->radio->(brahio/CT onko/MR onko) order.
+    if (oncologyIntent) {
+      const universe = sortByStatusAndDate(visibleItems.filter(isOncologyUniverseItem));
+      const primary = sortOncologyOrdered(universe.filter(isOncologyPrimaryItem));
+      const related = sortByStatusAndDate(universe.filter((x) => !isOncologyPrimaryItem(x)));
+
+      items = primary;
+      forcedAnswer = createOncologyCombinedAnswer(primary);
+      relatedItems = related;
+      relatedTitle = related.length ? "Ostalo (onkologija)" : null;
+    } else if (octIntent) {
       const octItems = sortByStatusAndDate(
         visibleItems
           .filter(isOctItem)
