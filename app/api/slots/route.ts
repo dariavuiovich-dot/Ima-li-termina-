@@ -215,7 +215,6 @@ function expandNeedleVariants(rawQuery: string): string[] {
     add("ultrazvuk");
     add("ultrazvuc");
     add("ultrazvucn");
-    add("dijagnostik");
     add("ultrazvucna dijagnostika");
     add("ultrzvucna dijagnostika");
   }
@@ -228,7 +227,6 @@ function expandNeedleVariants(rawQuery: string): string[] {
     add("ultrazvuk");
     add("ultrazvuc");
     add("ultrazvucn");
-    add("dijagnostik");
     add("uzv");
     add("ultrazvucna dijagnostika");
     add("ultrzvucna dijagnostika");
@@ -241,7 +239,6 @@ function expandNeedleVariants(rawQuery: string): string[] {
     add("ultrazvuk");
     add("ultrazvuc");
     add("ultrazvucn");
-    add("dijagnostik");
     add("uzv");
     add("dopler");
     add("doppler");
@@ -287,6 +284,26 @@ function isOnlyCtQuery(query: string): boolean {
   const q = normalizeQueryLatin(query);
   const tokens = q.split(/\s+/).filter(Boolean);
   return tokens.length === 1 && tokens[0] === "ct";
+}
+
+function containsUltrasoundQuery(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  const tokens = q.split(/\s+/).filter(Boolean);
+  return tokens.some((t) =>
+    ["uz", "uzv", "ultrazv", "ultrazvuk", "ultrazvuc", "ultrzv", "dopler", "doppler"].some((k) =>
+      t.includes(k)
+    )
+  );
+}
+
+function isUltrasoundItem(item: ApiSlotItem): boolean {
+  const text = normalizeForSearch(`${item.specialist} ${item.section}`);
+  if (text.includes("dopler") || text.includes("doppler")) return true;
+  if (text.includes("ultrazv") || text.includes("ultrazvuk") || text.includes("ultrazvuc")) return true;
+  // Word boundary-ish check for "uz" and "uzv".
+  if (/(^|\\s)uzv($|\\s)/.test(text)) return true;
+  if (/(^|\\s)uz($|\\s)/.test(text)) return true;
+  return false;
 }
 
 function createCombinedInvestigationAnswer(
@@ -766,6 +783,7 @@ export async function GET(req: NextRequest) {
     const childIntent = hasChildIntent(q);
     const ctIntent = containsCtQuery(q) && !containsOctQuery(q);
     const octIntent = containsOctQuery(q);
+    const ultrasoundIntent = containsUltrasoundQuery(q) && !ctIntent && !octIntent;
 
     let snapshot = await getLatestSnapshot();
     if (!snapshot) {
@@ -811,6 +829,7 @@ export async function GET(req: NextRequest) {
     // Special cases:
     // - CT: show only CT items (radiology), but also show OCT from Ophthalmology clinic as related.
     // - OCT: show only OCT items (do not mix CT radiology).
+    // - Ultrasound/Doppler: restrict to UZ/UZV/ultrazv/dopler items to avoid matching all radiology diagnostics.
     if (octIntent) {
       const octItems = sortByStatusAndDate(
         visibleItems
@@ -834,6 +853,14 @@ export async function GET(req: NextRequest) {
         );
         relatedTitle = relatedItems.length ? "OCT (Klinika za ocne bolesti)" : null;
       }
+    } else if (ultrasoundIntent) {
+      const uzItems = sortByStatusAndDate(
+        visibleItems
+          .filter(isUltrasoundItem)
+          .filter((item) => looseTextMatch(`${item.specialist} ${item.section}`, q))
+      );
+      items = uzItems;
+      forcedAnswer = createCombinedInvestigationAnswer("UZ / DOPLER", uzItems);
     }
 
     const refinedItems = applyEndocrinologyVisitFilter(q, items);
