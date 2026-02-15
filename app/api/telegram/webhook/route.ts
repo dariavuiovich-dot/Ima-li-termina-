@@ -124,7 +124,7 @@ function startText(): string {
     "2) /list (vidi pretplate)",
     "3) /unsub <id> ili /unsuball (odjava)",
     "",
-    "Provjera: samo posalji rijec (npr. reumatolog).",
+    "Provjera: posalji rijec (npr. reumatolog). U grupi: /q reumatolog.",
     "Test odmah: /sync (pokreni provjeru sad)"
   ].join("\n");
 }
@@ -145,6 +145,13 @@ function normalizeCommand(raw: string): { cmd: string; args: string } {
   // Telegram can send /cmd@botname
   const cmd = head.split("@")[0].toLowerCase();
   return { cmd, args };
+}
+
+function buildQueryFromText(text: string, cmd: string, args: string): string {
+  // In groups, bots may receive only commands. Allow `/q ct` and also `/ct` as a shortcut.
+  if (cmd === "/q") return args.trim();
+  if (cmd.startsWith("/") && cmd.length > 1) return `${cmd.slice(1)} ${args}`.trim();
+  return text.trim();
 }
 
 export async function GET() {
@@ -320,8 +327,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true });
     }
 
-    // Plain text -> check "right now" status (no auto-subscribe).
-    const query = text.trim();
+    // Query check (plain text or /q or unknown /xxx shortcut) -> "right now" status (no auto-subscribe).
+    const query = buildQueryFromText(text, cmd, args);
+    if (!query) {
+      await telegramSendMessage(chatId, helpText());
+      return NextResponse.json({ ok: true });
+    }
     await telegramSendMessage(chatId, "Treba mi 10 sekundi.");
     const data = await fetchSlotsForQuery(req, query);
     if (!data) {
