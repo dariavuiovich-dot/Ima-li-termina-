@@ -101,11 +101,9 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
     return [ `Nijesam nasao rezultate za: ${query}`, source ].filter(Boolean).join("\n");
   }
 
-  const withSlots = items.filter((x) => x.status === "HAS_SLOTS" && x.firstAvailable);
-  if (withSlots.length) {
-    // Pick the earliest date lexicographically (format is dd.mm.yyyy. hh:mm), so use answer from API if present,
-    // otherwise fall back to simple string sort which is "good enough" for a human summary.
-    const best = [...withSlots].sort((a, b) => String(a.firstAvailable).localeCompare(String(b.firstAvailable)))[0];
+  // Items from /api/slots are already sorted by status and date, so the first HAS_SLOTS is the earliest one.
+  const best = items.find((x) => x.status === "HAS_SLOTS" && x.firstAvailable);
+  if (best) {
     return [
       "IMA TERMINA",
       `Prvi dostupni termin: ${best.firstAvailable} (${best.specialist})`,
