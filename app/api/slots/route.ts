@@ -208,12 +208,90 @@ function expandNeedleVariants(rawQuery: string): string[] {
     add("gustina kosti");
   }
 
+  if (/\buz\b|ultrazv|ultrasound/.test(latin)) {
+    add("uz");
+    add("ultrazv");
+    add("ultrazvuk");
+  }
+
   return [...out];
+}
+
+function upperTokens(value: string): string[] {
+  return (value.toUpperCase().match(/[A-Z0-9]+/g) ?? []).filter(Boolean);
+}
+
+function isCtItem(item: ApiSlotItem): boolean {
+  const tokens = upperTokens(`${item.specialist} ${item.section}`);
+  return tokens.includes("CT");
+}
+
+function isOctItem(item: ApiSlotItem): boolean {
+  const tokens = upperTokens(`${item.specialist} ${item.section}`);
+  return tokens.includes("OCT");
+}
+
+function isOphthalmologyClinic(item: ApiSlotItem): boolean {
+  const sec = normalizeForSearch(item.section);
+  return sec.includes("klinika za ocne bolesti");
+}
+
+function containsCtQuery(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  const tokens = q.split(/\s+/).filter(Boolean);
+  return tokens.includes("ct");
+}
+
+function containsOctQuery(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  const tokens = q.split(/\s+/).filter(Boolean);
+  return tokens.includes("oct");
+}
+
+function isOnlyCtQuery(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  const tokens = q.split(/\s+/).filter(Boolean);
+  return tokens.length === 1 && tokens[0] === "ct";
+}
+
+function createCombinedInvestigationAnswer(
+  label: string,
+  items: ApiSlotItem[]
+): SlotAnswer {
+  if (!items.length) {
+    return {
+      kind: "none",
+      text: `No records found for "${label}".`,
+      bannerTone: "info"
+    };
+  }
+
+  const withSlots = items.find((x) => x.status === "HAS_SLOTS");
+  if (!withSlots) {
+    return {
+      kind: "single",
+      text: "NEMA TERMINA",
+      specialist: label,
+      section: "",
+      status: "NO_SLOTS",
+      firstAvailable: null,
+      bannerTone: "danger"
+    };
+  }
+
+  return {
+    kind: "single",
+    text: `IMA TERMINA\nPrvi dostupni termin: ${withSlots.firstAvailable ?? "nepoznato"} (${withSlots.specialist})`,
+    specialist: label,
+    section: withSlots.section,
+    status: "HAS_SLOTS",
+    firstAvailable: withSlots.firstAvailable,
+    bannerTone: "success"
+  };
 }
 
 function wordWiseLooseMatch(haystack: string, needle: string): boolean {
   if (!needle) return false;
-  if (haystack.includes(needle)) return true;
 
   const hWords = haystack.split(" ").filter(Boolean);
   const nWords = needle.split(" ").filter(Boolean);
@@ -223,6 +301,8 @@ function wordWiseLooseMatch(haystack: string, needle: string): boolean {
     hWords.some((h) => {
       if ((n === "1" && h === "i") || (n === "2" && h === "ii")) return true;
       if ((n === "i" && h === "1") || (n === "ii" && h === "2")) return true;
+      // Very short needles (ct, mr, etc.) should not match inside unrelated words (e.g. ct in oct).
+      if (n.length <= 2) return h === n || h.startsWith(n);
       if (h.includes(n)) return true;
       if (h.length >= 3 && n.length >= 3 && n.includes(h)) return true;
       if (h.length >= 5 && n.length >= 5) return h.slice(0, 5) === n.slice(0, 5);
@@ -649,6 +729,8 @@ export async function GET(req: NextRequest) {
     const q = (req.nextUrl.searchParams.get("q") ?? "").trim();
     const limit = toSafeLimit(req.nextUrl.searchParams.get("limit"), 50);
     const childIntent = hasChildIntent(q);
+    const ctIntent = containsCtQuery(q) && !containsOctQuery(q);
+    const octIntent = containsOctQuery(q);
 
     let snapshot = await getLatestSnapshot();
     if (!snapshot) {
@@ -677,16 +759,50 @@ export async function GET(req: NextRequest) {
       (item) => !isExcludedAdministrativeItem(item)
     );
 
-    const items = sortByStatusAndDate(
+    let relatedItems: ApiSlotItem[] = [];
+    let relatedTitle: string | null = null;
+    let forcedAnswer: SlotAnswer | null = null;
+
+    // Default search: loose match over visible items.
+    let items = sortByStatusAndDate(
       visibleItems
-      .filter((item) => looseTextMatch(`${item.specialist} ${item.section}`, q))
-      .filter((item) => item.slotKind === "INVESTIGATION" || item.slotKind === "SPECIALIST_VISIT")
+        .filter((item) => looseTextMatch(`${item.specialist} ${item.section}`, q))
+        .filter(
+          (item) =>
+            item.slotKind === "INVESTIGATION" || item.slotKind === "SPECIALIST_VISIT"
+        )
     );
+
+    // Special cases:
+    // - CT: show only CT items (radiology), but also show OCT from Ophthalmology clinic as related.
+    // - OCT: show only OCT items (do not mix CT radiology).
+    if (octIntent) {
+      const octItems = sortByStatusAndDate(
+        visibleItems
+          .filter(isOctItem)
+          .filter((item) => looseTextMatch(`${item.specialist} ${item.section}`, q))
+      );
+      items = octItems;
+      forcedAnswer = createCombinedInvestigationAnswer("OCT", octItems);
+    } else if (ctIntent) {
+      const ctItems = sortByStatusAndDate(
+        visibleItems
+          .filter(isCtItem)
+          .filter((item) => looseTextMatch(`${item.specialist} ${item.section}`, q))
+      );
+      items = ctItems;
+      forcedAnswer = createCombinedInvestigationAnswer("CT", ctItems);
+
+      if (isOnlyCtQuery(q)) {
+        relatedItems = sortByStatusAndDate(
+          visibleItems.filter((item) => isOctItem(item) && isOphthalmologyClinic(item))
+        );
+        relatedTitle = relatedItems.length ? "OCT (Klinika za ocne bolesti)" : null;
+      }
+    }
 
     const refinedItems = applyEndocrinologyVisitFilter(q, items);
     let finalItems = refinedItems;
-    let relatedItems: ApiSlotItem[] = [];
-    let forcedAnswer: SlotAnswer | null = null;
 
     if (containsEndocrinologyIntent(q) && !hasInvestigationIntent(q) && !hasSpecificCabinetNumber(q)) {
       const primary = sortEndocrineByAmbulantaNumber(
@@ -739,7 +855,8 @@ export async function GET(req: NextRequest) {
       sourcePdfUrl: snapshot.sourcePdfUrl,
       answer: forcedAnswer ?? buildAnswer(q, finalItems, visibleItems),
       items: finalItems,
-      relatedItems
+      relatedItems,
+      relatedTitle
     });
   } catch (error) {
     return NextResponse.json(

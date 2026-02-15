@@ -33,6 +33,7 @@ export default function HomePage() {
   const [query, setQuery] = useState("");
   const [rows, setRows] = useState<SlotRow[]>([]);
   const [relatedRows, setRelatedRows] = useState<SlotRow[]>([]);
+  const [relatedTitle, setRelatedTitle] = useState<string | null>(null);
   const [answer, setAnswer] = useState<SlotAnswer | null>(null);
   const [sourceDate, setSourceDate] = useState<string | null>(null);
   const [sourceUrl, setSourceUrl] = useState<string | null>(null);
@@ -144,12 +145,14 @@ export default function HomePage() {
 
       setRows(data.items ?? []);
       setRelatedRows(data.relatedItems ?? []);
+      setRelatedTitle(data.relatedTitle ?? null);
       setSourceDate(data.sourcePdfDate ?? null);
       setSourceUrl(data.sourcePdfUrl ?? null);
       setAnswer(data.answer ?? null);
     } catch (err) {
       setRows([]);
       setRelatedRows([]);
+      setRelatedTitle(null);
       setAnswer(null);
       setError(err instanceof Error ? err.message : "Unknown error");
     } finally {
@@ -321,7 +324,7 @@ export default function HomePage() {
 
         {relatedRows.length > 0 ? (
           <>
-            <h3 className="subhead">Related (not primary endocrinologist)</h3>
+            <h3 className="subhead">{relatedTitle ?? "Related"}</h3>
             <table>
               <thead>
                 <tr>

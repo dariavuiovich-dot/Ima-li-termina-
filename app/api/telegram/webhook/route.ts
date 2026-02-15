@@ -24,6 +24,7 @@ type TelegramMessage = {
 type SlotsApiResponse = {
   query: string;
   sourcePdfDate?: string | null;
+  relatedTitle?: string | null;
   answer?: {
     kind?: string;
     status?: "HAS_SLOTS" | "NO_SLOTS";
@@ -85,15 +86,57 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
   const firstFromAnswer = data.answer?.firstAvailable ?? null;
   const specialistFromAnswer = data.answer?.specialist ?? null;
 
+  const upperTokens = (value: string) =>
+    (value.toUpperCase().match(/[A-Z0-9]+/g) ?? []).filter(Boolean);
+  const qTokens = upperTokens(query);
+  const isCt = qTokens.includes("CT") && !qTokens.includes("OCT");
+  const isOct = qTokens.includes("OCT");
+
+  const statusLabel = (s: "HAS_SLOTS" | "NO_SLOTS") => (s === "HAS_SLOTS" ? "IMA TERMINA" : "NEMA TERMINA");
+  const fmtRow = (x: { status: "HAS_SLOTS" | "NO_SLOTS"; firstAvailable: string | null; specialist: string; section: string }) =>
+    `- ${statusLabel(x.status)} | ${x.firstAvailable ?? "-"} | ${x.specialist} (${x.section})`;
+  const primaryListLabel = isOct ? "OCT:" : "CT:";
+  const relatedListLabel = data.relatedTitle ? `${data.relatedTitle}:` : "Related:";
+
   // Prefer explicit answer status when available (endo/cardio/neuro combined logic).
   if (statusFromAnswer === "HAS_SLOTS") {
     const first = firstFromAnswer ?? "nepoznato";
     const line2 = specialistFromAnswer ? `Prvi dostupni termin: ${first} (${specialistFromAnswer})` : `Prvi dostupni termin: ${first}`;
-    return [ "IMA TERMINA", line2, source ].filter(Boolean).join("\n");
+    const header = [ "IMA TERMINA", line2, source ].filter(Boolean).join("\n");
+
+    if (isCt || isOct) {
+      const items = Array.isArray(data.items) ? data.items : [];
+      const related = Array.isArray(data.relatedItems) ? data.relatedItems : [];
+      const lines = items.slice(0, 25).map(fmtRow);
+      const relLines = related.slice(0, 25).map(fmtRow);
+      return [
+        header,
+        "",
+        ...(lines.length ? [primaryListLabel, ...lines] : []),
+        ...(relLines.length ? ["", relatedListLabel, ...relLines] : [])
+      ].filter(Boolean).join("\n");
+    }
+
+    return header;
   }
 
   if (statusFromAnswer === "NO_SLOTS") {
-    return [ "NEMA TERMINA", source ].filter(Boolean).join("\n");
+    const header = [ "NEMA TERMINA", source ].filter(Boolean).join("\n");
+
+    if (isCt || isOct) {
+      const items = Array.isArray(data.items) ? data.items : [];
+      const related = Array.isArray(data.relatedItems) ? data.relatedItems : [];
+      const lines = items.slice(0, 25).map(fmtRow);
+      const relLines = related.slice(0, 25).map(fmtRow);
+      return [
+        header,
+        "",
+        ...(lines.length ? [primaryListLabel, ...lines] : []),
+        ...(relLines.length ? ["", relatedListLabel, ...relLines] : [])
+      ].filter(Boolean).join("\n");
+    }
+
+    return header;
   }
 
   const items = Array.isArray(data.items) ? data.items : [];
@@ -104,10 +147,26 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
   // Items from /api/slots are already sorted by status and date, so the first HAS_SLOTS is the earliest one.
   const best = items.find((x) => x.status === "HAS_SLOTS" && x.firstAvailable);
   if (best) {
-    return [
+    const header = [
       "IMA TERMINA",
       `Prvi dostupni termin: ${best.firstAvailable} (${best.specialist})`,
-      source,
+      source
+    ].filter(Boolean).join("\n");
+
+    if (isCt || isOct) {
+      const related = Array.isArray(data.relatedItems) ? data.relatedItems : [];
+      const lines = items.slice(0, 25).map(fmtRow);
+      const relLines = related.slice(0, 25).map(fmtRow);
+      return [
+        header,
+        "",
+        ...(lines.length ? [primaryListLabel, ...lines] : []),
+        ...(relLines.length ? ["", relatedListLabel, ...relLines] : [])
+      ].filter(Boolean).join("\n");
+    }
+
+    return [
+      header,
       items.length > 1 ? "Ako zelis preciznije, posalji naziv ambulante iz liste na sajtu." : null
     ].filter(Boolean).join("\n");
   }
