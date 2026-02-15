@@ -212,6 +212,28 @@ function expandNeedleVariants(rawQuery: string): string[] {
     add("uz");
     add("ultrazv");
     add("ultrazvuk");
+    add("ultrazvuc");
+    add("ultrazvucna dijagnostika");
+    add("ultrzvucna dijagnostika");
+  }
+
+  // Ultrasound/Doppler are commonly used interchangeably in user language.
+  if (/(dopler|doppler)/.test(latin)) {
+    add("dopler");
+    add("doppler");
+    add("ultrazv");
+    add("ultrazvuk");
+    add("ultrazvuc");
+    add("ultrazvucna dijagnostika");
+    add("ultrzvucna dijagnostika");
+    add("uz");
+  }
+
+  if (/(ultrazv|ultrazvuk|ultrazvuc|ultrzvuc|uz)/.test(latin)) {
+    add("dopler");
+    add("doppler");
+    add("kolor dopler");
+    add("color doppler");
   }
 
   return [...out];
@@ -358,7 +380,7 @@ function containsCardiologyIntent(query: string): boolean {
 
 function hasInvestigationIntent(query: string): boolean {
   const q = normalizeQueryLatin(query);
-  return /(ct|mr|mri|mrt|eeg|emng|echo|eho|dopler|doppler|gastroskop|kolono|uz|ultrazv|dijagnost|kabinet|test|dxa|dexa|dex|denzitomet|densitomet|osteodenzito|gustina kost)/.test(
+  return /(ct|mr|mri|mrt|eeg|emng|echo|eho|dopler|doppler|gastroskop|kolono|uz|ultrazv|ultrzv|ultrazvuc|dijagnost|kabinet|test|dxa|dexa|dex|denzitomet|densitomet|osteodenzito|gustina kost)/.test(
     q
   );
 }
