@@ -852,33 +852,36 @@ export async function GET(req: NextRequest) {
       items = octItems;
       forcedAnswer = createCombinedInvestigationAnswer("OCT", octItems);
     } else if (ctIntent) {
-      const ctItems = sortByStatusAndDate(
-        visibleItems
-          .filter(isCtItem)
-          .filter((item) => looseTextMatch(`${item.specialist} ${item.section}`, q))
-      );
-      let primaryCtItems = ctItems;
-      let primaryLabel = "CT";
+      const ctNeuroIntent = containsCtNeuroIntent(q);
 
-      // If user intent clearly points to "CT neuro", narrow to CT NEURO 1/2.
-      if (containsCtNeuroIntent(q)) {
-        const neuro = ctItems.filter((x) => normalizeForSearch(x.specialist).includes("ct neuro"));
-        if (neuro.length) {
-          primaryCtItems = neuro;
-          primaryLabel = "CT NEURO";
-          relatedItems = sortByStatusAndDate(ctItems.filter((x) => !neuro.includes(x)));
-          relatedTitle = relatedItems.length ? "Ostali CT" : null;
-        }
-      }
-
-      items = primaryCtItems;
-      forcedAnswer = createCombinedInvestigationAnswer(primaryLabel, primaryCtItems);
-
-      if (isOnlyCtQuery(q)) {
-        relatedItems = sortByStatusAndDate(
-          visibleItems.filter((item) => isOctItem(item) && isOphthalmologyClinic(item))
+      if (ctNeuroIntent) {
+        // For CT neuro intent, ignore extra words (mozga/glave/kicme/etc) and show CT NEURO 1/2.
+        const ctUniverse = sortByStatusAndDate(visibleItems.filter(isCtItem));
+        const neuro = ctUniverse.filter((x) =>
+          normalizeForSearch(x.specialist).includes("ct neuro")
         );
-        relatedTitle = relatedItems.length ? "OCT (Klinika za ocne bolesti)" : null;
+
+        items = neuro;
+        forcedAnswer = createCombinedInvestigationAnswer("CT NEURO", neuro);
+
+        relatedItems = sortByStatusAndDate(ctUniverse.filter((x) => !neuro.includes(x)));
+        relatedTitle = relatedItems.length ? "Ostali CT" : null;
+      } else {
+        const ctItems = sortByStatusAndDate(
+          visibleItems
+            .filter(isCtItem)
+            .filter((item) => looseTextMatch(`${item.specialist} ${item.section}`, q))
+        );
+
+        items = ctItems;
+        forcedAnswer = createCombinedInvestigationAnswer("CT", ctItems);
+
+        if (isOnlyCtQuery(q)) {
+          relatedItems = sortByStatusAndDate(
+            visibleItems.filter((item) => isOctItem(item) && isOphthalmologyClinic(item))
+          );
+          relatedTitle = relatedItems.length ? "OCT (Klinika za ocne bolesti)" : null;
+        }
       }
     } else if (ultrasoundIntent) {
       const uzItems = sortByStatusAndDate(
