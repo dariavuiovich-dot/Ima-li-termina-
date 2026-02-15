@@ -290,6 +290,9 @@ function containsCtNeuroIntent(query: string): boolean {
   const q = normalizeQueryLatin(query);
   if (!q.includes("ct")) return false;
 
+  // Do not treat CT angio/body/etc as "CT neuro" just because it contains "glave".
+  if (/(angio|body|koronograf|kolonoskop|kolono|msk)/.test(q)) return false;
+
   // Common ways users describe "CT neuro" (head/brain/skull/spine).
   return (
     /(mozg|mozga|glav|endokran|endokranij|endocran|encephal|cerebr)/.test(q) ||
