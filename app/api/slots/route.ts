@@ -210,9 +210,12 @@ function expandNeedleVariants(rawQuery: string): string[] {
 
   if (/\buz\b|ultrazv|ultrasound/.test(latin)) {
     add("uz");
+    add("uzv");
     add("ultrazv");
     add("ultrazvuk");
     add("ultrazvuc");
+    add("ultrazvucn");
+    add("dijagnostik");
     add("ultrazvucna dijagnostika");
     add("ultrzvucna dijagnostika");
   }
@@ -224,12 +227,22 @@ function expandNeedleVariants(rawQuery: string): string[] {
     add("ultrazv");
     add("ultrazvuk");
     add("ultrazvuc");
+    add("ultrazvucn");
+    add("dijagnostik");
+    add("uzv");
     add("ultrazvucna dijagnostika");
     add("ultrzvucna dijagnostika");
     add("uz");
   }
 
   if (/(ultrazv|ultrazvuk|ultrazvuc|ultrzvuc|uz)/.test(latin)) {
+    // Common typos: ultrzv... -> ultrazv...
+    add("ultrazv");
+    add("ultrazvuk");
+    add("ultrazvuc");
+    add("ultrazvucn");
+    add("dijagnostik");
+    add("uzv");
     add("dopler");
     add("doppler");
     add("kolor dopler");
