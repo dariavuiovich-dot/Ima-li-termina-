@@ -888,7 +888,11 @@ function isNeurologyUniverseItem(item: ApiSlotItem): boolean {
   const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
   if (isUrologyItem(item)) return false;
   if (/(neurol|nevrol|neuro|klinika za neurologiju)/.test(combined)) return true;
-  if (/(emng|eeg|evociran|evocirane potencijale|evocirani potencijali|epi|epi dispanser|dispanser)/.test(combined)) {
+  if (
+    /(emng|eeg|evociran|evocirane potencijale|evocirani potencijali|dispanser za epi|epi dispanser|epilep)/.test(
+      combined
+    )
+  ) {
     return true;
   }
   return false;
@@ -896,7 +900,7 @@ function isNeurologyUniverseItem(item: ApiSlotItem): boolean {
 
 function isNeurologySecondaryItem(item: ApiSlotItem): boolean {
   const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
-  return /(emng|eeg|evociran|evocirane potencijale|evocirani potencijali|dispanser.*epi|epi.*dispanser)/.test(
+  return /(emng|eeg|evociran|evocirane potencijale|evocirani potencijali|dispanser.*epi|epi.*dispanser|epilep)/.test(
     combined
   );
 }
@@ -910,6 +914,48 @@ function isNeurologyCtOrMrItem(item: ApiSlotItem): boolean {
   if (!(isCtItem(item) || isMrItem(item))) return false;
   const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
   return /(neuro|pns|sinus|endokran|glav|mozg|kicm)/.test(combined);
+}
+
+function rankNeurologyPrimary(item: ApiSlotItem): number {
+  const upper = item.specialist.toUpperCase();
+  if (/\b1\b|\bI\b/.test(upper)) return 110;
+  if (/\b2\b|\bII\b/.test(upper)) return 120;
+  return 199;
+}
+
+function sortNeurologyPrimary(items: ApiSlotItem[]): ApiSlotItem[] {
+  return [...items].sort((a, b) => {
+    const ra = rankNeurologyPrimary(a);
+    const rb = rankNeurologyPrimary(b);
+    if (ra !== rb) return ra - rb;
+    if (a.status !== b.status) return a.status === "HAS_SLOTS" ? -1 : 1;
+    const da = parseSlotDate(a.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    const db = parseSlotDate(b.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    if (da !== db) return da - db;
+    return a.specialist.localeCompare(b.specialist);
+  });
+}
+
+function rankNeurologySecondary(item: ApiSlotItem): number {
+  const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
+  if (combined.includes("emng")) return 210;
+  if (/(^|\\s)eeg($|\\s)/.test(combined)) return 220;
+  if (/dispanser.*epi|epi.*dispanser|epilep/.test(combined)) return 230;
+  if (combined.includes("evociran")) return 240;
+  return 299;
+}
+
+function sortNeurologySecondary(items: ApiSlotItem[]): ApiSlotItem[] {
+  return [...items].sort((a, b) => {
+    const ra = rankNeurologySecondary(a);
+    const rb = rankNeurologySecondary(b);
+    if (ra !== rb) return ra - rb;
+    if (a.status !== b.status) return a.status === "HAS_SLOTS" ? -1 : 1;
+    const da = parseSlotDate(a.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    const db = parseSlotDate(b.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    if (da !== db) return da - db;
+    return a.specialist.localeCompare(b.specialist);
+  });
 }
 
 function isPediatricItem(item: ApiSlotItem): boolean {
@@ -1418,10 +1464,10 @@ export async function GET(req: NextRequest) {
           .filter((item) => !isUrologyItem(item))
       );
 
-      const primary = sortByStatusAndDate(
+      const primary = sortNeurologyPrimary(
         neurologyUniverse.filter(isNeurologyAmbulantaOneOrTwo)
       );
-      const secondary = sortByStatusAndDate(
+      const secondary = sortNeurologySecondary(
         neurologyUniverse.filter(
           (item) =>
             !isNeurologyAmbulantaOneOrTwo(item) &&
