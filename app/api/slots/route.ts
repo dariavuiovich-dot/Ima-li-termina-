@@ -873,6 +873,14 @@ function isPediatricItem(item: ApiSlotItem): boolean {
 
 function isExcludedAdministrativeItem(item: ApiSlotItem): boolean {
   const combinedNorm = normalizeForSearch(`${item.specialist} ${item.section}`);
+  // Exception: keep MR council scheduling ambulanta visible for users.
+  if (
+    combinedNorm.includes("zakazivanje") &&
+    /konzilij|konsilij|konsilium|consilium/.test(combinedNorm) &&
+    (/\bmr\b/.test(combinedNorm) || combinedNorm.includes("magnet"))
+  ) {
+    return false;
+  }
   // MVP rule: hide all consilium records from results.
   if (/(konzilij|konsilij|consilium|konsilium)/.test(combinedNorm)) {
     return true;
