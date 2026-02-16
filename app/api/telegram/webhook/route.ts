@@ -112,7 +112,7 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
       : isCt
         ? `${data.answer?.specialist ?? "CT"}:`
         : isMr
-          ? `${data.answer?.specialist ?? "MR"}:`
+          ? "MR:"
         : isOnko
           ? "ONKOLOGIJA:"
           : "Rezultati:";

@@ -516,46 +516,52 @@ function createCombinedInvestigationAnswer(
   };
 }
 
-function createMrCombinedAnswer(
-  label: string,
-  items: ApiSlotItem[]
-): SlotAnswer {
-  const disclaimer =
-    "MR pregled ne moze direktno da zakaze izabrani doktor. Potrebno je odobrenje Konzilijuma i prvi korak je termin u AMBULANTA ZA ZAKAZIVANJE KONZILIJUMA ZA MR.";
+function formatKonzilijumFirstAvailable(value: string | null): string {
+  if (!value) return "nepoznat";
+  const m = value.match(/(\d{2}\.\d{2}\.\d{4})\.?\s+(\d{2}):(\d{2})/);
+  if (!m) return value;
+  return `${m[1]} u ${m[2]}.${m[3]}`;
+}
 
-  if (!items.length) {
+function createMrSchedulingAnswer(scheduleItem: ApiSlotItem | null): SlotAnswer {
+  const prefix = "Da biste mogli zakazati trazeni pregled potrebno je odobrenje Konzilijuma za MR.";
+  if (!scheduleItem || scheduleItem.status !== "HAS_SLOTS") {
     return {
       kind: "single",
-      text: `${disclaimer}\nNEMA TERMINA`,
-      specialist: label,
-      section: "",
+      text: `${prefix} Trenutno nema slobodnih termina za Konzilijum.`,
+      specialist: "AMBULANTA ZA ZAKAZIVANJE KONZILIJUMA ZA MR",
+      section: scheduleItem?.section ?? "",
       status: "NO_SLOTS",
       firstAvailable: null,
       bannerTone: "danger"
     };
   }
 
-  const withSlots = items.find((x) => x.status === "HAS_SLOTS");
-  if (!withSlots) {
-    return {
-      kind: "single",
-      text: `${disclaimer}\nNEMA TERMINA`,
-      specialist: label,
-      section: "",
-      status: "NO_SLOTS",
-      firstAvailable: null,
-      bannerTone: "danger"
-    };
-  }
-
+  const when = formatKonzilijumFirstAvailable(scheduleItem.firstAvailable);
   return {
     kind: "single",
-    text: `${disclaimer}\nIMA TERMINA\nPrvi dostupni termin: ${withSlots.firstAvailable ?? "nepoznato"} (${withSlots.specialist})`,
-    specialist: label,
-    section: withSlots.section,
+    text: `${prefix} Prvi slobodni termin za Konzilijum je ${when}.`,
+    specialist: "AMBULANTA ZA ZAKAZIVANJE KONZILIJUMA ZA MR",
+    section: scheduleItem.section,
     status: "HAS_SLOTS",
-    firstAvailable: withSlots.firstAvailable,
-    bannerTone: "success"
+    firstAvailable: scheduleItem.firstAvailable,
+    bannerTone: "info"
+  };
+}
+
+function createMrGroupSummaryRow(label: string, candidates: ApiSlotItem[]): ApiSlotItem | null {
+  if (!candidates.length) return null;
+  const sorted = sortByStatusAndDate(candidates);
+  const bestAvailable = sorted.find((x) => x.status === "HAS_SLOTS");
+  const base = bestAvailable ?? sorted[0];
+  return {
+    key: `MR_SUMMARY::${label}`,
+    specialist: label,
+    section: base.section,
+    status: bestAvailable ? "HAS_SLOTS" : "NO_SLOTS",
+    firstAvailable: bestAvailable?.firstAvailable ?? null,
+    codes: [],
+    slotKind: "INVESTIGATION"
   };
 }
 
@@ -1418,34 +1424,43 @@ export async function GET(req: NextRequest) {
       const mrClinicalUniverse = sortByStatusAndDate(
         mrUniverse.filter((item) => !isMrSchedulingAmbulanta(item))
       );
+      const scheduleItem = scheduleItems[0] ?? null;
+
+      const mrNeuroAll = mrClinicalUniverse.filter(isMrNeuroItem);
+      const mrBodyAll = mrClinicalUniverse.filter(isMrBodyItem);
+      const mrMskAll = mrClinicalUniverse.filter(isMrMskItem);
+      const mrBreastAll = mrClinicalUniverse.filter(isMrBreastItem);
+
+      const mrNeuroSummary = createMrGroupSummaryRow("MR NEURO", mrNeuroAll);
+      const mrBodySummary = createMrGroupSummaryRow("MR BODY", mrBodyAll);
+      const mrMskSummary = createMrGroupSummaryRow("MR MSK", mrMskAll);
+      const mrBreastSummary = createMrGroupSummaryRow("MR DOJKI", mrBreastAll);
 
       if (mrNeuroIntent || mrBodyIntent || mrMskIntent || mrBreastIntent) {
         const primary = mrNeuroIntent
-          ? mrClinicalUniverse.filter(isMrNeuroItem)
+          ? mrNeuroSummary
           : mrBodyIntent
-            ? mrClinicalUniverse.filter(isMrBodyItem)
+            ? mrBodySummary
             : mrMskIntent
-              ? mrClinicalUniverse.filter(isMrMskItem)
-              : mrClinicalUniverse.filter(isMrBreastItem);
+              ? mrMskSummary
+              : mrBreastSummary;
+        const others = [
+          mrNeuroIntent ? null : mrNeuroSummary,
+          mrBodyIntent ? null : mrBodySummary,
+          mrMskIntent ? null : mrMskSummary,
+          mrBreastIntent ? null : mrBreastSummary
+        ].filter((x): x is ApiSlotItem => Boolean(x));
 
-        const label = mrNeuroIntent
-          ? "MR NEURO"
-          : mrBodyIntent
-            ? "MR BODY"
-            : mrMskIntent
-              ? "MR MSK"
-              : "MR DOJKI";
+        items = [scheduleItem, primary].filter((x): x is ApiSlotItem => Boolean(x));
+        forcedAnswer = createMrSchedulingAnswer(scheduleItem);
 
-        items = [...scheduleItems, ...primary];
-        forcedAnswer = createMrCombinedAnswer(label, primary);
-
-        relatedItems = sortByStatusAndDate(
-          mrClinicalUniverse.filter((x) => !primary.includes(x))
-        );
+        relatedItems = others;
         relatedTitle = relatedItems.length ? "Ostali MR" : null;
       } else {
-        items = [...scheduleItems, ...mrClinicalUniverse];
-        forcedAnswer = createMrCombinedAnswer("MR", mrClinicalUniverse);
+        items = [scheduleItem, mrNeuroSummary, mrBodySummary, mrMskSummary, mrBreastSummary].filter(
+          (x): x is ApiSlotItem => Boolean(x)
+        );
+        forcedAnswer = createMrSchedulingAnswer(scheduleItem);
       }
     } else if (ultrasoundIntent) {
       const uzItems = sortByStatusAndDate(
