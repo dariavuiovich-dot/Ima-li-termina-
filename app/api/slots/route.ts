@@ -560,13 +560,14 @@ function isPrimaryOrlItem(item: ApiSlotItem): boolean {
   const section = normalizeForSearch(item.section);
   const inOrlUniverse = isOrlUniverseItem(item);
   if (!inOrlUniverse) return false;
-  if (!sp.includes("ambulanta")) return false;
 
   const isOrlSpecialisticka =
     (sp.includes("orl") || sp.includes("otorino") || section.includes("uha grla nosa") || section.includes("uho grlo nos")) &&
     sp.includes("specijal");
   const numbered12 = /\b(1|2|i|ii)\b/i.test(item.specialist);
-  const interventional = sp.includes("intervent");
+  const interventional =
+    sp.includes("intervent") &&
+    (sp.includes("orl") || sp.includes("otorino") || section.includes("uha grla nosa") || section.includes("uho grlo nos"));
 
   return (isOrlSpecialisticka && numbered12) || interventional;
 }
