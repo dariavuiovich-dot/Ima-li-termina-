@@ -265,6 +265,11 @@ function isOctItem(item: ApiSlotItem): boolean {
   return tokens.includes("OCT");
 }
 
+function isMrItem(item: ApiSlotItem): boolean {
+  const tokens = upperTokens(`${item.specialist} ${item.section}`);
+  return tokens.includes("MR") || tokens.includes("MRI") || tokens.includes("MRT");
+}
+
 function isOphthalmologyClinic(item: ApiSlotItem): boolean {
   const sec = normalizeForSearch(item.section);
   return sec.includes("klinika za ocne bolesti");
@@ -286,6 +291,12 @@ function containsOctQuery(query: string): boolean {
   const q = normalizeQueryLatin(query);
   const tokens = q.split(/\s+/).filter(Boolean);
   return tokens.includes("oct");
+}
+
+function containsMrQuery(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  const tokens = q.split(/\s+/).filter(Boolean);
+  return tokens.includes("mr") || tokens.includes("mri") || tokens.includes("mrt");
 }
 
 function isOnlyCtQuery(query: string): boolean {
@@ -327,6 +338,54 @@ function containsCtBodyIntent(query: string): boolean {
   );
 }
 
+function containsMrBreastIntent(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  if (!containsMrQuery(q)) return false;
+  return /(dojk|dojke|dojki|dojka|mamma|mamm)/.test(q);
+}
+
+function containsMrMskIntent(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  if (!containsMrQuery(q)) return false;
+  if (containsMrBreastIntent(q)) return false;
+
+  // Musculoskeletal MR.
+  if (/(msk|ramen|rame|koljen|koleno|koljena|lakat|lakta|si zglob|sakroili|sakroilij|zglobov|zglobova|kostiju|kosti)/.test(q)) {
+    return true;
+  }
+
+  // "kukova i karlice" belongs to MSK (bone structures).
+  if (/(kukov|kukova|kukovi)/.test(q) && /karlic/.test(q)) return true;
+  return false;
+}
+
+function containsMrBodyIntent(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  if (!containsMrQuery(q)) return false;
+  if (containsMrBreastIntent(q) || containsMrMskIntent(q)) return false;
+
+  // "abdomena i karlice" belongs to BODY (organs).
+  if (/abdom/.test(q) && /karlic/.test(q)) return true;
+
+  return (
+    /(body|abdom|abdomena|male karlic|mala karlic|pelv|toraks|toraksa|toraxa|thorax|thoraxa|grudnog kos|grudni kos|gornjeg abdomena|gornji abdomen)/.test(
+      q
+    )
+  );
+}
+
+function containsMrNeuroIntent(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  if (!containsMrQuery(q)) return false;
+  if (containsMrBreastIntent(q) || containsMrMskIntent(q) || containsMrBodyIntent(q)) return false;
+
+  return (
+    /(neuro|endokran|endokranij|endocran|glav|mozga|pns|sinus|temporaln|temporalne kosti|kicm|c kicm|ls kicm|th kicm|vratn|cervikal|lumbosakral|krst)/.test(
+      q
+    )
+  );
+}
+
 function containsUltrasoundQuery(query: string): boolean {
   const q = normalizeQueryLatin(query);
   const tokens = q.split(/\s+/).filter(Boolean);
@@ -361,8 +420,44 @@ function isCtAngioItem(item: ApiSlotItem): boolean {
   return sp.includes("ct angio") || sp.includes("angiograf");
 }
 
+function isMrSchedulingAmbulanta(item: ApiSlotItem): boolean {
+  const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
+  return (
+    combined.includes("zakazivanje") &&
+    /konzilij|konsilij|konsilium|consilium/.test(combined) &&
+    (/\bmr\b/.test(combined) || combined.includes("magnet"))
+  );
+}
+
+function isMrNeuroItem(item: ApiSlotItem): boolean {
+  return normalizeForSearch(item.specialist).includes("mr neuro");
+}
+
+function isMrBodyItem(item: ApiSlotItem): boolean {
+  return normalizeForSearch(item.specialist).includes("mr body");
+}
+
+function isMrMskItem(item: ApiSlotItem): boolean {
+  return normalizeForSearch(item.specialist).includes("mr msk");
+}
+
+function isMrBreastItem(item: ApiSlotItem): boolean {
+  const sp = normalizeForSearch(item.specialist);
+  return sp.includes("mr doj") || sp.includes("dojk");
+}
+
 function getItemNote(item: Pick<ApiSlotItem, "specialist" | "section">): { note: string; noteUrl?: string } | null {
   const sp = normalizeForSearch(item.specialist);
+  // MRI requires cardiology? no, requires MR council approval and scheduling via dedicated ambulanta.
+  if (
+    sp.includes("zakazivanje") &&
+    /konzilij|konsilij|konsilium|consilium/.test(sp) &&
+    (/\bmr\b/.test(sp) || sp.includes("magnet"))
+  ) {
+    return {
+      note: "MR pregled ne moze direktno da zakaze izabrani doktor. Potrebno je odobrenje Konzilijuma i termin u ovoj ambulanti."
+    };
+  }
   // MSCT/CT coronarography needs cardiology council approval.
   if (sp.includes("koronograf") || sp.includes("koronarograf")) {
     return {
@@ -406,6 +501,49 @@ function createCombinedInvestigationAnswer(
   return {
     kind: "single",
     text: `IMA TERMINA\nPrvi dostupni termin: ${withSlots.firstAvailable ?? "nepoznato"} (${withSlots.specialist})`,
+    specialist: label,
+    section: withSlots.section,
+    status: "HAS_SLOTS",
+    firstAvailable: withSlots.firstAvailable,
+    bannerTone: "success"
+  };
+}
+
+function createMrCombinedAnswer(
+  label: string,
+  items: ApiSlotItem[]
+): SlotAnswer {
+  const disclaimer =
+    "MR pregled ne moze direktno da zakaze izabrani doktor. Potrebno je odobrenje Konzilijuma i prvi korak je termin u AMBULANTA ZA ZAKAZIVANJE KONZILIJUMA ZA MR.";
+
+  if (!items.length) {
+    return {
+      kind: "single",
+      text: `${disclaimer}\nNEMA TERMINA`,
+      specialist: label,
+      section: "",
+      status: "NO_SLOTS",
+      firstAvailable: null,
+      bannerTone: "danger"
+    };
+  }
+
+  const withSlots = items.find((x) => x.status === "HAS_SLOTS");
+  if (!withSlots) {
+    return {
+      kind: "single",
+      text: `${disclaimer}\nNEMA TERMINA`,
+      specialist: label,
+      section: "",
+      status: "NO_SLOTS",
+      firstAvailable: null,
+      bannerTone: "danger"
+    };
+  }
+
+  return {
+    kind: "single",
+    text: `${disclaimer}\nIMA TERMINA\nPrvi dostupni termin: ${withSlots.firstAvailable ?? "nepoznato"} (${withSlots.specialist})`,
     specialist: label,
     section: withSlots.section,
     status: "HAS_SLOTS",
@@ -1055,8 +1193,9 @@ export async function GET(req: NextRequest) {
     const limit = toSafeLimit(req.nextUrl.searchParams.get("limit"), 50);
     const childIntent = hasChildIntent(q);
     const ctIntent = containsCtQuery(q) && !containsOctQuery(q);
+    const mrIntent = containsMrQuery(q) && !ctIntent && !containsOctQuery(q);
     const octIntent = containsOctQuery(q);
-    const ultrasoundIntent = containsUltrasoundQuery(q) && !ctIntent && !octIntent;
+    const ultrasoundIntent = containsUltrasoundQuery(q) && !ctIntent && !octIntent && !mrIntent;
     const oncologyIntent = containsOncologyIntent(q);
 
     let snapshot = await getLatestSnapshot();
@@ -1103,6 +1242,7 @@ export async function GET(req: NextRequest) {
 
     // Special cases:
     // - CT: show only CT items (radiology), but also show OCT from Ophthalmology clinic as related.
+    // - MR: first show council scheduling ambulanta + MR subgroup by intent (NEURO/BODY/MSK/DOJKI).
     // - OCT: show only OCT items (do not mix CT radiology).
     // - Ultrasound/Doppler: restrict to UZ/UZV/ultrazv/dopler items to avoid matching all radiology diagnostics.
     // - Oncology: show chemo->radio->(brahio/CT onko/MR onko) order.
@@ -1161,6 +1301,46 @@ export async function GET(req: NextRequest) {
           );
           relatedTitle = relatedItems.length ? "OCT (Klinika za ocne bolesti)" : null;
         }
+      }
+    } else if (mrIntent) {
+      const mrNeuroIntent = containsMrNeuroIntent(q);
+      const mrBodyIntent = !mrNeuroIntent && containsMrBodyIntent(q);
+      const mrMskIntent = !mrNeuroIntent && !mrBodyIntent && containsMrMskIntent(q);
+      const mrBreastIntent = !mrNeuroIntent && !mrBodyIntent && !mrMskIntent && containsMrBreastIntent(q);
+
+      const mrUniverse = sortByStatusAndDate(visibleItems.filter(isMrItem));
+      const scheduleItems = sortByStatusAndDate(mrUniverse.filter(isMrSchedulingAmbulanta));
+      const mrClinicalUniverse = sortByStatusAndDate(
+        mrUniverse.filter((item) => !isMrSchedulingAmbulanta(item))
+      );
+
+      if (mrNeuroIntent || mrBodyIntent || mrMskIntent || mrBreastIntent) {
+        const primary = mrNeuroIntent
+          ? mrClinicalUniverse.filter(isMrNeuroItem)
+          : mrBodyIntent
+            ? mrClinicalUniverse.filter(isMrBodyItem)
+            : mrMskIntent
+              ? mrClinicalUniverse.filter(isMrMskItem)
+              : mrClinicalUniverse.filter(isMrBreastItem);
+
+        const label = mrNeuroIntent
+          ? "MR NEURO"
+          : mrBodyIntent
+            ? "MR BODY"
+            : mrMskIntent
+              ? "MR MSK"
+              : "MR DOJKI";
+
+        items = [...scheduleItems, ...primary];
+        forcedAnswer = createMrCombinedAnswer(label, primary);
+
+        relatedItems = sortByStatusAndDate(
+          mrClinicalUniverse.filter((x) => !primary.includes(x))
+        );
+        relatedTitle = relatedItems.length ? "Ostali MR" : null;
+      } else {
+        items = [...scheduleItems, ...mrClinicalUniverse];
+        forcedAnswer = createMrCombinedAnswer("MR", mrClinicalUniverse);
       }
     } else if (ultrasoundIntent) {
       const uzItems = sortByStatusAndDate(

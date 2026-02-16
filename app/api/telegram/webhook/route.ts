@@ -94,6 +94,7 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
     (value.toUpperCase().match(/[A-Z0-9]+/g) ?? []).filter(Boolean);
   const qTokens = upperTokens(query);
   const isCt = (qTokens.includes("CT") || qTokens.includes("MSCT")) && !qTokens.includes("OCT");
+  const isMr = (qTokens.includes("MR") || qTokens.includes("MRI") || qTokens.includes("MRT")) && !isCt && !qTokens.includes("OCT");
   const isOct = qTokens.includes("OCT");
   const isOnko = qTokens.some((t) => t.startsWith("ONKO") || t.startsWith("ONKOL")) || qTokens.includes("HEMOTERAPIJA") || qTokens.includes("RADIOTERAPIJA");
 
@@ -110,6 +111,8 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
       ? "OCT:"
       : isCt
         ? `${data.answer?.specialist ?? "CT"}:`
+        : isMr
+          ? `${data.answer?.specialist ?? "MR"}:`
         : isOnko
           ? "ONKOLOGIJA:"
           : "Rezultati:";
@@ -121,7 +124,7 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
     const line2 = specialistFromAnswer ? `Prvi dostupni termin: ${first} (${specialistFromAnswer})` : `Prvi dostupni termin: ${first}`;
     const header = [ "IMA TERMINA", line2, source ].filter(Boolean).join("\n");
 
-    if (isCt || isOct || isOnko) {
+    if (isCt || isMr || isOct || isOnko) {
       const items = Array.isArray(data.items) ? data.items : [];
       const related = Array.isArray(data.relatedItems) ? data.relatedItems : [];
       const lines = items.slice(0, 25).map(fmtRow);
@@ -140,7 +143,7 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
   if (statusFromAnswer === "NO_SLOTS") {
     const header = [ "NEMA TERMINA", source ].filter(Boolean).join("\n");
 
-    if (isCt || isOct || isOnko) {
+    if (isCt || isMr || isOct || isOnko) {
       const items = Array.isArray(data.items) ? data.items : [];
       const related = Array.isArray(data.relatedItems) ? data.relatedItems : [];
       const lines = items.slice(0, 25).map(fmtRow);
@@ -170,7 +173,7 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
       source
     ].filter(Boolean).join("\n");
 
-    if (isCt || isOct || isOnko) {
+    if (isCt || isMr || isOct || isOnko) {
       const related = Array.isArray(data.relatedItems) ? data.relatedItems : [];
       const lines = items.slice(0, 25).map(fmtRow);
       const relLines = related.slice(0, 25).map(fmtRow);
