@@ -480,6 +480,11 @@ function containsCardiologyIntent(query: string): boolean {
   return /(kardiolog|cardiolog|kardiolo|cardiolo|kardiologija|kardio)/.test(q);
 }
 
+function containsOrlIntent(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  return /(orl|lor|otorino|otolaring|uho grlo nos|uha grla nosa)/.test(q);
+}
+
 function containsOncologyIntent(query: string): boolean {
   const q = normalizeQueryLatin(query);
   return /(onko|onkolog|onkolo|hemoterap|radioterap|brahi|brahio|brachy|citostat|citostatik)/.test(
@@ -541,6 +546,34 @@ function isCardiologyUniverseItem(item: ApiSlotItem): boolean {
 
   if (section.includes("klinika za bolesti srca")) return true;
   return specialist.includes("kardio") || specialist.includes("kardiol");
+}
+
+function isOrlUniverseItem(item: ApiSlotItem): boolean {
+  const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
+  return /(orl|lor|otorino|otolaring|uha grla nosa|uho grlo nos|foniatrij|subplastic|sub plastic)/.test(
+    combined
+  );
+}
+
+function isPrimaryOrlItem(item: ApiSlotItem): boolean {
+  const sp = normalizeForSearch(item.specialist);
+  const section = normalizeForSearch(item.section);
+  const inOrlUniverse = isOrlUniverseItem(item);
+  if (!inOrlUniverse) return false;
+  if (!sp.includes("ambulanta")) return false;
+
+  const isOrlSpecialisticka =
+    (sp.includes("orl") || sp.includes("otorino") || section.includes("uha grla nosa") || section.includes("uho grlo nos")) &&
+    sp.includes("specijal");
+  const numbered12 = /\b(1|2|i|ii)\b/i.test(item.specialist);
+  const interventional = sp.includes("intervent");
+
+  return (isOrlSpecialisticka && numbered12) || interventional;
+}
+
+function isSecondaryOrlItem(item: ApiSlotItem): boolean {
+  const sp = normalizeForSearch(item.specialist);
+  return sp.includes("foniatrij") || sp.includes("plastic");
 }
 
 function isOncologyUniverseItem(item: ApiSlotItem): boolean {
@@ -873,6 +906,34 @@ function createCardiologyCombinedAnswer(primary: ApiSlotItem[]): SlotAnswer {
   };
 }
 
+function createOrlCombinedAnswer(primary: ApiSlotItem[]): SlotAnswer {
+  const hasSlots = primary.some((item) => item.status === "HAS_SLOTS");
+  if (!hasSlots) {
+    return {
+      kind: "single",
+      text: "NEMA TERMINA",
+      specialist: "ORL specijalisticka ambulanta 1/2 + interventna",
+      section: "KLINIKA ZA BOLESTI UHA, GRLA I NOSA",
+      status: "NO_SLOTS",
+      firstAvailable: null,
+      bannerTone: "danger"
+    };
+  }
+
+  const best = sortByStatusAndDate(
+    primary.filter((item) => item.status === "HAS_SLOTS")
+  )[0];
+  return {
+    kind: "single",
+    text: `IMA TERMINA\nPrvi dostupni termin: ${best.firstAvailable ?? "nepoznato"} (${best.specialist})`,
+    specialist: "ORL specijalisticka ambulanta 1/2 + interventna",
+    section: best.section,
+    status: "HAS_SLOTS",
+    firstAvailable: best.firstAvailable,
+    bannerTone: "success"
+  };
+}
+
 function createOncologyCombinedAnswer(primary: ApiSlotItem[]): SlotAnswer {
   const hasSlots = primary.some((item) => item.status === "HAS_SLOTS");
   if (!hasSlots) {
@@ -1107,6 +1168,35 @@ export async function GET(req: NextRequest) {
         finalItems = primary;
         relatedItems = related;
         forcedAnswer = createCardiologyCombinedAnswer(primary);
+      }
+    }
+
+    if (
+      !forcedAnswer &&
+      containsOrlIntent(q) &&
+      !hasInvestigationIntent(q) &&
+      !hasSpecificCabinetNumber(q)
+    ) {
+      const orlUniverse = sortByStatusAndDate(
+        visibleItems
+          .filter((item) => looseTextMatch(`${item.specialist} ${item.section}`, q))
+          .filter(isOrlUniverseItem)
+      );
+      const primary = sortByStatusAndDate(orlUniverse.filter(isPrimaryOrlItem));
+      const secondary = sortByStatusAndDate(
+        orlUniverse.filter((item) => !isPrimaryOrlItem(item) && isSecondaryOrlItem(item))
+      );
+      const rest = sortByStatusAndDate(
+        orlUniverse.filter((item) => !isPrimaryOrlItem(item) && !isSecondaryOrlItem(item))
+      );
+
+      if (primary.length > 0) {
+        finalItems = [...primary, ...secondary];
+        relatedItems = rest;
+        relatedTitle = relatedItems.length ? "Ostalo (ORL)" : null;
+        forcedAnswer = createOrlCombinedAnswer(primary);
+      } else if (secondary.length > 0 || rest.length > 0) {
+        finalItems = [...secondary, ...rest];
       }
     }
 
