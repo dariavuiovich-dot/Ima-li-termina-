@@ -574,7 +574,50 @@ function isPrimaryOrlItem(item: ApiSlotItem): boolean {
 
 function isSecondaryOrlItem(item: ApiSlotItem): boolean {
   const sp = normalizeForSearch(item.specialist);
-  return sp.includes("foniatrij") || sp.includes("plastic");
+  return sp.includes("foniat") || sp.includes("fonijat") || sp.includes("plastic");
+}
+
+function rankOrlPrimary(item: ApiSlotItem): number {
+  const sp = normalizeForSearch(item.specialist);
+  const upper = item.specialist.toUpperCase();
+
+  if (sp.includes("specijal") && (/\b1\b|\bI\b/.test(upper) || /\bAMBULANTA I\b/.test(upper))) return 110;
+  if (sp.includes("specijal") && (/\b2\b|\bII\b/.test(upper) || /\b ORL 2\b/.test(upper))) return 120;
+  if (sp.includes("intervent")) return 130;
+  return 199;
+}
+
+function sortOrlPrimary(items: ApiSlotItem[]): ApiSlotItem[] {
+  return [...items].sort((a, b) => {
+    const ra = rankOrlPrimary(a);
+    const rb = rankOrlPrimary(b);
+    if (ra !== rb) return ra - rb;
+    if (a.status !== b.status) return a.status === "HAS_SLOTS" ? -1 : 1;
+    const da = parseSlotDate(a.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    const db = parseSlotDate(b.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    if (da !== db) return da - db;
+    return a.specialist.localeCompare(b.specialist);
+  });
+}
+
+function rankOrlSecondary(item: ApiSlotItem): number {
+  const sp = normalizeForSearch(item.specialist);
+  if (sp.includes("foniat") || sp.includes("fonijat")) return 210;
+  if (sp.includes("plastic")) return 220;
+  return 299;
+}
+
+function sortOrlSecondary(items: ApiSlotItem[]): ApiSlotItem[] {
+  return [...items].sort((a, b) => {
+    const ra = rankOrlSecondary(a);
+    const rb = rankOrlSecondary(b);
+    if (ra !== rb) return ra - rb;
+    if (a.status !== b.status) return a.status === "HAS_SLOTS" ? -1 : 1;
+    const da = parseSlotDate(a.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    const db = parseSlotDate(b.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    if (da !== db) return da - db;
+    return a.specialist.localeCompare(b.specialist);
+  });
 }
 
 function isOncologyUniverseItem(item: ApiSlotItem): boolean {
@@ -1183,8 +1226,8 @@ export async function GET(req: NextRequest) {
           .filter((item) => looseTextMatch(`${item.specialist} ${item.section}`, q))
           .filter(isOrlUniverseItem)
       );
-      const primary = sortByStatusAndDate(orlUniverse.filter(isPrimaryOrlItem));
-      const secondary = sortByStatusAndDate(
+      const primary = sortOrlPrimary(orlUniverse.filter(isPrimaryOrlItem));
+      const secondary = sortOrlSecondary(
         orlUniverse.filter((item) => !isPrimaryOrlItem(item) && isSecondaryOrlItem(item))
       );
       const rest = sortByStatusAndDate(
