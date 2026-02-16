@@ -314,7 +314,7 @@ function containsCtNeuroIntent(query: string): boolean {
 
   // Common ways users describe "CT neuro" (head/brain/skull/spine).
   return (
-    /(mozg|mozga|glav|endokran|endokranij|endocran|encephal|cerebr)/.test(q) ||
+    /(mozg|mozga|glav|endokran|endokranij|endocran|encephal|cerebr|pns|sinus|paranaz|supljin)/.test(q) ||
     /(kicm|kicme|kicma|cervikal|cervik|vratn|torakal|lumbosakral|lumbal|ls\b|th\b|\bc\b|krst|krsta)/.test(
       q
     )
@@ -368,7 +368,7 @@ function containsMrBodyIntent(query: string): boolean {
   if (/abdom/.test(q) && /karlic/.test(q)) return true;
 
   return (
-    /(body|abdom|abdomena|male karlic|mala karlic|pelv|toraks|toraksa|toraxa|thorax|thoraxa|grudnog kos|grudni kos|gornjeg abdomena|gornji abdomen)/.test(
+    /(body|abdom|abdomena|male karlic|mala karlic|pelv|toraks|toraksa|toraxa|thorax|thoraxa|grudnog kos|grudni kos|gornjeg abdomena|gornji abdomen|prostat|prostata|nadbubreg|adrenal)/.test(
       q
     )
   );
@@ -407,7 +407,8 @@ function isUltrasoundItem(item: ApiSlotItem): boolean {
 }
 
 function isCtNeuroItem(item: ApiSlotItem): boolean {
-  return normalizeForSearch(item.specialist).includes("ct neuro");
+  const sp = normalizeForSearch(item.specialist);
+  return sp.includes("ct neuro") || sp.includes("ct pns") || sp.includes("paranaz") || sp.includes("sinus");
 }
 
 function isCtBodyItem(item: ApiSlotItem): boolean {
@@ -434,7 +435,13 @@ function isMrNeuroItem(item: ApiSlotItem): boolean {
 }
 
 function isMrBodyItem(item: ApiSlotItem): boolean {
-  return normalizeForSearch(item.specialist).includes("mr body");
+  const sp = normalizeForSearch(item.specialist);
+  return (
+    sp.includes("mr body") ||
+    sp.includes("prostat") ||
+    sp.includes("nadbubreg") ||
+    sp.includes("adrenal")
+  );
 }
 
 function isMrMskItem(item: ApiSlotItem): boolean {
@@ -600,12 +607,23 @@ function hasChildIntent(query: string): boolean {
 
 function containsNeurologyIntent(query: string): boolean {
   const latin = normalizeQueryLatin(query);
-  return /(nevrolog|neurolog|nevrolo|neurolo)/.test(latin);
+  return /(nevrolog|neurolog|nevrolo|neurolo|\bneuro\b|\bnevro\b)/.test(latin);
 }
 
 function hasSpecificCabinetNumber(query: string): boolean {
   const q = normalizeQueryLatin(query);
   return /\b(i|ii|iii|1|2|3)\b/.test(q);
+}
+
+function isShortNeuroQuery(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  const tokens = q.split(/\s+/).filter(Boolean);
+  return tokens.length === 1 && (tokens[0] === "neuro" || tokens[0] === "nevro");
+}
+
+function isFullNeurologQuery(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  return /\b(neurolog|nevrolog|neurologija|nevrologija)\b/.test(q);
 }
 
 function containsEndocrinologyIntent(query: string): boolean {
@@ -861,6 +879,39 @@ function isNeurologyAmbulantaOneOrTwo(item: ApiSlotItem): boolean {
   return /\b(I|II|1|2)\b/i.test(item.specialist) || /\b(i|ii|1|2)\b/.test(sp);
 }
 
+function isUrologyItem(item: ApiSlotItem): boolean {
+  const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
+  return /(urol|urolog)/.test(combined);
+}
+
+function isNeurologyUniverseItem(item: ApiSlotItem): boolean {
+  const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
+  if (isUrologyItem(item)) return false;
+  if (/(neurol|nevrol|neuro|klinika za neurologiju)/.test(combined)) return true;
+  if (/(emng|eeg|evociran|evocirane potencijale|evocirani potencijali|epi|epi dispanser|dispanser)/.test(combined)) {
+    return true;
+  }
+  return false;
+}
+
+function isNeurologySecondaryItem(item: ApiSlotItem): boolean {
+  const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
+  return /(emng|eeg|evociran|evocirane potencijale|evocirani potencijali|dispanser.*epi|epi.*dispanser)/.test(
+    combined
+  );
+}
+
+function isNeurologyInterventionalItem(item: ApiSlotItem): boolean {
+  const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
+  return combined.includes("intervent") && /(neuro|neurol|nevrol)/.test(combined);
+}
+
+function isNeurologyCtOrMrItem(item: ApiSlotItem): boolean {
+  if (!(isCtItem(item) || isMrItem(item))) return false;
+  const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
+  return /(neuro|pns|sinus|endokran|glav|mozg|kicm)/.test(combined);
+}
+
 function isPediatricItem(item: ApiSlotItem): boolean {
   const sectionNorm = normalizeForSearch(item.section);
   const specialistNorm = normalizeForSearch(item.specialist);
@@ -1005,7 +1056,7 @@ function createNeurologyCombinedAnswer(allItems: ApiSlotItem[]): SlotAnswer {
   if (!relevant.length) {
     return {
       kind: "none",
-      text: 'No "Neuroloska ambulanta I/II" records found in the current report.',
+      text: "Nema zapisa za Neuroloska ambulanta I/II u aktuelnom izvjestaju.",
       bannerTone: "info"
     };
   }
@@ -1014,7 +1065,7 @@ function createNeurologyCombinedAnswer(allItems: ApiSlotItem[]): SlotAnswer {
   if (!withSlots.length) {
     return {
       kind: "single",
-      text: "NO: there are no free slots for neurologist (Neuroloska ambulanta I/II).",
+      text: "NEMA TERMINA",
       specialist: "Neuroloska ambulanta I/II",
       section: "KLINIKA ZA NEUROLOGIJU",
       status: "NO_SLOTS" as const,
@@ -1031,7 +1082,7 @@ function createNeurologyCombinedAnswer(allItems: ApiSlotItem[]): SlotAnswer {
 
   return {
     kind: "single",
-    text: `YES: there are free neurologist slots (Neuroloska ambulanta I/II). Earliest: ${best.firstAvailable ?? "unknown"} in "${best.specialist}".`,
+    text: `IMA TERMINA\nPrvi dostupni termin: ${best.firstAvailable ?? "nepoznato"} (${best.specialist})`,
     specialist: "Neuroloska ambulanta I/II",
     section: "KLINIKA ZA NEUROLOGIJU",
     status: "HAS_SLOTS" as const,
@@ -1358,6 +1409,58 @@ export async function GET(req: NextRequest) {
       );
       items = uzItems;
       forcedAnswer = createCombinedInvestigationAnswer("UZ / DOPLER", uzItems);
+    }
+
+    if (!forcedAnswer && containsNeurologyIntent(q)) {
+      const neurologyUniverse = sortByStatusAndDate(
+        visibleItems
+          .filter(isNeurologyUniverseItem)
+          .filter((item) => !isUrologyItem(item))
+      );
+
+      const primary = sortByStatusAndDate(
+        neurologyUniverse.filter(isNeurologyAmbulantaOneOrTwo)
+      );
+      const secondary = sortByStatusAndDate(
+        neurologyUniverse.filter(
+          (item) =>
+            !isNeurologyAmbulantaOneOrTwo(item) &&
+            isNeurologySecondaryItem(item)
+        )
+      );
+      const interventional = sortByStatusAndDate(
+        neurologyUniverse.filter(
+          (item) =>
+            !isNeurologyAmbulantaOneOrTwo(item) &&
+            !isNeurologySecondaryItem(item) &&
+            isNeurologyInterventionalItem(item)
+        )
+      );
+      const ctmr = sortByStatusAndDate(
+        neurologyUniverse.filter(
+          (item) =>
+            !isNeurologyAmbulantaOneOrTwo(item) &&
+            !isNeurologySecondaryItem(item) &&
+            !isNeurologyInterventionalItem(item) &&
+            isNeurologyCtOrMrItem(item)
+        )
+      );
+      const rest = sortByStatusAndDate(
+        neurologyUniverse.filter(
+          (item) =>
+            !isNeurologyAmbulantaOneOrTwo(item) &&
+            !isNeurologySecondaryItem(item) &&
+            !isNeurologyInterventionalItem(item) &&
+            !isNeurologyCtOrMrItem(item)
+        )
+      );
+
+      const includeCtMrTail = isShortNeuroQuery(q) && !isFullNeurologQuery(q);
+      items = includeCtMrTail
+        ? [...primary, ...secondary, ...interventional, ...rest, ...ctmr]
+        : [...primary, ...secondary, ...interventional, ...rest];
+
+      forcedAnswer = createNeurologyCombinedAnswer(neurologyUniverse);
     }
 
     const refinedItems = applyEndocrinologyVisitFilter(q, items);
