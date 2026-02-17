@@ -723,19 +723,39 @@ function isPrimaryEndocrinologyAmbulanta(item: ApiSlotItem): boolean {
 }
 
 function isRelatedEndocrinologyItem(item: ApiSlotItem): boolean {
+  return isEndocrineSurgeryItem(item) || isGyneEndocrinologyItem(item);
+}
+
+function isEndocrineSurgeryItem(item: ApiSlotItem): boolean {
   const section = normalizeForSearch(item.section);
   const specialist = normalizeForSearch(item.specialist);
-
-  const endocrineSurgery =
+  return (
     specialist.includes("endokrin") &&
-    (specialist.includes("hirurg") || section.includes("hirurska klinika"));
+    (specialist.includes("hirurg") || section.includes("hirurska klinika"))
+  );
+}
 
-  const gyneEndocrine =
+function isGyneEndocrinologyItem(item: ApiSlotItem): boolean {
+  const section = normalizeForSearch(item.section);
+  const specialist = normalizeForSearch(item.specialist);
+  return (
     specialist.includes("endokrin") &&
     (specialist.includes("ginekol") ||
-      section.includes("ginekologiju i akuserstvo"));
+      section.includes("ginekologiju i akuserstvo"))
+  );
+}
 
-  return endocrineSurgery || gyneEndocrine;
+function sortEndocrineRelated(items: ApiSlotItem[]): ApiSlotItem[] {
+  return [...items].sort((a, b) => {
+    const ra = isGyneEndocrinologyItem(a) ? 200 : 100;
+    const rb = isGyneEndocrinologyItem(b) ? 200 : 100;
+    if (ra !== rb) return ra - rb;
+    if (a.status !== b.status) return a.status === "HAS_SLOTS" ? -1 : 1;
+    const da = parseSlotDate(a.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    const db = parseSlotDate(b.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    if (da !== db) return da - db;
+    return a.specialist.localeCompare(b.specialist);
+  });
 }
 
 function isPrimaryCardiologyItem(item: ApiSlotItem): boolean {
@@ -1651,7 +1671,7 @@ export async function GET(req: NextRequest) {
       const primary = sortEndocrineByAmbulantaNumber(
         visibleItems.filter(isPrimaryEndocrinologyAmbulanta)
       );
-      const related = sortByStatusAndDate(
+      const related = sortEndocrineRelated(
         visibleItems.filter(isRelatedEndocrinologyItem)
       );
 
