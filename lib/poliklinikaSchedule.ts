@@ -16,7 +16,7 @@ type RawAccordionItem = {
 };
 
 const DOCTOR_NAME_REGEX =
-  /(?:prof\.?|doc\.?|prim\.?|mr\.?\s*sc\.?\s*med\.?|dr\.?\s*sc\.?\s*med\.?|dr\.?)\s+[\p{L}][\p{L}\-']+(?:\s+[\p{L}][\p{L}\-']+){0,4}/giu;
+  /(?:(?:prof\.?|doc\.?|prim\.?|mr\.?|dr\.?)\s*)+(?:(?:sc\.?|med\.?)\s*)*[\p{L}][\p{L}\-']+(?:\s+[\p{L}][\p{L}\-']+){1,3}/giu;
 
 function decodeHtmlEntities(input: string): string {
   const named: Record<string, string> = {
@@ -170,24 +170,22 @@ function containsScheduleMarker(line: string): boolean {
 function extractDoctorNames(line: string): string[] {
   const found = line.match(DOCTOR_NAME_REGEX);
   if (!found) return [];
-  const cleaned = found.map((x) =>
-    x
-      .replace(/\s+/g, " ")
-      .replace(/\b(ordinira|od|do|u|na|sa)\b.*$/i, "")
-      .trim()
-  );
+  const cleaned = found.map((x) => x.replace(/\s+/g, " ").replace(/[,;:\s]+$/g, "").trim());
   return [...new Set(cleaned.filter(Boolean))];
 }
 
 function cleanScheduleLine(line: string): string {
   const withoutNames = line.replace(DOCTOR_NAME_REGEX, " ");
   const normalized = withoutNames
+    .replace(/\b(specijalista|specijalistkinja)\b[^,;:]*(?:[,;:]|$)/gi, " ")
+    .replace(/\bordinira(?:ju)?\b/gi, " ")
     .replace(/\s+/g, " ")
     .replace(/\s*:\s*:/g, ": ")
     .replace(/:\s*(,|;|i)\b/gi, ": ")
     .replace(/\(\s*\)/g, " ")
     .replace(/\s+,/g, ",")
     .replace(/\s+;/g, ";")
+    .replace(/[:;,]\s*(od\s*\d)/gi, " $1")
     .trim()
     .replace(/[:;,\s]+$/g, "")
     .trim();
