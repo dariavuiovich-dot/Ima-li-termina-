@@ -17,6 +17,20 @@ type RawAccordionItem = {
 
 const DOCTOR_NAME_REGEX =
   /(?:(?:prof\.?|doc\.?|prim\.?|mr\.?|dr\.?)\s*)+(?:(?:sc\.?|med\.?)\s*)*[\p{L}][\p{L}\-']+(?:\s+[\p{L}][\p{L}\-']+){1,3}/giu;
+const INFO_LINE_REGEX =
+  /potrebne informacije|pozivom na broj|broj telefona|telefon|\bkontakt\b|u periodu od/i;
+const TITLE_TOKEN_REGEX = /^(dr|doc|prof|prim|mr|sc|med)\.?$/i;
+
+const DAY_PATTERNS: Array<{ label: string; re: RegExp }> = [
+  { label: "Ponedjeljak", re: /\bponedjelj(?:ak|kom|ka)?\b|\bponedelj(?:ak|kom|ka)?\b/i },
+  { label: "Utorak", re: /\butor(?:ak|kom|ka)?\b/i },
+  { label: "Srijeda", re: /\bsrijed(?:a|om|e)?\b|\bsred(?:a|om|e)?\b/i },
+  { label: "Četvrtak", re: /\bčetvrt(?:ak|kom|ka)?\b|\bcetvrt(?:ak|kom|ka)?\b/i },
+  { label: "Petak", re: /\bpet(?:ak|kom|ka)?\b/i },
+  { label: "Subota", re: /\bsubot(?:a|om|e)?\b/i },
+  { label: "Nedjelja", re: /\bnedjelj(?:a|om|e)?\b|\bnedelj(?:a|om|e)?\b/i },
+  { label: "Radnim danima", re: /\bradnim?\s+danima\b/i }
+];
 
 function decodeHtmlEntities(input: string): string {
   const named: Record<string, string> = {
@@ -52,7 +66,7 @@ function stripHtmlToLines(html: string): string[] {
     .replace(/<br\s*\/?>/gi, "\n")
     .replace(/<\/p>/gi, "\n")
     .replace(/<\/li>/gi, "\n")
-    .replace(/<li[^>]*>/gi, "• ")
+    .replace(/<li[^>]*>/gi, "- ")
     .replace(/<[^>]+>/g, " ");
 
   return decodeHtmlEntities(normalized)
@@ -126,7 +140,7 @@ function extractAccordionItems(pageHtml: string): RawAccordionItem[] {
 function extractLocation(lines: string[]): string | null {
   const idx = lines.findIndex((line) => /lokacija/i.test(line));
   if (idx < 0) return null;
-  for (let i = idx + 1; i < Math.min(lines.length, idx + 5); i += 1) {
+  for (let i = idx + 1; i < Math.min(lines.length, idx + 6); i += 1) {
     const candidate = lines[i];
     if (!candidate) continue;
     if (/potrebne informacije|telefon|radno vrijeme|ordinira|ordiniraju/i.test(candidate)) {
@@ -151,9 +165,7 @@ function cleanHoursLine(line: string): string {
 }
 
 function scheduleFromHoursLine(line: string): string | null {
-  const normalized = cleanHoursLine(line)
-    .replace(/^ljekari?\s+ordiniraju\s*/i, "")
-    .trim();
+  const normalized = cleanHoursLine(line).replace(/^ljekari?\s+ordiniraju\s*/i, "").trim();
   return normalized || null;
 }
 
@@ -162,21 +174,80 @@ function containsDoctorMarker(line: string): boolean {
 }
 
 function containsScheduleMarker(line: string): boolean {
-  return /(poned|utor|srijed|cetvrt|četvrt|petak|subot|nedjel|nedelj|svake|svakog|od\s*\d{1,2}|ordinira|ordiniraju)/i.test(
+  return /(poned|utor|srijed|sred|cetvrt|četvrt|petak|subot|nedjel|nedelj|radnim danima|svake|svakog|od\s*\d{1,2}|ordinira|ordiniraju)/i.test(
     line
   );
+}
+
+function isNonScheduleInfoLine(line: string): boolean {
+  return INFO_LINE_REGEX.test(line);
+}
+
+function normalizeDoctorName(candidate: string): string | null {
+  let value = candidate.replace(/\s+/g, " ").trim();
+  value = value.replace(/\b(ordinira|ordiniraju|specijalista|specijalistkinja)\b.*$/i, "").trim();
+  value = value.replace(/[,;:\s]+$/g, "").trim();
+  value = value.replace(/\bmr\.?\s*sc\.?\s*med\.?$/i, "").trim();
+  value = value.replace(/\bmr\.?\s*sc\.?$/i, "").trim();
+  if (!value) return null;
+
+  const nameTokens = value
+    .split(/\s+/)
+    .map((x) => x.replace(/[^\p{L}.-]/gu, ""))
+    .filter(Boolean)
+    .filter((x) => !TITLE_TOKEN_REGEX.test(x));
+
+  if (nameTokens.length < 2) return null;
+  return value;
 }
 
 function extractDoctorNames(line: string): string[] {
   const found = line.match(DOCTOR_NAME_REGEX);
   if (!found) return [];
-  const cleaned = found.map((x) => x.replace(/\s+/g, " ").replace(/[,;:\s]+$/g, "").trim());
-  return [...new Set(cleaned.filter(Boolean))];
+  const cleaned = found
+    .map((x) => normalizeDoctorName(x))
+    .filter((x): x is string => Boolean(x));
+  return [...new Set(cleaned)];
+}
+
+function extractDayLabel(text: string | null): string | null {
+  if (!text) return null;
+  for (const day of DAY_PATTERNS) {
+    if (day.re.test(text)) return day.label;
+  }
+  return null;
+}
+
+function extractAmbulantaNumber(text: string | null): string | null {
+  if (!text) return null;
+  const match = text.match(/ambulanta\s*br\.?\s*\d+/i);
+  return match?.[0]?.replace(/\s+/g, " ").trim() ?? null;
+}
+
+function extractTimeRange(text: string | null): string | null {
+  if (!text) return null;
+  const normalized = text.replace(/\s+/g, " ");
+
+  const odDo =
+    normalized.match(
+      /\bod\s*\d{1,2}(?:[.:]\d{2})?\s*h?\s*do\s*\d{1,2}(?:[.:]\d{2})?\s*h?\b/i
+    )?.[0] ??
+    normalized.match(/\b\d{1,2}(?:[.:]\d{2})?\s*h?\s*do\s*\d{1,2}(?:[.:]\d{2})?\s*h?\b/i)?.[0];
+  if (odDo) {
+    const value = odDo.replace(/\s+/g, " ").trim();
+    return value.toLowerCase().startsWith("od ") ? value : `od ${value}`;
+  }
+
+  const dash = normalized.match(/\b(\d{1,2}(?:[.:]\d{2})?)\s*-\s*(\d{1,2}(?:[.:]\d{2})?)\s*h?\b/i);
+  if (dash) {
+    return `od ${dash[1]} h do ${dash[2]} h`;
+  }
+  return null;
 }
 
 function cleanScheduleLine(line: string): string {
   const timeRangeMatch = line.match(
-    /\bod\s*\d{1,2}(?::\d{2})?\s*h?\s*do\s*\d{1,2}(?::\d{2})?\s*h?\b/i
+    /\bod\s*\d{1,2}(?:[.:]\d{2})?\s*h?\s*do\s*\d{1,2}(?:[.:]\d{2})?\s*h?\b/i
   );
   const timeRange = timeRangeMatch?.[0]?.replace(/\s+/g, " ").trim() ?? null;
 
@@ -194,10 +265,28 @@ function cleanScheduleLine(line: string): string {
     .trim()
     .replace(/[:;,\s]+$/g, "")
     .trim();
+
   if (timeRange && !/\bod\b.*\bdo\b/i.test(normalized)) {
     return `${normalized} ${timeRange}`.replace(/\s+/g, " ").trim();
   }
   return normalized || line;
+}
+
+function unifyScheduleDisplay(
+  schedule: string,
+  ambulantaHours: string | null,
+  dayContext: string | null
+): string {
+  const day = extractDayLabel(schedule) ?? dayContext ?? extractDayLabel(ambulantaHours);
+  const time = extractTimeRange(schedule) ?? (day ? extractTimeRange(ambulantaHours) : null);
+  const ambNo = extractAmbulantaNumber(schedule);
+
+  if (!day && !time && !ambNo) return schedule;
+
+  let out = day ?? "";
+  if (ambNo) out = out ? `${out} (${ambNo})` : ambNo;
+  if (time) out = out ? `${out} ${time}` : time;
+  return out.replace(/\s+/g, " ").trim();
 }
 
 function buildId(parts: string[]): string {
@@ -219,9 +308,12 @@ function parseDoctorSchedule(pageHtml: string): DoctorScheduleItem[] {
     const location = extractLocation(lines);
     const fallbackAmbulantaHours = extractAmbulantaHours(lines);
     let currentScheduleContext: string | null = null;
+    let currentDayContext: string | null = null;
     let currentHoursContext: string | null = fallbackAmbulantaHours;
 
     for (const line of lines) {
+      if (isNonScheduleInfoLine(line)) continue;
+
       const hasDoctor = containsDoctorMarker(line);
       const hasSchedule = containsScheduleMarker(line);
       const hasHours = /ljekari?\s+ordiniraju|radno\s+vrijeme/i.test(line);
@@ -229,14 +321,20 @@ function parseDoctorSchedule(pageHtml: string): DoctorScheduleItem[] {
       if (hasHours) {
         currentHoursContext = cleanHoursLine(line);
         const hoursAsSchedule = scheduleFromHoursLine(line);
-        if (hoursAsSchedule) currentScheduleContext = hoursAsSchedule;
+        if (hoursAsSchedule) {
+          currentScheduleContext = hoursAsSchedule;
+          currentDayContext = extractDayLabel(hoursAsSchedule) ?? currentDayContext;
+        }
       }
 
       if (hasSchedule && !hasDoctor) {
         const nextContext = hasHours
           ? scheduleFromHoursLine(line) ?? cleanScheduleLine(line)
           : cleanScheduleLine(line);
-        if (nextContext) currentScheduleContext = nextContext;
+        if (nextContext) {
+          currentScheduleContext = nextContext;
+          currentDayContext = extractDayLabel(nextContext) ?? currentDayContext;
+        }
         continue;
       }
       if (!hasDoctor) continue;
@@ -244,14 +342,16 @@ function parseDoctorSchedule(pageHtml: string): DoctorScheduleItem[] {
       const names = extractDoctorNames(line);
       if (!names.length) continue;
 
-      const normalizedSchedule = hasSchedule
-        ? cleanScheduleLine(line)
-        : currentScheduleContext;
+      const normalizedSchedule = hasSchedule ? cleanScheduleLine(line) : currentScheduleContext;
       if (hasSchedule && normalizedSchedule) {
         currentScheduleContext = normalizedSchedule;
+        currentDayContext = extractDayLabel(normalizedSchedule) ?? currentDayContext;
       }
-      const rowSchedule = normalizedSchedule ?? line;
+
       const rowHours = currentHoursContext ?? fallbackAmbulantaHours;
+      const rowScheduleRaw = normalizedSchedule ?? line;
+      const rowSchedule = unifyScheduleDisplay(rowScheduleRaw, rowHours, currentDayContext);
+      currentDayContext = extractDayLabel(rowSchedule) ?? currentDayContext;
 
       for (const doctor of names) {
         const id = buildId([item.ambulanta, doctor, rowSchedule, location ?? ""]);
