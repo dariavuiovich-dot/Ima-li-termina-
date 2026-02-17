@@ -36,6 +36,15 @@ type ResultGroup = {
   items: SlotRow[];
 };
 
+type ScheduleRow = {
+  id: string;
+  ambulanta: string;
+  doctor: string;
+  schedule: string;
+  location: string | null;
+  sourceUrl: string;
+};
+
 export default function HomePage() {
   const [query, setQuery] = useState("");
   const [rows, setRows] = useState<SlotRow[]>([]);
@@ -47,6 +56,11 @@ export default function HomePage() {
   const [sourceUrl, setSourceUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [scheduleQuery, setScheduleQuery] = useState("");
+  const [scheduleRows, setScheduleRows] = useState<ScheduleRow[]>([]);
+  const [scheduleLoading, setScheduleLoading] = useState(false);
+  const [scheduleError, setScheduleError] = useState<string | null>(null);
+  const [scheduleSourceUrl, setScheduleSourceUrl] = useState<string | null>(null);
 
   const [userId, setUserId] = useState("demo-user");
   const [subQuery, setSubQuery] = useState("");
@@ -183,6 +197,32 @@ export default function HomePage() {
     await runSearch(nextQuery);
   }
 
+  async function searchSchedule(e?: FormEvent) {
+    e?.preventDefault();
+    const raw = scheduleQuery.trim();
+    setScheduleError(null);
+    setScheduleLoading(true);
+
+    try {
+      const qs = new URLSearchParams();
+      if (raw) qs.set("q", raw);
+      qs.set("limit", "100");
+
+      const res = await fetch(`/api/schedule?${qs.toString()}`);
+      const data = await readJsonOrThrow(res, "Neuspjelo ucitavanje rasporeda");
+      setScheduleRows(data.items ?? []);
+      setScheduleSourceUrl(data.sourceUrl ?? null);
+    } catch (err) {
+      setScheduleRows([]);
+      setScheduleSourceUrl(null);
+      setScheduleError(
+        err instanceof Error ? err.message : "Neuspjelo ucitavanje rasporeda"
+      );
+    } finally {
+      setScheduleLoading(false);
+    }
+  }
+
   async function createSubscription(e: FormEvent) {
     e.preventDefault();
     setSubMessage(null);
@@ -265,6 +305,58 @@ export default function HomePage() {
           </p>
         ) : null}
         {error ? <p className="meta">{error}</p> : null}
+      </form>
+
+      <form className="card" onSubmit={searchSchedule}>
+        <h2>Kad ordinira?</h2>
+        <p className="meta">
+          Ukucajte prezime ili ime ljekara, ili specijalnost (npr. neurolog
+          Vujovic, endokrinolog Muzurovic, samo Vujovic).
+        </p>
+        <div className="row">
+          <input
+            placeholder="npr. neurolog Vujovic"
+            value={scheduleQuery}
+            onChange={(e) => setScheduleQuery(e.target.value)}
+          />
+          <button type="submit" disabled={scheduleLoading}>
+            {scheduleLoading ? "Provjeravam..." : "Provjeri raspored"}
+          </button>
+        </div>
+        {scheduleSourceUrl ? (
+          <p className="meta">
+            Izvor:{" "}
+            <a href={scheduleSourceUrl} target="_blank" rel="noreferrer">
+              Poliklinika KCCG
+            </a>
+          </p>
+        ) : null}
+        {scheduleError ? <p className="meta">{scheduleError}</p> : null}
+        {scheduleQuery.trim() && !scheduleLoading && !scheduleRows.length && !scheduleError ? (
+          <p className="meta">Nema rezultata za uneseni upit.</p>
+        ) : null}
+        {scheduleRows.length ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Ljekar</th>
+                <th>Ambulanta / jedinica</th>
+                <th>Dani i vrijeme</th>
+                <th>Lokacija</th>
+              </tr>
+            </thead>
+            <tbody>
+              {scheduleRows.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.doctor}</td>
+                  <td>{item.ambulanta}</td>
+                  <td>{item.schedule}</td>
+                  <td>{item.location ?? "-"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : null}
       </form>
 
       <div className="card">
