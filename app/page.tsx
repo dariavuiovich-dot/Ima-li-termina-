@@ -231,8 +231,9 @@ export default function HomePage() {
       <div className="card">
         <h1>Ima li terminaaa!?</h1>
         <p className="meta">
-          Ask in text form if a specialist has free slots and when the first slot
-          is available.
+          Ukucajte naziv dijagnosticke pretrage ili specijaliste i mi cemo
+          provjeriti da li ima termina za tu vrstu dijagnostike ili konsultativnog
+          pregleda, provjericemo i kad je prvi slobodni termin.
         </p>
       </div>
 
@@ -444,6 +445,12 @@ export default function HomePage() {
 
       <form className="card" onSubmit={createSubscription}>
         <h2>Notifications Subscription</h2>
+        <p className="meta">
+          Potpisite se na notifikacije za specijalistu/pretragu za kojeg dugo
+          cekate termin: mi cemo da Vam posaljemo notifikaciju kad se pojavi prvi
+          slobodni (ili raniji) termin za pregled tog specijaliste ili
+          dijagnosticku pretragu od interesa.
+        </p>
         <div className="row">
           <input
             placeholder="User ID"
@@ -489,7 +496,7 @@ export default function HomePage() {
         ) : null}
         {channel === "web_push" ? (
           <p className="meta">
-            Browser will ask permission and register push subscription on save.
+            Browser ce traziti dozvolu i registrovati push pretplatu nakon cuvanja.
           </p>
         ) : null}
         <div className="row">

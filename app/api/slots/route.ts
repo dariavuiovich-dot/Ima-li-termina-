@@ -271,6 +271,11 @@ function isCtItem(item: ApiSlotItem): boolean {
   return tokens.includes("CT") || tokens.includes("MSCT");
 }
 
+function isCtKolonoskopijeItem(item: ApiSlotItem): boolean {
+  const sp = normalizeForSearch(item.specialist);
+  return sp.includes("ct kolonoskop");
+}
+
 function isOctItem(item: ApiSlotItem): boolean {
   const tokens = upperTokens(`${item.specialist} ${item.section}`);
   return tokens.includes("OCT");
@@ -314,6 +319,35 @@ function isOnlyCtQuery(query: string): boolean {
   const q = normalizeQueryLatin(query);
   const tokens = q.split(/\s+/).filter(Boolean);
   return tokens.length === 1 && tokens[0] === "ct";
+}
+
+function isGenericCtQuery(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  const tokens = q.split(/\s+/).filter(Boolean);
+  if (!tokens.length) return false;
+
+  const hasCt = tokens.includes("ct") || tokens.includes("msct");
+  if (!hasCt) return false;
+
+  const genericWords = new Set([
+    "pregled",
+    "snimanje",
+    "snimak",
+    "dijagnostika",
+    "diagnostika",
+    "radiologija",
+    "radioloska",
+    "centar",
+    "kccg",
+    "za",
+    "u",
+    "na",
+    "i"
+  ]);
+
+  const nonCtTokens = tokens.filter((t) => t !== "ct" && t !== "msct");
+  if (!nonCtTokens.length) return true;
+  return nonCtTokens.every((t) => genericWords.has(t));
 }
 
 function containsCtNeuroIntent(query: string): boolean {
@@ -535,6 +569,52 @@ function createCombinedInvestigationAnswer(
     firstAvailable: withSlots.firstAvailable,
     bannerTone: "success"
   };
+}
+
+function createSimpleAvailabilityAnswer(label: string, items: ApiSlotItem[]): SlotAnswer {
+  if (!items.length) {
+    return {
+      kind: "none",
+      text: `Nema zapisa za "${label}".`,
+      bannerTone: "info"
+    };
+  }
+
+  const hasSlots = items.some((x) => x.status === "HAS_SLOTS");
+  if (!hasSlots) {
+    return {
+      kind: "single",
+      text: "NEMA TERMINA",
+      specialist: label,
+      section: "",
+      status: "NO_SLOTS",
+      firstAvailable: null,
+      bannerTone: "danger"
+    };
+  }
+
+  return {
+    kind: "single",
+    text: "IMA TERMINA",
+    specialist: label,
+    section: "",
+    status: "HAS_SLOTS",
+    firstAvailable: null,
+    bannerTone: "success"
+  };
+}
+
+function sortCtItems(items: ApiSlotItem[]): ApiSlotItem[] {
+  return [...items].sort((a, b) => {
+    const ra = isCtKolonoskopijeItem(a) ? 900 : 100;
+    const rb = isCtKolonoskopijeItem(b) ? 900 : 100;
+    if (ra !== rb) return ra - rb;
+    if (a.status !== b.status) return a.status === "HAS_SLOTS" ? -1 : 1;
+    const da = parseSlotDate(a.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    const db = parseSlotDate(b.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    if (da !== db) return da - db;
+    return a.specialist.localeCompare(b.specialist);
+  });
 }
 
 function formatKonzilijumFirstAvailable(value: string | null): string {
@@ -1482,7 +1562,7 @@ export async function GET(req: NextRequest) {
 
       if (ctAngioIntent || ctNeuroIntent || ctBodyIntent) {
         // For CT subtype intents, ignore extra words (mozga/abdomena/toraksa/etc) and show the matching CT subgroup.
-        const ctUniverse = sortByStatusAndDate(visibleItems.filter(isCtItem));
+        const ctUniverse = sortCtItems(visibleItems.filter(isCtItem));
 
         const primary = ctAngioIntent
           ? ctUniverse.filter(isCtAngioItem)
@@ -1495,17 +1575,19 @@ export async function GET(req: NextRequest) {
         items = primary;
         forcedAnswer = createCombinedInvestigationAnswer(label, primary);
 
-        relatedItems = sortByStatusAndDate(ctUniverse.filter((x) => !primary.includes(x)));
+        relatedItems = sortCtItems(ctUniverse.filter((x) => !primary.includes(x)));
         relatedTitle = relatedItems.length ? "Ostali CT" : null;
       } else {
-        const ctItems = sortByStatusAndDate(
+        const ctItems = sortCtItems(
           visibleItems
             .filter(isCtItem)
             .filter((item) => looseTextMatch(`${item.specialist} ${item.section}`, q))
         );
 
         items = ctItems;
-        forcedAnswer = createCombinedInvestigationAnswer("CT", ctItems);
+        forcedAnswer = isGenericCtQuery(q)
+          ? createSimpleAvailabilityAnswer("CT", ctItems)
+          : createCombinedInvestigationAnswer("CT", ctItems);
 
         if (isOnlyCtQuery(q)) {
           relatedItems = sortByStatusAndDate(
