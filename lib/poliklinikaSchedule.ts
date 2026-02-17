@@ -175,6 +175,11 @@ function extractDoctorNames(line: string): string[] {
 }
 
 function cleanScheduleLine(line: string): string {
+  const timeRangeMatch = line.match(
+    /\bod\s*\d{1,2}(?::\d{2})?\s*h?\s*do\s*\d{1,2}(?::\d{2})?\s*h?\b/i
+  );
+  const timeRange = timeRangeMatch?.[0]?.replace(/\s+/g, " ").trim() ?? null;
+
   const withoutNames = line.replace(DOCTOR_NAME_REGEX, " ");
   const normalized = withoutNames
     .replace(/\b(specijalista|specijalistkinja)\b[^,;:]*(?:[,;:]|$)/gi, " ")
@@ -189,6 +194,9 @@ function cleanScheduleLine(line: string): string {
     .trim()
     .replace(/[:;,\s]+$/g, "")
     .trim();
+  if (timeRange && !/\bod\b.*\bdo\b/i.test(normalized)) {
+    return `${normalized} ${timeRange}`.replace(/\s+/g, " ").trim();
+  }
   return normalized || line;
 }
 
