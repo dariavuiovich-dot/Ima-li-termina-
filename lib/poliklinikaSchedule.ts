@@ -227,7 +227,9 @@ function parseDoctorSchedule(pageHtml: string): DoctorScheduleItem[] {
       }
 
       if (hasSchedule && !hasDoctor) {
-        const nextContext = cleanScheduleLine(line);
+        const nextContext = hasHours
+          ? scheduleFromHoursLine(line) ?? cleanScheduleLine(line)
+          : cleanScheduleLine(line);
         if (nextContext) currentScheduleContext = nextContext;
         continue;
       }
