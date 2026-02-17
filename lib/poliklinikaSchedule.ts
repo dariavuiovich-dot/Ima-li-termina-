@@ -146,6 +146,17 @@ function extractAmbulantaHours(lines: string[]): string | null {
   return null;
 }
 
+function cleanHoursLine(line: string): string {
+  return line.replace(/\s+/g, " ").replace(/[:;.,\s]+$/g, "").trim();
+}
+
+function scheduleFromHoursLine(line: string): string | null {
+  const normalized = cleanHoursLine(line)
+    .replace(/^ljekari?\s+ordiniraju\s*/i, "")
+    .trim();
+  return normalized || null;
+}
+
 function containsDoctorMarker(line: string): boolean {
   return /\b(dr|doc\.?|prof\.?|prim\.?|mr\.?)\b/i.test(line);
 }
@@ -200,25 +211,50 @@ function parseDoctorSchedule(pageHtml: string): DoctorScheduleItem[] {
     if (!lines.length) continue;
 
     const location = extractLocation(lines);
-    const ambulantaHours = extractAmbulantaHours(lines);
+    const fallbackAmbulantaHours = extractAmbulantaHours(lines);
+    let currentScheduleContext: string | null = null;
+    let currentHoursContext: string | null = fallbackAmbulantaHours;
 
     for (const line of lines) {
-      if (!containsDoctorMarker(line)) continue;
-      if (!containsScheduleMarker(line)) continue;
+      const hasDoctor = containsDoctorMarker(line);
+      const hasSchedule = containsScheduleMarker(line);
+      const hasHours = /ljekari?\s+ordiniraju|radno\s+vrijeme/i.test(line);
+
+      if (hasHours) {
+        currentHoursContext = cleanHoursLine(line);
+        const hoursAsSchedule = scheduleFromHoursLine(line);
+        if (hoursAsSchedule) currentScheduleContext = hoursAsSchedule;
+      }
+
+      if (hasSchedule && !hasDoctor) {
+        const nextContext = cleanScheduleLine(line);
+        if (nextContext) currentScheduleContext = nextContext;
+        continue;
+      }
+      if (!hasDoctor) continue;
 
       const names = extractDoctorNames(line);
       if (!names.length) continue;
 
+      const normalizedSchedule = hasSchedule
+        ? cleanScheduleLine(line)
+        : currentScheduleContext;
+      if (hasSchedule && normalizedSchedule) {
+        currentScheduleContext = normalizedSchedule;
+      }
+      const rowSchedule = normalizedSchedule ?? line;
+      const rowHours = currentHoursContext ?? fallbackAmbulantaHours;
+
       for (const doctor of names) {
-        const id = buildId([item.ambulanta, doctor, line, location ?? ""]);
+        const id = buildId([item.ambulanta, doctor, rowSchedule, location ?? ""]);
         if (seen.has(id)) continue;
         seen.add(id);
         out.push({
           id,
           ambulanta: item.ambulanta,
           doctor,
-          schedule: cleanScheduleLine(line),
-          ambulantaHours,
+          schedule: rowSchedule,
+          ambulantaHours: rowHours,
           location,
           sourceUrl: POLIKLINIKA_URL
         });
