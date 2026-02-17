@@ -675,6 +675,36 @@ function containsOncologyIntent(query: string): boolean {
   );
 }
 
+function cleanSpecialistName(value: string): string {
+  return value
+    .replace(/\b([123])1{4,}(?=\s+Ljekar specijalista u amb\.?)/gi, "$1")
+    .replace(/\s*\d*\s*Ljekar specijalista u amb\.?.*$/i, "")
+    .replace(/\b([123])1{4,}\b/g, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function extractEndocrineAmbulantaNumber(value: string): number | null {
+  const normalized = normalizeForSearch(value);
+  const upper = value.toUpperCase();
+
+  const fused = normalized.match(/ambulanta\s*([123])1{3,}\b/);
+  if (fused) return Number(fused[1]);
+
+  const arabic = normalized.match(/\bambulanta\s*([123])\b/);
+  if (arabic) return Number(arabic[1]);
+
+  if (/\bAMBULANTA\s*III\b/.test(upper)) return 3;
+  if (/\bAMBULANTA\s*II\b/.test(upper)) return 2;
+  if (/\bAMBULANTA\s*I\b/.test(upper)) return 1;
+
+  // Some reports have "ENDOKRINOLOSKA AMBULANTA" (without ordinal),
+  // which corresponds to endocrinology ambulanta stream in Interna klinika.
+  if (normalized.includes("endokrinol") && normalized.includes("ambulanta")) return 1;
+
+  return null;
+}
+
 function hasInvestigationIntent(query: string): boolean {
   const q = normalizeQueryLatin(query);
   return /(ct|mr|mri|mrt|eeg|emng|echo|eho|dopler|doppler|gastroskop|kolono|uz|ultrazv|ultrzv|ultrazvuc|dijagnost|kabinet|test|dxa|dexa|dex|denzitomet|densitomet|osteodenzito|gustina kost)/.test(
@@ -688,7 +718,8 @@ function isPrimaryEndocrinologyAmbulanta(item: ApiSlotItem): boolean {
   if (!section.includes("interna klinika")) return false;
   if (!specialist.includes("endokrinol")) return false;
   if (!specialist.includes("ambulanta")) return false;
-  return /\b(1|2|3|i|ii|iii)\b/i.test(item.specialist);
+  if (isRelatedEndocrinologyItem(item)) return false;
+  return true;
 }
 
 function isRelatedEndocrinologyItem(item: ApiSlotItem): boolean {
@@ -879,18 +910,14 @@ function sortByStatusAndDate(items: ApiSlotItem[]): ApiSlotItem[] {
 }
 
 function sortEndocrineByAmbulantaNumber(items: ApiSlotItem[]): ApiSlotItem[] {
-  const rank = (value: string): number => {
-    const upper = value.toUpperCase();
-    if (/\b1\b|\bI\b/.test(upper)) return 1;
-    if (/\b2\b|\bII\b/.test(upper)) return 2;
-    if (/\b3\b|\bIII\b/.test(upper)) return 3;
-    return 99;
-  };
-
   return [...items].sort((a, b) => {
-    const ra = rank(a.specialist);
-    const rb = rank(b.specialist);
+    const ra = extractEndocrineAmbulantaNumber(a.specialist) ?? 99;
+    const rb = extractEndocrineAmbulantaNumber(b.specialist) ?? 99;
     if (ra !== rb) return ra - rb;
+    if (a.status !== b.status) return a.status === "HAS_SLOTS" ? -1 : 1;
+    const da = parseSlotDate(a.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    const db = parseSlotDate(b.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    if (da !== db) return da - db;
     return a.specialist.localeCompare(b.specialist);
   });
 }
@@ -1107,11 +1134,10 @@ function applyEndocrinologyVisitFilter(
 
   if (!visitAmbulanta.length) return items;
 
-  const numbered = visitAmbulanta.filter((item) =>
-    /\b(1|2|3|i|ii|iii)\b/i.test(item.specialist)
-  );
+  const primary = visitAmbulanta.filter(isPrimaryEndocrinologyAmbulanta);
+  if (primary.length) return sortEndocrineByAmbulantaNumber(primary);
 
-  return numbered.length ? numbered : visitAmbulanta;
+  return visitAmbulanta.filter((item) => !isRelatedEndocrinologyItem(item));
 }
 
 function createNarrowSuggestions(
@@ -1366,19 +1392,22 @@ export async function GET(req: NextRequest) {
       await saveSnapshot(snapshot);
     }
 
-    const allItems: ApiSlotItem[] = snapshot.bySpecialist.map((item) => ({
-      key: item.key,
-      section: item.section,
-      specialist: item.specialist,
-      status: item.status,
-      firstAvailable: item.firstAvailable,
-      codes: Array.isArray(item.codes) ? item.codes : [],
-      slotKind: detectSlotKind({
+    const allItems: ApiSlotItem[] = snapshot.bySpecialist.map((item) => {
+      const specialist = cleanSpecialistName(item.specialist);
+      return {
+        key: item.key,
         section: item.section,
-        specialist: item.specialist
-      }),
-      ...(getItemNote({ specialist: item.specialist, section: item.section }) ?? {})
-    }));
+        specialist,
+        status: item.status,
+        firstAvailable: item.firstAvailable,
+        codes: Array.isArray(item.codes) ? item.codes : [],
+        slotKind: detectSlotKind({
+          section: item.section,
+          specialist
+        }),
+        ...(getItemNote({ specialist, section: item.section }) ?? {})
+      };
+    });
 
     const searchableItems = childIntent
       ? allItems

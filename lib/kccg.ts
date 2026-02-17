@@ -10,7 +10,13 @@ interface KccgPdfMeta {
 
 function cleanName(value: string): string {
   return value
-    .replace(/\s+111111\s+Ljekar specijalista u amb\..*$/i, "")
+    // OCR can glue doctor marker to ambulanta ordinal:
+    // "AMBULANTA 2111111 Ljekar specijalista u amb." -> "AMBULANTA 2".
+    .replace(/\b([123])1{4,}(?=\s+Ljekar specijalista u amb\.?)/gi, "$1")
+    // Drop trailing doctor marker regardless of dot/spacing variants.
+    .replace(/\s*\d*\s*Ljekar specijalista u amb\.?.*$/i, "")
+    // Normalize leftover glued digits (e.g. "2 111111" or "2111111").
+    .replace(/\b([123])1{4,}\b/g, "$1")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -163,7 +169,7 @@ function parseRowsModern(markdown: string, meta: KccgPdfMeta): SlotRecord[] {
       if (!code) continue;
 
       const specialistMatch =
-        block.match(/^\d{6}\s+(.+?)\s+111111\d*\s+Ljekar specijalista u amb\./i) ??
+        block.match(/^\d{6}\s+(.+?)\s+111111\d*\s+Ljekar specijalista u amb\.?/i) ??
         block.match(/^\d{6}\s+(.+?)\s+\d{2}\.\d{2}\.\d{4}\.\s*\d{2}:\d{2}/);
 
       const specialist = cleanName((specialistMatch?.[1] ?? "").trim());
