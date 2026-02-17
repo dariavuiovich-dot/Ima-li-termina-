@@ -41,6 +41,7 @@ type ScheduleRow = {
   ambulanta: string;
   doctor: string;
   schedule: string;
+  ambulantaHours: string | null;
   location: string | null;
   sourceUrl: string;
 };
@@ -342,6 +343,7 @@ export default function HomePage() {
                 <th>Ljekar</th>
                 <th>Ambulanta / jedinica</th>
                 <th>Dani i vrijeme</th>
+                <th>Radno vrijeme ambulante</th>
                 <th>Lokacija</th>
               </tr>
             </thead>
@@ -351,6 +353,7 @@ export default function HomePage() {
                   <td>{item.doctor}</td>
                   <td>{item.ambulanta}</td>
                   <td>{item.schedule}</td>
+                  <td>{item.ambulantaHours ?? "-"}</td>
                   <td>{item.location ?? "-"}</td>
                 </tr>
               ))}

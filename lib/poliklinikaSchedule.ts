@@ -5,6 +5,7 @@ export type DoctorScheduleItem = {
   ambulanta: string;
   doctor: string;
   schedule: string;
+  ambulantaHours: string | null;
   location: string | null;
   sourceUrl: string;
 };
@@ -13,6 +14,9 @@ type RawAccordionItem = {
   ambulanta: string;
   html: string;
 };
+
+const DOCTOR_NAME_REGEX =
+  /(?:prof\.?|doc\.?|prim\.?|mr\.?\s*sc\.?\s*med\.?|dr\.?\s*sc\.?\s*med\.?|dr\.?)\s+[\p{L}][\p{L}\-']+(?:\s+[\p{L}][\p{L}\-']+){0,4}/giu;
 
 function decodeHtmlEntities(input: string): string {
   const named: Record<string, string> = {
@@ -133,6 +137,15 @@ function extractLocation(lines: string[]): string | null {
   return null;
 }
 
+function extractAmbulantaHours(lines: string[]): string | null {
+  for (const line of lines) {
+    if (/ljekari?\s+ordiniraju|radno\s+vrijeme/i.test(line)) {
+      return line.replace(/\s+/g, " ").replace(/[:;.,\s]+$/g, "").trim();
+    }
+  }
+  return null;
+}
+
 function containsDoctorMarker(line: string): boolean {
   return /\b(dr|doc\.?|prof\.?|prim\.?|mr\.?)\b/i.test(line);
 }
@@ -144,9 +157,7 @@ function containsScheduleMarker(line: string): boolean {
 }
 
 function extractDoctorNames(line: string): string[] {
-  const found = line.match(
-    /(?:prof\.?|doc\.?|prim\.?|mr\.?\s*sc\.?\s*med\.?|dr\.?\s*sc\.?\s*med\.?|dr\.?)\s+[\p{L}][\p{L}\-']+(?:\s+[\p{L}][\p{L}\-']+){0,4}/giu
-  );
+  const found = line.match(DOCTOR_NAME_REGEX);
   if (!found) return [];
   const cleaned = found.map((x) =>
     x
@@ -155,6 +166,21 @@ function extractDoctorNames(line: string): string[] {
       .trim()
   );
   return [...new Set(cleaned.filter(Boolean))];
+}
+
+function cleanScheduleLine(line: string): string {
+  const withoutNames = line.replace(DOCTOR_NAME_REGEX, " ");
+  const normalized = withoutNames
+    .replace(/\s+/g, " ")
+    .replace(/\s*:\s*:/g, ": ")
+    .replace(/:\s*(,|;|i)\b/gi, ": ")
+    .replace(/\(\s*\)/g, " ")
+    .replace(/\s+,/g, ",")
+    .replace(/\s+;/g, ";")
+    .trim()
+    .replace(/[:;,\s]+$/g, "")
+    .trim();
+  return normalized || line;
 }
 
 function buildId(parts: string[]): string {
@@ -174,6 +200,7 @@ function parseDoctorSchedule(pageHtml: string): DoctorScheduleItem[] {
     if (!lines.length) continue;
 
     const location = extractLocation(lines);
+    const ambulantaHours = extractAmbulantaHours(lines);
 
     for (const line of lines) {
       if (!containsDoctorMarker(line)) continue;
@@ -190,7 +217,8 @@ function parseDoctorSchedule(pageHtml: string): DoctorScheduleItem[] {
           id,
           ambulanta: item.ambulanta,
           doctor,
-          schedule: line,
+          schedule: cleanScheduleLine(line),
+          ambulantaHours,
           location,
           sourceUrl: POLIKLINIKA_URL
         });
