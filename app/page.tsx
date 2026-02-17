@@ -266,7 +266,7 @@ export default function HomePage() {
 
       <div className="card">
         <h2>Rezultate pretrage</h2>
-        {answer ? (
+        {answer && answer.kind !== "narrow" ? (
           <p
             className={
               answer.bannerTone === "danger"
@@ -278,21 +278,6 @@ export default function HomePage() {
           >
             {answer.text}
           </p>
-        ) : null}
-
-        {answer?.suggestions?.length ? (
-          <div className="row">
-            {answer.suggestions.map((s) => (
-              <button
-                key={`${s.label}_${s.query}`}
-                type="button"
-                className="secondary"
-                onClick={() => void searchSuggestion(s.query)}
-              >
-                {s.label}
-              </button>
-            ))}
-          </div>
         ) : null}
 
         {!hasResults ? (
