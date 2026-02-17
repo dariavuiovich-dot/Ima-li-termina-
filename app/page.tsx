@@ -204,13 +204,13 @@ export default function HomePage() {
       body: JSON.stringify(payload)
     });
     try {
-      await readJsonOrThrow(res, "Subscription failed");
+      await readJsonOrThrow(res, "Neuspjelo cuvanje pretplate");
     } catch (err) {
-      setSubMessage(err instanceof Error ? err.message : "Subscription failed");
+      setSubMessage(err instanceof Error ? err.message : "Neuspjelo cuvanje pretplate");
       return;
     }
 
-    setSubMessage("Subscription saved");
+    setSubMessage("Pretplata je sacuvana");
     setSubQuery("");
   }
 
@@ -218,10 +218,12 @@ export default function HomePage() {
     const qs = new URLSearchParams({ userId, limit: "20" });
     const res = await fetch(`/api/notifications?${qs.toString()}`);
     try {
-      const data = await readJsonOrThrow(res, "Failed to load notifications");
+      const data = await readJsonOrThrow(res, "Neuspjelo ucitavanje notifikacija");
       setNotifications(data.items ?? []);
     } catch (err) {
-      setSubMessage(err instanceof Error ? err.message : "Failed to load notifications");
+      setSubMessage(
+        err instanceof Error ? err.message : "Neuspjelo ucitavanje notifikacija"
+      );
       return;
     }
   }
@@ -444,7 +446,7 @@ export default function HomePage() {
       </div>
 
       <form className="card" onSubmit={createSubscription}>
-        <h2>Notifications Subscription</h2>
+        <h2>Notifikacije</h2>
         <p className="meta">
           Potpisite se na notifikacije za specijalistu/pretragu za kojeg dugo
           cekate termin: mi cemo da Vam posaljemo notifikaciju kad se pojavi prvi
@@ -458,7 +460,7 @@ export default function HomePage() {
             onChange={(e) => setUserId(e.target.value)}
           />
           <input
-            placeholder="Specialist query (for matching)"
+            placeholder="Specijalista ili pretraga"
             value={subQuery}
             onChange={(e) => setSubQuery(e.target.value)}
           />
@@ -500,18 +502,18 @@ export default function HomePage() {
           </p>
         ) : null}
         <div className="row">
-          <button type="submit">Save Subscription</button>
+          <button type="submit">Sacuvaj pretplatu</button>
           <button type="button" className="secondary" onClick={loadNotifications}>
-            Load My Notifications
+            Ucitaj moje notifikacije
           </button>
         </div>
         {subMessage ? <p className="meta">{subMessage}</p> : null}
       </form>
 
       <div className="card">
-        <h2>My Notifications</h2>
+        <h2>Moje notifikacije</h2>
         {!notifications.length ? (
-          <p className="meta">No notifications.</p>
+          <p className="meta">Nema notifikacija.</p>
         ) : (
           <table>
             <thead>
