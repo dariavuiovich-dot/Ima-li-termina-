@@ -19,7 +19,7 @@ const DOCTOR_NAME_REGEX =
   /(?:(?:prof\.?|doc\.?|prim\.?|mr\.?|dr\.?)\s*)+(?:(?:sc\.?|med\.?)\s*)*[\p{L}][\p{L}\-']+(?:\s+[\p{L}][\p{L}\-']+){1,3}/giu;
 const INFO_LINE_REGEX =
   /potrebne informacije|pozivom na broj|broj telefona|telefon|\bkontakt\b|u periodu od/i;
-const TITLE_TOKEN_REGEX = /^(dr|doc|prof|prim|mr|sc|med)\.?$/i;
+const TITLE_TOKEN_REGEX = /^(?:dr|doc|prof|prim|mr|sc|med)+\.?$/i;
 
 const DAY_PATTERNS: Array<{ label: string; re: RegExp }> = [
   { label: "Ponedjeljak", re: /\bponedjelj(?:ak|kom|ka)?\b|\bponedelj(?:ak|kom|ka)?\b/i },
@@ -198,6 +198,8 @@ function normalizeDoctorName(candidate: string): string | null {
     .filter((x) => !TITLE_TOKEN_REGEX.test(x));
 
   if (nameTokens.length < 2) return null;
+  const capitalized = nameTokens.filter((x) => /^\p{Lu}/u.test(x));
+  if (capitalized.length < 2) return null;
   return `Dr ${nameTokens.join(" ")}`;
 }
 
