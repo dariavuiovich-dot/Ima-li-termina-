@@ -134,7 +134,7 @@ function containsScheduleMarker(line: string): boolean {
 
 function extractDoctorNames(line: string): string[] {
   const found = line.match(
-    /(?:prof\.?|doc\.?|prim\.?|mr\.?\s*sc\.?\s*med\.?|dr\.?\s*sc\.?\s*med\.?|dr\.?)\s+[A-Za-zČĆŽŠĐčćžšđ][A-Za-zČĆŽŠĐčćžšđ\-']+(?:\s+[A-Za-zČĆŽŠĐčćžšđ][A-Za-zČĆŽŠĐčćžšđ\-']+){0,4}/gu
+    /(?:prof\.?|doc\.?|prim\.?|mr\.?\s*sc\.?\s*med\.?|dr\.?\s*sc\.?\s*med\.?|dr\.?)\s+[\p{L}][\p{L}\-']+(?:\s+[\p{L}][\p{L}\-']+){0,4}/giu
   );
   if (!found) return [];
   return [...new Set(found.map((x) => x.replace(/\s+/g, " ").trim()))];
