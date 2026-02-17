@@ -65,9 +65,8 @@ export function computeChanges(
       const prevDate = parseSlotDate(prevItem.firstAvailable);
       const currDate = parseSlotDate(currentItem.firstAvailable);
       if (
-        prevDate &&
         currDate &&
-        currDate.getTime() < prevDate.getTime() &&
+        (!prevDate || currDate.getTime() < prevDate.getTime()) &&
         currentItem.firstAvailable !== prevItem.firstAvailable
       ) {
         changes.push({
@@ -106,13 +105,16 @@ function createNotification(
   subscription: Subscription,
   change: SlotChange
 ): UserNotification {
-  const title = `Slot update: ${change.specialist}`;
+  const title =
+    change.reason === "EARLIER_SLOT"
+      ? `Raniji termin: ${change.specialist}`
+      : `Promjena termina: ${change.specialist}`;
   const message =
     change.reason === "OPENED_SLOTS"
-      ? `Slots opened. First available: ${change.currentFirstAvailable ?? "unknown"}`
+      ? `Otvoreni su termini. Prvi dostupni: ${change.currentFirstAvailable ?? "nepoznato"}`
       : change.reason === "EARLIER_SLOT"
-        ? `Earlier slot found: ${change.currentFirstAvailable ?? "unknown"} (was ${change.previousFirstAvailable ?? "unknown"})`
-        : `New specialist with slots. First available: ${change.currentFirstAvailable ?? "unknown"}`;
+        ? `Nasli smo raniji termin: ${change.currentFirstAvailable ?? "nepoznato"} (prethodno: ${change.previousFirstAvailable ?? "nepoznato"})`
+        : `Novi specijalista sa terminima. Prvi dostupni: ${change.currentFirstAvailable ?? "nepoznato"}`;
 
   return {
     id: randomId("notif"),
