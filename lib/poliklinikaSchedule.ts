@@ -68,6 +68,32 @@ function normalizeSearch(value: string): string {
     .trim();
 }
 
+function tokenVariants(token: string): string[] {
+  const out = new Set<string>([token]);
+
+  if (token.startsWith("neurolog") || token.startsWith("nevrolog")) {
+    out.add("neuro");
+    out.add("neurol");
+    out.add("nevrol");
+  }
+
+  if (token.startsWith("endokrinolog") || token.startsWith("endocrinolog")) {
+    out.add("endokrin");
+    out.add("endocrin");
+  }
+
+  if (token.startsWith("kardiolog")) {
+    out.add("kardio");
+    out.add("kardiol");
+  }
+
+  if (token.startsWith("dermatolog")) {
+    out.add("dermato");
+  }
+
+  return [...out];
+}
+
 function extractAccordionItems(pageHtml: string): RawAccordionItem[] {
   const items: RawAccordionItem[] = [];
   const regex =
@@ -169,7 +195,8 @@ export async function fetchDoctorSchedule(): Promise<DoctorScheduleItem[]> {
     throw new Error(`Failed to load KCCG schedule page: ${res.status}`);
   }
 
-  const html = await res.text();
+  const buffer = await res.arrayBuffer();
+  const html = new TextDecoder("utf-8").decode(buffer);
   return parseDoctorSchedule(html);
 }
 
@@ -179,13 +206,16 @@ export function filterDoctorSchedule(
 ): DoctorScheduleItem[] {
   const q = normalizeSearch(query);
   if (!q) return [];
-  const tokens = q.split(/\s+/).filter(Boolean);
+  const tokenGroups = q
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((token) => tokenVariants(token));
 
   const matched = items.filter((item) => {
     const hay = normalizeSearch(
       `${item.doctor} ${item.ambulanta} ${item.schedule} ${item.location ?? ""}`
     );
-    return tokens.every((t) => hay.includes(t));
+    return tokenGroups.every((group) => group.some((token) => hay.includes(token)));
   });
 
   return matched.sort((a, b) => {
