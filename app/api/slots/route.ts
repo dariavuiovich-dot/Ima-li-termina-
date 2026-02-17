@@ -886,8 +886,20 @@ function isNeurologyAmbulantaOneOrTwo(item: ApiSlotItem): boolean {
 }
 
 function isUrologyItem(item: ApiSlotItem): boolean {
-  const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
-  return /(urol|urolog)/.test(combined);
+  const specialist = normalizeForSearch(item.specialist);
+  const section = normalizeForSearch(item.section);
+
+  // Guard against OCR/encoding splits like "ne urol..." inside "neurol..."
+  // so neurology rows are never treated as urology.
+  if (
+    /(neurol|nevrol)/.test(specialist) ||
+    /(neurolog|nevrolog)/.test(section)
+  ) {
+    return false;
+  }
+
+  if (/(urolog)/.test(section)) return true;
+  return /\burol/.test(specialist);
 }
 
 function isNeurologyUniverseItem(item: ApiSlotItem): boolean {
