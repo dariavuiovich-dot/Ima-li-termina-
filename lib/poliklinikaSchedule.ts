@@ -193,12 +193,12 @@ function normalizeDoctorName(candidate: string): string | null {
 
   const nameTokens = value
     .split(/\s+/)
-    .map((x) => x.replace(/[^\p{L}.-]/gu, ""))
+    .map((x) => x.replace(/[^\p{L}'-]/gu, ""))
     .filter(Boolean)
     .filter((x) => !TITLE_TOKEN_REGEX.test(x));
 
   if (nameTokens.length < 2) return null;
-  return value;
+  return `Dr ${nameTokens.join(" ")}`;
 }
 
 function extractDoctorNames(line: string): string[] {
@@ -253,6 +253,7 @@ function cleanScheduleLine(line: string): string {
 
   const withoutNames = line.replace(DOCTOR_NAME_REGEX, " ");
   const normalized = withoutNames
+    .replace(/\b(?:prof\.?|doc\.?|prim\.?|mr\.?|sc\.?|med\.?)\b/gi, " ")
     .replace(/\b(specijalista|specijalistkinja)\b[^,;:]*(?:[,;:]|$)/gi, " ")
     .replace(/\bordinira(?:ju)?\b/gi, " ")
     .replace(/\s+/g, " ")
@@ -340,7 +341,16 @@ function parseDoctorSchedule(pageHtml: string): DoctorScheduleItem[] {
       if (!hasDoctor) continue;
 
       const names = extractDoctorNames(line);
-      if (!names.length) continue;
+      if (!names.length) {
+        if (hasSchedule) {
+          const fallbackSchedule = cleanScheduleLine(line);
+          if (fallbackSchedule) {
+            currentScheduleContext = fallbackSchedule;
+            currentDayContext = extractDayLabel(fallbackSchedule) ?? currentDayContext;
+          }
+        }
+        continue;
+      }
 
       const normalizedSchedule = hasSchedule ? cleanScheduleLine(line) : currentScheduleContext;
       if (hasSchedule && normalizedSchedule) {
