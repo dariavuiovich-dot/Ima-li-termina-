@@ -87,6 +87,17 @@ function tokenVariants(token: string): string[] {
     out.add("kardiol");
   }
 
+  if (
+    token.startsWith("pulmolog") ||
+    token.startsWith("pulmonolog") ||
+    token.startsWith("pneumolog")
+  ) {
+    out.add("pulmolo");
+    out.add("pulmolos");
+    out.add("pulmon");
+    out.add("pneumo");
+  }
+
   if (token.startsWith("dermatolog")) {
     out.add("dermato");
   }
@@ -137,7 +148,13 @@ function extractDoctorNames(line: string): string[] {
     /(?:prof\.?|doc\.?|prim\.?|mr\.?\s*sc\.?\s*med\.?|dr\.?\s*sc\.?\s*med\.?|dr\.?)\s+[\p{L}][\p{L}\-']+(?:\s+[\p{L}][\p{L}\-']+){0,4}/giu
   );
   if (!found) return [];
-  return [...new Set(found.map((x) => x.replace(/\s+/g, " ").trim()))];
+  const cleaned = found.map((x) =>
+    x
+      .replace(/\s+/g, " ")
+      .replace(/\b(ordinira|od|do|u|na|sa)\b.*$/i, "")
+      .trim()
+  );
+  return [...new Set(cleaned.filter(Boolean))];
 }
 
 function buildId(parts: string[]): string {
