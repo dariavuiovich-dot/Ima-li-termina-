@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { recordApiCall } from "@/lib/storage";
 import { normalizeVapidSubject } from "@/lib/webpush";
 
 type WebPushSubscriptionData = {
@@ -37,6 +38,8 @@ function toWebPushSubscription(value: unknown): WebPushSubscriptionData | null {
 }
 
 export async function POST(req: NextRequest) {
+  await recordApiCall("/api/push/smoke");
+
   const body = await req.json().catch(() => null);
   if (!body || typeof body !== "object") {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });

@@ -1,5 +1,5 @@
 import { fetchLatestSnapshot } from "@/lib/kccg";
-import { getLatestSnapshot, saveSnapshot } from "@/lib/storage";
+import { getLatestSnapshot, recordApiCall, saveSnapshot } from "@/lib/storage";
 import { normalizeForSearch, parseSlotDate } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -1476,6 +1476,8 @@ function buildAnswer(
 
 export async function GET(req: NextRequest) {
   try {
+    await recordApiCall("/api/slots");
+
     const q = (req.nextUrl.searchParams.get("q") ?? "").trim();
     const limit = toSafeLimit(req.nextUrl.searchParams.get("limit"), 50);
     const childIntent = hasChildIntent(q);

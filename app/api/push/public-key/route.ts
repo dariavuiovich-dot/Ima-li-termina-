@@ -1,6 +1,9 @@
+import { recordApiCall } from "@/lib/storage";
 import { NextResponse } from "next/server";
 
 export async function GET() {
+  await recordApiCall("/api/push/public-key");
+
   const key =
     process.env.VAPID_PUBLIC_KEY ?? process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
   if (!key) {
@@ -12,4 +15,3 @@ export async function GET() {
 
   return NextResponse.json({ publicKey: key });
 }
-

@@ -1,4 +1,9 @@
-import { disableSubscription, listSubscriptions, upsertSubscription } from "@/lib/storage";
+import {
+  disableSubscription,
+  listSubscriptions,
+  recordApiCall,
+  upsertSubscription
+} from "@/lib/storage";
 import { DeliveryChannel, Subscription, WebPushSubscriptionData } from "@/lib/types";
 import { nowIso, randomId } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
@@ -39,6 +44,8 @@ function toWebPushSubscription(value: unknown): WebPushSubscriptionData | null {
 }
 
 export async function GET(req: NextRequest) {
+  await recordApiCall("/api/subscriptions:get");
+
   const userId = (req.nextUrl.searchParams.get("userId") ?? "").trim();
   if (!userId) {
     return NextResponse.json(
@@ -52,6 +59,8 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  await recordApiCall("/api/subscriptions:post");
+
   const body = await req.json().catch(() => null);
   if (!body || typeof body !== "object") {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
@@ -115,6 +124,8 @@ export async function POST(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  await recordApiCall("/api/subscriptions:delete");
+
   const id = (req.nextUrl.searchParams.get("id") ?? "").trim();
   if (!id) {
     return NextResponse.json(

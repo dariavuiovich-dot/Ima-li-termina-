@@ -15,6 +15,7 @@ type MemoryStore = {
   subscriptions: Subscription[];
   notificationsByUser: Record<string, UserNotification[]>;
   debugByKey: Record<string, unknown>;
+  usageByMonth: Record<string, { total: number; byRoute: Record<string, number> }>;
 };
 
 declare global {
@@ -29,7 +30,8 @@ function getMemoryStore(): MemoryStore {
       snapshotsByDate: {},
       subscriptions: [],
       notificationsByUser: {},
-      debugByKey: {}
+      debugByKey: {},
+      usageByMonth: {}
     };
   }
   return globalThis.__kccgMemoryStore;
@@ -87,6 +89,40 @@ function createRedisMode(): RedisMode {
 }
 
 const redis = createRedisMode();
+const USAGE_PREFIX = "kccg:usage:api:";
+
+function monthId(date = new Date()): string {
+  const y = date.getUTCFullYear();
+  const m = String(date.getUTCMonth() + 1).padStart(2, "0");
+  return `${y}-${m}`;
+}
+
+function usageTotalKey(month: string): string {
+  return `${USAGE_PREFIX}${month}:total`;
+}
+
+function usageRouteKey(month: string, route: string): string {
+  return `${USAGE_PREFIX}${month}:route:${route}`;
+}
+
+function usageRoutesSetKey(month: string): string {
+  return `${USAGE_PREFIX}${month}:routes`;
+}
+
+async function setKeyExpiryIfNeeded(key: string): Promise<void> {
+  const ttlSeconds = 60 * 60 * 24 * 400;
+  if (!redis) return;
+  try {
+    if (redis.kind === "upstash") {
+      await redis.client.expire(key, ttlSeconds);
+      return;
+    }
+    await redis.ready;
+    await redis.client.expire(key, ttlSeconds);
+  } catch {
+    // Ignore metric TTL errors.
+  }
+}
 
 async function redisGet<T>(key: string): Promise<T | null> {
   if (!redis) return null;
@@ -262,4 +298,102 @@ export async function getDebugValue<T>(key: string): Promise<T | null> {
     return (await redisGet<T>(k)) ?? null;
   }
   return (getMemoryStore().debugByKey[k] as T | null) ?? null;
+}
+
+export async function recordApiCall(route: string, now = new Date()): Promise<void> {
+  const month = monthId(now);
+  const normalizedRoute = route.trim() || "unknown";
+
+  if (redis) {
+    try {
+      if (redis.kind === "upstash") {
+        await redis.client.incr(usageTotalKey(month));
+        await redis.client.incr(usageRouteKey(month, normalizedRoute));
+        await redis.client.sadd(usageRoutesSetKey(month), normalizedRoute);
+        await setKeyExpiryIfNeeded(usageTotalKey(month));
+        await setKeyExpiryIfNeeded(usageRouteKey(month, normalizedRoute));
+        await setKeyExpiryIfNeeded(usageRoutesSetKey(month));
+        return;
+      }
+
+      await redis.ready;
+      await redis.client.incr(usageTotalKey(month));
+      await redis.client.incr(usageRouteKey(month, normalizedRoute));
+      await redis.client.sAdd(usageRoutesSetKey(month), normalizedRoute);
+      await setKeyExpiryIfNeeded(usageTotalKey(month));
+      await setKeyExpiryIfNeeded(usageRouteKey(month, normalizedRoute));
+      await setKeyExpiryIfNeeded(usageRoutesSetKey(month));
+      return;
+    } catch (error) {
+      console.error("recordApiCall failed, fallback to memory:", error);
+    }
+  }
+
+  const memory = getMemoryStore();
+  const bucket = memory.usageByMonth[month] ?? { total: 0, byRoute: {} };
+  bucket.total += 1;
+  bucket.byRoute[normalizedRoute] = (bucket.byRoute[normalizedRoute] ?? 0) + 1;
+  memory.usageByMonth[month] = bucket;
+}
+
+export async function getMonthlyApiUsage(month?: string): Promise<{
+  month: string;
+  total: number;
+  byRoute: Record<string, number>;
+}> {
+  const monthKey = month?.trim() || monthId(new Date());
+
+  if (redis) {
+    try {
+      if (redis.kind === "upstash") {
+        const total = Number((await redis.client.get<number>(usageTotalKey(monthKey))) ?? 0);
+        const routesRaw = await (redis.client as any).smembers(usageRoutesSetKey(monthKey));
+        const routes: string[] = Array.isArray(routesRaw)
+          ? routesRaw.map((x) => String(x))
+          : [];
+        const byRoute: Record<string, number> = {};
+        if (routes.length) {
+          const values = await Promise.all(
+            routes.map((route) =>
+              redis.client
+                .get<number>(usageRouteKey(monthKey, route))
+                .then((v) => Number(v ?? 0))
+                .catch(() => 0)
+            )
+          );
+          routes.forEach((route, idx) => {
+            byRoute[route] = values[idx] ?? 0;
+          });
+        }
+        return { month: monthKey, total, byRoute };
+      }
+
+      await redis.ready;
+      const totalRaw = await redis.client.get(usageTotalKey(monthKey));
+      const routes = await redis.client.sMembers(usageRoutesSetKey(monthKey));
+      const byRoute: Record<string, number> = {};
+      if (routes.length) {
+        const values = await Promise.all(
+          routes.map(async (route) => {
+            const v = await redis.client.get(usageRouteKey(monthKey, route));
+            return Number(v ?? 0);
+          })
+        );
+        routes.forEach((route, idx) => {
+          byRoute[route] = values[idx] ?? 0;
+        });
+      }
+      return { month: monthKey, total: Number(totalRaw ?? 0), byRoute };
+    } catch (error) {
+      console.error("getMonthlyApiUsage failed, fallback to memory:", error);
+    }
+  }
+
+  const memory = getMemoryStore();
+  const bucket = memory.usageByMonth[monthKey] ?? { total: 0, byRoute: {} };
+  return {
+    month: monthKey,
+    total: bucket.total,
+    byRoute: { ...bucket.byRoute }
+  };
 }

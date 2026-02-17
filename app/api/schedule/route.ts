@@ -3,6 +3,7 @@ import {
   fetchDoctorSchedule,
   filterDoctorSchedule
 } from "@/lib/poliklinikaSchedule";
+import { recordApiCall } from "@/lib/storage";
 import { NextRequest, NextResponse } from "next/server";
 
 function toSafeLimit(value: string | null, fallback = 50): number {
@@ -13,6 +14,8 @@ function toSafeLimit(value: string | null, fallback = 50): number {
 
 export async function GET(req: NextRequest) {
   try {
+    await recordApiCall("/api/schedule");
+
     const query = (req.nextUrl.searchParams.get("q") ?? "").trim();
     const limit = toSafeLimit(req.nextUrl.searchParams.get("limit"), 50);
 

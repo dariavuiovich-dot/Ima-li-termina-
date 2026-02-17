@@ -1,5 +1,5 @@
 import { hasAdminAccess } from "@/lib/auth";
-import { listSubscriptions } from "@/lib/storage";
+import { listSubscriptions, recordApiCall } from "@/lib/storage";
 import { normalizeVapidSubject } from "@/lib/webpush";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -10,6 +10,8 @@ function getBearerToken(value: string | null): string | null {
 }
 
 export async function POST(req: NextRequest) {
+  await recordApiCall("/api/push/test");
+
   if (!hasAdminAccess(req)) {
     const expected =
       (process.env.ADMIN_API_TOKEN ?? process.env.CRON_SECRET)?.trim() ?? "";

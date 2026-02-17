@@ -1,7 +1,9 @@
-import { getDebugValue } from "@/lib/storage";
+import { getDebugValue, recordApiCall } from "@/lib/storage";
 import { NextResponse } from "next/server";
 
 export async function GET() {
+  await recordApiCall("/api/telegram/last");
+
   const last = await getDebugValue<unknown>("telegram:last");
   return NextResponse.json({
     ok: true,
@@ -10,4 +12,3 @@ export async function GET() {
     last: last ?? null
   });
 }
-

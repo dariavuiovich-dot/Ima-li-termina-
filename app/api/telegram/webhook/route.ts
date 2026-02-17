@@ -1,6 +1,7 @@
 import {
   disableSubscription,
   listSubscriptions,
+  recordApiCall,
   setDebugValue,
   upsertSubscription
 } from "@/lib/storage";
@@ -291,6 +292,8 @@ function buildQueryFromText(text: string, cmd: string, args: string): string {
 }
 
 export async function GET() {
+  await recordApiCall("/api/telegram/webhook:get");
+
   // Simple reachability check for debugging webhook URL.
   return NextResponse.json({
     ok: true,
@@ -302,6 +305,8 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  await recordApiCall("/api/telegram/webhook:post");
+
   const expectedSecret = process.env.TELEGRAM_WEBHOOK_SECRET;
   if (expectedSecret) {
     const header = req.headers.get("x-telegram-bot-api-secret-token") ?? "";

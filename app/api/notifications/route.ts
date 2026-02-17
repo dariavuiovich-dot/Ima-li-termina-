@@ -1,4 +1,4 @@
-import { getNotifications } from "@/lib/storage";
+import { getNotifications, recordApiCall } from "@/lib/storage";
 import { NextRequest, NextResponse } from "next/server";
 
 function toSafeLimit(value: string | null, fallback = 20): number {
@@ -8,6 +8,8 @@ function toSafeLimit(value: string | null, fallback = 20): number {
 }
 
 export async function GET(req: NextRequest) {
+  await recordApiCall("/api/notifications");
+
   const userId = (req.nextUrl.searchParams.get("userId") ?? "").trim();
   if (!userId) {
     return NextResponse.json(

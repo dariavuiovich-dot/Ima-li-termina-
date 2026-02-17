@@ -1,8 +1,11 @@
 import { hasCronAccess } from "@/lib/auth";
+import { recordApiCall } from "@/lib/storage";
 import { runDailySync } from "@/lib/sync";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
+  await recordApiCall("/api/cron/daily-sync");
+
   if (!hasCronAccess(req)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }

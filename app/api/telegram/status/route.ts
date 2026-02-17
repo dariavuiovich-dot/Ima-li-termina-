@@ -1,3 +1,4 @@
+import { recordApiCall } from "@/lib/storage";
 import { NextResponse } from "next/server";
 
 type TgOk<T> = { ok: true; result: T };
@@ -33,6 +34,8 @@ async function tgPost<T>(
 }
 
 export async function GET(req: Request) {
+  await recordApiCall("/api/telegram/status");
+
   const token = process.env.TELEGRAM_BOT_TOKEN ?? "";
   const secretConfigured = Boolean(process.env.TELEGRAM_WEBHOOK_SECRET?.trim());
 
