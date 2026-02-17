@@ -43,80 +43,7 @@ function dedupeRecords(rows: SlotRecord[]): SlotRecord[] {
   return out;
 }
 
-function parseRows(markdown: string, meta: KccgPdfMeta): SlotRecord[] {
-  const parseModernSections = (): SlotRecord[] => {
-    const out: SlotRecord[] = [];
-    const sectionRegex =
-      /(?:^|\n)#\s*(\d+\s*-\s*[^\n]+?)\s*\n([\s\S]*?)(?=(?:\n#\s*\d+\s*-\s*[^\n]+)|$)/g;
-
-    for (const match of markdown.matchAll(sectionRegex)) {
-      const heading = match[1]?.replace(/\s+/g, " ").trim() ?? "";
-      const sectionBody = match[2] ?? "";
-      if (!heading) continue;
-
-      const section = heading.replace(/^\d+\s*-\s*/i, "").trim();
-      const compactBody = sectionBody.replace(/\s+/g, " ").trim();
-      if (!compactBody) continue;
-
-      const rowStartRegex = /\b(?!111111\b)(\d{6})\s+(?!Ljekar\b)/g;
-      const starts = [...compactBody.matchAll(rowStartRegex)];
-      if (!starts.length) continue;
-
-      for (let i = 0; i < starts.length; i++) {
-        const start = starts[i].index ?? 0;
-        const end = i + 1 < starts.length ? starts[i + 1].index ?? compactBody.length : compactBody.length;
-        const block = compactBody.slice(start, end).replace(/\s+/g, " ").trim();
-        if (!block) continue;
-
-        const codeMatch = block.match(/^(\d{6})\b/);
-        const code = codeMatch?.[1];
-        if (!code) continue;
-
-        const specialistMatch =
-          block.match(/^\d{6}\s+(.+?)\s+111111\d*\s+Ljekar specijalista u amb\./i) ??
-          block.match(/^\d{6}\s+(.+?)\s+\d{2}\.\d{2}\.\d{4}\.\s*\d{2}:\d{2}/);
-
-        const specialist = cleanName((specialistMatch?.[1] ?? "").trim());
-        if (!specialist) continue;
-
-        const hasNoSlots = /Nema slobodnih termina/i.test(block);
-        const dateMatches = [...block.matchAll(/\d{2}\.\d{2}\.\d{4}\.\s*\d{2}:\d{2}/g)]
-          .map((m) => m[0].replace(/\s+/g, " "))
-          .filter(Boolean);
-
-        const firstAvailable = hasNoSlots
-          ? null
-          : dateMatches
-              .map((value) => ({
-                value,
-                ts: parseSlotDate(value)?.getTime() ?? Number.MAX_SAFE_INTEGER
-              }))
-              .sort((a, b) => a.ts - b.ts)[0]?.value ?? null;
-
-        const lastBooked =
-          dateMatches
-            .map((value) => ({
-              value,
-              ts: parseSlotDate(value)?.getTime() ?? Number.MIN_SAFE_INTEGER
-            }))
-            .sort((a, b) => b.ts - a.ts)[0]?.value ?? null;
-
-        out.push({
-          section,
-          code,
-          specialist,
-          status: hasNoSlots ? "NO_SLOTS" : "HAS_SLOTS",
-          firstAvailable,
-          lastBooked,
-          sourcePdfDate: meta.reportDate,
-          sourcePdfUrl: meta.pdfUrl
-        });
-      }
-    }
-
-    return dedupeRecords(out);
-  };
-
+function parseRowsLegacy(markdown: string, meta: KccgPdfMeta): SlotRecord[] {
   const lines = markdown
     .split(/\r?\n/)
     .map((line) => line.trim())
@@ -201,11 +128,118 @@ function parseRows(markdown: string, meta: KccgPdfMeta): SlotRecord[] {
   }
 
   flushCurrent();
-  const legacy = dedupeRecords(rows);
-  const modern = parseModernSections();
+  return dedupeRecords(rows);
+}
 
-  // Prefer parser variant that produced more records for the current PDF format.
-  return modern.length > legacy.length ? modern : legacy;
+function parseRowsModern(markdown: string, meta: KccgPdfMeta): SlotRecord[] {
+  const out: SlotRecord[] = [];
+  const sectionRegex =
+    /(?:^|\n)#\s*(\d+\s*-\s*[^\n]+?)\s*\n([\s\S]*?)(?=(?:\n#\s*\d+\s*-\s*[^\n]+)|$)/g;
+
+  for (const match of markdown.matchAll(sectionRegex)) {
+    const heading = match[1]?.replace(/\s+/g, " ").trim() ?? "";
+    const sectionBody = match[2] ?? "";
+    if (!heading) continue;
+
+    const section = heading.replace(/^\d+\s*-\s*/i, "").trim();
+    const compactBody = sectionBody.replace(/\s+/g, " ").trim();
+    if (!compactBody) continue;
+
+    const rowStartRegex = /\b(?!111111\b)(\d{6})\s+(?!Ljekar\b)/g;
+    const starts = [...compactBody.matchAll(rowStartRegex)];
+    if (!starts.length) continue;
+
+    for (let i = 0; i < starts.length; i++) {
+      const start = starts[i].index ?? 0;
+      const end =
+        i + 1 < starts.length
+          ? starts[i + 1].index ?? compactBody.length
+          : compactBody.length;
+      const block = compactBody.slice(start, end).replace(/\s+/g, " ").trim();
+      if (!block) continue;
+
+      const codeMatch = block.match(/^(\d{6})\b/);
+      const code = codeMatch?.[1];
+      if (!code) continue;
+
+      const specialistMatch =
+        block.match(/^\d{6}\s+(.+?)\s+111111\d*\s+Ljekar specijalista u amb\./i) ??
+        block.match(/^\d{6}\s+(.+?)\s+\d{2}\.\d{2}\.\d{4}\.\s*\d{2}:\d{2}/);
+
+      const specialist = cleanName((specialistMatch?.[1] ?? "").trim());
+      if (!specialist) continue;
+
+      const hasNoSlots = /Nema slobodnih termina/i.test(block);
+      const dateMatches = [...block.matchAll(/\d{2}\.\d{2}\.\d{4}\.\s*\d{2}:\d{2}/g)]
+        .map((m) => m[0].replace(/\s+/g, " "))
+        .filter(Boolean);
+
+      const firstAvailable = hasNoSlots
+        ? null
+        : dateMatches
+            .map((value) => ({
+              value,
+              ts: parseSlotDate(value)?.getTime() ?? Number.MAX_SAFE_INTEGER
+            }))
+            .sort((a, b) => a.ts - b.ts)[0]?.value ?? null;
+
+      const lastBooked =
+        dateMatches
+          .map((value) => ({
+            value,
+            ts: parseSlotDate(value)?.getTime() ?? Number.MIN_SAFE_INTEGER
+          }))
+          .sort((a, b) => b.ts - a.ts)[0]?.value ?? null;
+
+      out.push({
+        section,
+        code,
+        specialist,
+        status: hasNoSlots ? "NO_SLOTS" : "HAS_SLOTS",
+        firstAvailable,
+        lastBooked,
+        sourcePdfDate: meta.reportDate,
+        sourcePdfUrl: meta.pdfUrl
+      });
+    }
+  }
+
+  return dedupeRecords(out);
+}
+
+function scoreRows(rows: SlotRecord[]): number {
+  if (!rows.length) return 0;
+  const sectionCount = new Set(rows.map((x) => x.section)).size;
+  const hasSlotsCount = rows.filter((x) => x.status === "HAS_SLOTS").length;
+  const longNamePenalty = rows.filter((x) => x.specialist.length > 140).length * 5;
+  const looksBrokenPenalty = rows.filter((x) =>
+    /(prvi slobodni termin|datum ambulanta doktor|strana \d+ od \d+)/i.test(
+      x.specialist
+    )
+  ).length * 10;
+
+  return (
+    rows.length * 10 +
+    sectionCount * 5 +
+    hasSlotsCount * 2 -
+    longNamePenalty -
+    looksBrokenPenalty
+  );
+}
+
+function parseRows(markdown: string, meta: KccgPdfMeta): SlotRecord[] {
+  const legacy = parseRowsLegacy(markdown, meta);
+  const modern = parseRowsModern(markdown, meta);
+  const hybrid = dedupeRecords([...modern, ...legacy]);
+
+  const candidates = [
+    { name: "legacy", rows: legacy, score: scoreRows(legacy) },
+    { name: "modern", rows: modern, score: scoreRows(modern) },
+    { name: "hybrid", rows: hybrid, score: scoreRows(hybrid) }
+  ].sort((a, b) => b.score - a.score);
+
+  // Auto-select the best known strategy for current PDF shape.
+  return candidates[0].rows;
 }
 
 function aggregateBySpecialist(rows: SlotRecord[]): SpecialistSlot[] {

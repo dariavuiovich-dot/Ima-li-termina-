@@ -50,6 +50,30 @@ type SlotsApiResponse = {
   total?: number;
 };
 
+function normalizeSimple(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9а-яё]+/gi, " ")
+    .trim();
+}
+
+function isNeurologyQuery(query: string): boolean {
+  const q = normalizeSimple(query);
+  return /(nevrolog|neurolog|nevrolo|neurolo|\bneuro\b|\bnevro\b|невролог|невро)/.test(
+    q
+  );
+}
+
+function isNeurologyOrNeurosurgeryItem(item: {
+  specialist: string;
+  section: string;
+}): boolean {
+  const sec = normalizeSimple(item.section);
+  return sec.includes("klinika za neurologiju") || sec.includes("klinika za neurohirurgiju");
+}
+
 async function telegramSendMessage(chatId: number, text: string): Promise<void> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   if (!token) return;
@@ -97,6 +121,7 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
   const isMr = (qTokens.includes("MR") || qTokens.includes("MRI") || qTokens.includes("MRT")) && !isCt && !qTokens.includes("OCT");
   const isOct = qTokens.includes("OCT");
   const isOnko = qTokens.some((t) => t.startsWith("ONKO") || t.startsWith("ONKOL")) || qTokens.includes("HEMOTERAPIJA") || qTokens.includes("RADIOTERAPIJA");
+  const isNeuro = isNeurologyQuery(query);
 
   const statusLabel = (s: "HAS_SLOTS" | "NO_SLOTS") => (s === "HAS_SLOTS" ? "IMA TERMINA" : "NEMA TERMINA");
   const fmtRow = (x: { status: "HAS_SLOTS" | "NO_SLOTS"; firstAvailable: string | null; specialist: string; section: string; note?: string; noteUrl?: string }) => {
@@ -117,6 +142,8 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
           ? "ONKOLOGIJA:"
           : "Rezultati:";
   const relatedListLabel = data.relatedTitle ? `${data.relatedTitle}:` : "Related:";
+  const allItems = Array.isArray(data.items) ? data.items : [];
+  const neuroItems = isNeuro ? allItems.filter(isNeurologyOrNeurosurgeryItem) : allItems;
 
   // Prefer explicit answer status when available (endo/cardio/neuro combined logic).
   if (statusFromAnswer === "HAS_SLOTS") {
@@ -124,8 +151,18 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
     const line2 = specialistFromAnswer ? `Prvi dostupni termin: ${first} (${specialistFromAnswer})` : `Prvi dostupni termin: ${first}`;
     const header = [ "IMA TERMINA", line2, source ].filter(Boolean).join("\n");
 
+    if (isNeuro) {
+      const lines = neuroItems.slice(0, 20).map(fmtRow);
+      return [
+        header,
+        ...(lines.length ? ["", "Neurologija + Neurohirurgija:", ...lines] : [])
+      ]
+        .filter(Boolean)
+        .join("\n");
+    }
+
     if (isCt || isMr || isOct || isOnko) {
-      const items = Array.isArray(data.items) ? data.items : [];
+      const items = allItems;
       const related = Array.isArray(data.relatedItems) ? data.relatedItems : [];
       const lines = items.slice(0, 25).map(fmtRow);
       const relLines = related.slice(0, 25).map(fmtRow);
@@ -143,8 +180,18 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
   if (statusFromAnswer === "NO_SLOTS") {
     const header = [ "NEMA TERMINA", source ].filter(Boolean).join("\n");
 
+    if (isNeuro) {
+      const lines = neuroItems.slice(0, 20).map(fmtRow);
+      return [
+        header,
+        ...(lines.length ? ["", "Neurologija + Neurohirurgija:", ...lines] : [])
+      ]
+        .filter(Boolean)
+        .join("\n");
+    }
+
     if (isCt || isMr || isOct || isOnko) {
-      const items = Array.isArray(data.items) ? data.items : [];
+      const items = allItems;
       const related = Array.isArray(data.relatedItems) ? data.relatedItems : [];
       const lines = items.slice(0, 25).map(fmtRow);
       const relLines = related.slice(0, 25).map(fmtRow);
@@ -159,7 +206,7 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
     return header;
   }
 
-  const items = Array.isArray(data.items) ? data.items : [];
+  const items = allItems;
   if (!items.length) {
     return [ `Nijesam nasao rezultate za: ${query}`, source ].filter(Boolean).join("\n");
   }
@@ -172,6 +219,16 @@ function formatNowAnswer(query: string, data: SlotsApiResponse): string {
       `Prvi dostupni termin: ${best.firstAvailable} (${best.specialist})`,
       source
     ].filter(Boolean).join("\n");
+
+    if (isNeuro) {
+      const lines = neuroItems.slice(0, 20).map(fmtRow);
+      return [
+        header,
+        ...(lines.length ? ["", "Neurologija + Neurohirurgija:", ...lines] : [])
+      ]
+        .filter(Boolean)
+        .join("\n");
+    }
 
     if (isCt || isMr || isOct || isOnko) {
       const related = Array.isArray(data.relatedItems) ? data.relatedItems : [];
