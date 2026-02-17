@@ -1,5 +1,6 @@
 import { hasAdminAccess } from "@/lib/auth";
 import { listSubscriptions } from "@/lib/storage";
+import { normalizeVapidSubject } from "@/lib/webpush";
 import { NextRequest, NextResponse } from "next/server";
 
 function getBearerToken(value: string | null): string | null {
@@ -43,7 +44,7 @@ export async function POST(req: NextRequest) {
     const publicKey =
       process.env.VAPID_PUBLIC_KEY ?? process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
     const privateKey = process.env.VAPID_PRIVATE_KEY;
-    const subject = process.env.VAPID_SUBJECT ?? "mailto:no-reply@example.com";
+    const subject = normalizeVapidSubject(process.env.VAPID_SUBJECT);
 
     if (!publicKey || !privateKey) {
       return NextResponse.json(

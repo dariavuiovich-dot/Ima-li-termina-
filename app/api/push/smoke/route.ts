@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { normalizeVapidSubject } from "@/lib/webpush";
 
 type WebPushSubscriptionData = {
   endpoint: string;
@@ -56,7 +57,7 @@ export async function POST(req: NextRequest) {
   const publicKey =
     process.env.VAPID_PUBLIC_KEY ?? process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
   const privateKey = process.env.VAPID_PRIVATE_KEY;
-  const subject = process.env.VAPID_SUBJECT ?? "mailto:no-reply@example.com";
+  const subject = normalizeVapidSubject(process.env.VAPID_SUBJECT);
 
   if (!publicKey || !privateKey) {
     return NextResponse.json(
@@ -84,4 +85,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-

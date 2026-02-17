@@ -6,6 +6,7 @@ import {
   WebPushSubscriptionData
 } from "@/lib/types";
 import { normalizeForSearch, parseSlotDate, randomId } from "@/lib/utils";
+import { normalizeVapidSubject } from "@/lib/webpush";
 
 export function computeChanges(
   previous: SlotsSnapshot | null,
@@ -162,7 +163,7 @@ async function sendWebPush(
   const publicKey =
     process.env.VAPID_PUBLIC_KEY ?? process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
   const privateKey = process.env.VAPID_PRIVATE_KEY;
-  const subject = process.env.VAPID_SUBJECT ?? "mailto:no-reply@example.com";
+  const subject = normalizeVapidSubject(process.env.VAPID_SUBJECT);
   if (!publicKey || !privateKey) return;
 
   const module = await import("web-push");
