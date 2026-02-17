@@ -31,9 +31,15 @@ type SlotAnswer = {
   bannerTone?: "success" | "danger" | "info";
 };
 
+type ResultGroup = {
+  title: string;
+  items: SlotRow[];
+};
+
 export default function HomePage() {
   const [query, setQuery] = useState("");
   const [rows, setRows] = useState<SlotRow[]>([]);
+  const [resultGroups, setResultGroups] = useState<ResultGroup[]>([]);
   const [relatedRows, setRelatedRows] = useState<SlotRow[]>([]);
   const [relatedTitle, setRelatedTitle] = useState<string | null>(null);
   const [answer, setAnswer] = useState<SlotAnswer | null>(null);
@@ -52,7 +58,10 @@ export default function HomePage() {
   const [subMessage, setSubMessage] = useState<string | null>(null);
   const [notifications, setNotifications] = useState<NotificationRow[]>([]);
 
-  const hasResults = useMemo(() => rows.length > 0, [rows]);
+  const hasResults = useMemo(
+    () => rows.length > 0 || resultGroups.some((g) => g.items.length > 0),
+    [rows, resultGroups]
+  );
   const statusLabel = (status: "HAS_SLOTS" | "NO_SLOTS") =>
     status === "HAS_SLOTS" ? "IMA TERMINA" : "NEMA TERMINA";
 
@@ -146,6 +155,7 @@ export default function HomePage() {
       const data = await readJsonOrThrow(res, "Failed to load slots");
 
       setRows(data.items ?? []);
+      setResultGroups(data.resultGroups ?? []);
       setRelatedRows(data.relatedItems ?? []);
       setRelatedTitle(data.relatedTitle ?? null);
       setSourceDate(data.sourcePdfDate ?? null);
@@ -153,6 +163,7 @@ export default function HomePage() {
       setAnswer(data.answer ?? null);
     } catch (err) {
       setRows([]);
+      setResultGroups([]);
       setRelatedRows([]);
       setRelatedTitle(null);
       setAnswer(null);
@@ -290,6 +301,60 @@ export default function HomePage() {
               ? "No exact match for your query."
               : "No results yet. Run search."}
           </p>
+        ) : resultGroups.length > 0 ? (
+          <>
+            {resultGroups.map((group) => (
+              <div key={group.title}>
+                <h3 className="subhead">{group.title}</h3>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Status</th>
+                      <th>Prvi dostupni termin</th>
+                      <th>Specijalista</th>
+                      <th>Organizaciona jedinica</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {group.items.map((row) => (
+                      <tr
+                        key={`${group.title}_${row.key}`}
+                        className={
+                          row.status === "NO_SLOTS"
+                            ? "row-no-slots"
+                            : row.slotKind === "INVESTIGATION"
+                              ? "row-investigation"
+                              : "row-visit"
+                        }
+                      >
+                        <td className={row.status === "HAS_SLOTS" ? "status-ok" : "status-no"}>
+                          {statusLabel(row.status)}
+                        </td>
+                        <td>{row.firstAvailable ?? "-"}</td>
+                        <td>
+                          <div>{row.specialist}</div>
+                          {row.note ? (
+                            <div className="note">
+                              <span>{row.note}</span>
+                              {row.noteUrl ? (
+                                <>
+                                  {" "}
+                                  <a href={row.noteUrl} target="_blank" rel="noreferrer">
+                                    (detalji)
+                                  </a>
+                                </>
+                              ) : null}
+                            </div>
+                          ) : null}
+                        </td>
+                        <td>{row.section}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ))}
+          </>
         ) : (
           <table>
             <thead>

@@ -31,6 +31,11 @@ type SlotAnswer = {
   bannerTone?: "success" | "danger" | "info";
 };
 
+type ResultGroup = {
+  title: string;
+  items: ApiSlotItem[];
+};
+
 const CYR_TO_LAT_MAP: Record<string, string> = {
   "\u0430": "a",
   "\u0431": "b",
@@ -110,6 +115,14 @@ function expandNeedleVariants(rawQuery: string): string[] {
   if (/(nevrolog|neurolog|nevro|neuro)/.test(latin)) {
     add("neurolog");
     add("neuroloska ambulanta");
+  }
+
+  if (/(emng|emg|eng|iglic|iglice|iglicama)/.test(latin)) {
+    add("emng");
+    add("emng ambulanta");
+    add("elektromioneurograf");
+    add("electromyography");
+    add("needle emg");
   }
 
   if (/(kardiolog|cardiolog)/.test(latin)) {
@@ -928,6 +941,23 @@ function isNeurologyInterventionalItem(item: ApiSlotItem): boolean {
   return combined.includes("intervent") && /(neuro|neurol|nevrol)/.test(combined);
 }
 
+function isNeurologyElectrophysiologyItem(item: ApiSlotItem): boolean {
+  const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
+  return /\bemng\b/.test(combined) || /(^|\s)eeg($|\s)/.test(combined);
+}
+
+function isNeurosurgeryItem(item: ApiSlotItem): boolean {
+  const section = normalizeForSearch(item.section);
+  return section.includes("klinika za neurohirurgiju");
+}
+
+function isExcludedNeurologyUiItem(item: ApiSlotItem): boolean {
+  const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
+  return /(logoped|defektolog|psiholosk|psiholoski|psiho).*(kabinet|ambulant)|neurolosko psiholoski/.test(
+    combined
+  );
+}
+
 function isNeurologyCtOrMrItem(item: ApiSlotItem): boolean {
   if (!(isCtItem(item) || isMrItem(item))) return false;
   const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
@@ -1351,6 +1381,7 @@ export async function GET(req: NextRequest) {
 
     let relatedItems: ApiSlotItem[] = [];
     let relatedTitle: string | null = null;
+    let resultGroups: ResultGroup[] = [];
     let forcedAnswer: SlotAnswer | null = null;
 
     // Default search: loose match over visible items.
@@ -1489,6 +1520,7 @@ export async function GET(req: NextRequest) {
         visibleItems
           .filter(isNeurologyUniverseItem)
           .filter((item) => !isUrologyItem(item))
+          .filter((item) => !isExcludedNeurologyUiItem(item))
       );
 
       const primary = sortNeurologyPrimary(
@@ -1528,10 +1560,40 @@ export async function GET(req: NextRequest) {
         )
       );
 
+      const neurosurgery = sortByStatusAndDate(
+        neurologyUniverse.filter(
+          (item) =>
+            isNeurosurgeryItem(item) && !isNeurologyCtOrMrItem(item)
+        )
+      );
+      const electro = sortByStatusAndDate(
+        neurologyUniverse.filter(
+          (item) =>
+            !isNeurosurgeryItem(item) && isNeurologyElectrophysiologyItem(item)
+        )
+      );
+      const neurologyMain = sortByStatusAndDate([
+        ...primary,
+        ...secondary.filter((item) => !isNeurologyElectrophysiologyItem(item)),
+        ...interventional.filter((item) => !isNeurosurgeryItem(item)),
+        ...rest.filter(
+          (item) =>
+            !isNeurosurgeryItem(item) &&
+            !isNeurologyElectrophysiologyItem(item)
+        )
+      ]);
+
       const includeCtMrTail = isShortNeuroQuery(q) && !isFullNeurologQuery(q);
-      items = includeCtMrTail
-        ? [...primary, ...secondary, ...interventional, ...rest, ...ctmr]
-        : [...primary, ...secondary, ...interventional, ...rest];
+      resultGroups = [
+        { title: "Neurologija", items: neurologyMain },
+        { title: "Elektrofizioloska ispitivanja", items: electro },
+        { title: "Neurohirurgija", items: neurosurgery },
+        ...(includeCtMrTail
+          ? [{ title: "Radioloska snimanja", items: ctmr }]
+          : [])
+      ].filter((group) => group.items.length > 0);
+
+      items = resultGroups.flatMap((group) => group.items);
 
       forcedAnswer = createNeurologyCombinedAnswer(neurologyUniverse);
     }
@@ -1619,6 +1681,7 @@ export async function GET(req: NextRequest) {
       sourcePdfUrl: snapshot.sourcePdfUrl,
       answer: forcedAnswer ?? buildAnswer(q, finalItems, visibleItems),
       items: finalItems,
+      resultGroups,
       relatedItems,
       relatedTitle
     });
