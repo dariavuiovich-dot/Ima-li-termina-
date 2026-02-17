@@ -289,7 +289,7 @@ export default function HomePage() {
             onChange={(e) => setQuery(e.target.value)}
           />
           <button type="submit" disabled={loading}>
-            {loading ? "Searching..." : "Search"}
+            {loading ? "Trazi termin..." : "Trazi termin"}
           </button>
         </div>
         {sourceDate ? (
@@ -630,6 +630,7 @@ export default function HomePage() {
           </table>
         )}
       </div>
+      <p className="powered-by">powered by dr Daria Vuiovich</p>
     </main>
   );
 }

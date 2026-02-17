@@ -132,6 +132,14 @@ td {
   text-decoration: underline;
 }
 
+.powered-by {
+  margin: 6px 4px 0;
+  color: #6d7fa3;
+  font-size: 12px;
+  text-align: right;
+  opacity: 0.85;
+}
+
 .answer-banner {
   margin: 0 0 12px;
   padding: 10px 12px;
