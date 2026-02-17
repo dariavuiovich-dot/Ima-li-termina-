@@ -120,9 +120,7 @@ function expandNeedleVariants(rawQuery: string): string[] {
   if (/(emng|emg|eng|iglic|iglice|iglicama)/.test(latin)) {
     add("emng");
     add("emng ambulanta");
-    add("elektromioneurograf");
-    add("electromyography");
-    add("needle emg");
+    add("emng pregled");
   }
 
   if (/(kardiolog|cardiolog)/.test(latin)) {
@@ -407,6 +405,16 @@ function containsUltrasoundQuery(query: string): boolean {
       t.includes(k)
     )
   );
+}
+
+function containsEmngIntent(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  return /(emng|emg|eng|iglic|iglice|iglicama)/.test(q);
+}
+
+function isEmngItem(item: ApiSlotItem): boolean {
+  const text = normalizeForSearch(`${item.specialist} ${item.section}`);
+  return /\bemng\b/.test(text) || text.includes("elektromioneuro");
 }
 
 function isUltrasoundItem(item: ApiSlotItem): boolean {
@@ -1349,6 +1357,7 @@ export async function GET(req: NextRequest) {
     const mrIntent = containsMrQuery(q) && !ctIntent && !containsOctQuery(q);
     const octIntent = containsOctQuery(q);
     const ultrasoundIntent = containsUltrasoundQuery(q) && !ctIntent && !octIntent && !mrIntent;
+    const emngIntent = containsEmngIntent(q);
     const oncologyIntent = containsOncologyIntent(q);
 
     let snapshot = await getLatestSnapshot();
@@ -1505,6 +1514,14 @@ export async function GET(req: NextRequest) {
         );
         forcedAnswer = createMrSchedulingAnswer(scheduleItem);
       }
+    } else if (emngIntent) {
+      const emngItems = sortByStatusAndDate(
+        visibleItems
+          .filter(isEmngItem)
+          .filter((item) => looseTextMatch(`${item.specialist} ${item.section}`, q))
+      );
+      items = emngItems;
+      forcedAnswer = createCombinedInvestigationAnswer("EMNG", emngItems);
     } else if (ultrasoundIntent) {
       const uzItems = sortByStatusAndDate(
         visibleItems
