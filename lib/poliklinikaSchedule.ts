@@ -16,7 +16,7 @@ type RawAccordionItem = {
 };
 
 const DOCTOR_NAME_REGEX =
-  /(?:(?:prof\.?|doc\.?|prim\.?|mr\.?|dr\.?)\s*)+(?:(?:sc\.?|med\.?)\s*)*[\p{L}][\p{L}\-']+(?:\s+[\p{L}][\p{L}\-']+){1,3}/giu;
+  /(?:(?:prof\.?|doc\.?|prim\.?|mr\.?|dr\.?)\s*)+(?:(?:sc\.?|med\.?)\s*)*[\p{L}][\p{L}\-']+(?:\s+(?!(?:prva?|druga?|treca?|četvrta?|cetvrta?|poslednji|posljednji|pslednji|ponedjeljak|ponedeljak|utorak|srijeda|sreda|četvrtak|cetvrtak|petak|subota|nedjelja|nedelja|u|mjesecu|od|do)\b)[\p{L}][\p{L}\-']+){1,3}/giu;
 const INFO_LINE_REGEX =
   /potrebne informacije|pozivom na broj|broj telefona|telefon|\bkontakt\b|u periodu od/i;
 const TITLE_TOKEN_REGEX = /^(?:dr|doc|prof|prim|mr|sc|med)+\.?$/i;
@@ -119,6 +119,19 @@ function tokenVariants(token: string): string[] {
   if (token.startsWith("dermatolog")) {
     out.add("dermato");
   }
+
+  if (token.startsWith("grud")) {
+    out.add("torakaln");
+    out.add("torakal");
+    out.add("ezofag");
+  }
+
+  if (token.startsWith("torak") || token.startsWith("ezofag")) {
+    out.add("grud");
+  }
+
+  if (token.length >= 6) out.add(token.slice(0, 6));
+  if (token.length >= 7) out.add(token.slice(0, 7));
 
   return [...out];
 }
