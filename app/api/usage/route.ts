@@ -2,6 +2,18 @@ import { hasAdminAccess } from "@/lib/auth";
 import { getMonthlyApiUsage } from "@/lib/storage";
 import { NextRequest, NextResponse } from "next/server";
 
+function safeInt(raw: string | undefined, fallback: number): number {
+  const n = Number.parseInt(raw ?? "", 10);
+  if (!Number.isFinite(n) || n <= 0) return fallback;
+  return n;
+}
+
+function safePercent(raw: string | undefined, fallback: number): number {
+  const n = Number.parseFloat(raw ?? "");
+  if (!Number.isFinite(n) || n <= 0 || n >= 1) return fallback;
+  return n;
+}
+
 function parseMonth(raw: string | null): string | null {
   if (!raw) return null;
   const value = raw.trim();
@@ -27,9 +39,17 @@ export async function GET(req: NextRequest) {
   const thisMonth = usage.month === currentMonth;
   const dayOfMonth = thisMonth ? now.getUTCDate() : null;
   const daysInMonth = monthDays(usage.month);
+  const monthlyLimit = safeInt(process.env.MONTHLY_API_LIMIT, 100000);
+  const alertThresholdRatio = safePercent(process.env.API_USAGE_ALERT_THRESHOLD, 0.8);
+  const alertThresholdCount = Math.ceil(monthlyLimit * alertThresholdRatio);
+  const usagePercent = monthlyLimit > 0 ? Number(((usage.total / monthlyLimit) * 100).toFixed(2)) : null;
   const projectedTotal =
     dayOfMonth && dayOfMonth > 0
       ? Math.round((usage.total / dayOfMonth) * daysInMonth)
+      : null;
+  const projectedPercent =
+    projectedTotal && monthlyLimit > 0
+      ? Number(((projectedTotal / monthlyLimit) * 100).toFixed(2))
       : null;
 
   return NextResponse.json({
@@ -41,8 +61,13 @@ export async function GET(req: NextRequest) {
       daysInMonth,
       projectedTotal,
       halfwayThreshold: 50000,
-      passedHalfwayThreshold: Boolean(dayOfMonth && dayOfMonth <= 15 && usage.total >= 50000)
+      passedHalfwayThreshold: Boolean(dayOfMonth && dayOfMonth <= 15 && usage.total >= 50000),
+      monthlyLimit,
+      usagePercent,
+      projectedPercent,
+      alertThresholdRatio,
+      alertThresholdCount,
+      passed80PercentThreshold: usage.total >= alertThresholdCount
     }
   });
 }
-

@@ -1,6 +1,8 @@
 import { fetchLatestSnapshot } from "@/lib/kccg";
 import { computeChanges, fanoutNotifications } from "@/lib/notify";
 import {
+  getDebugValue,
+  getMonthlyApiUsage,
   getLatestSnapshot,
   listSubscriptions,
   pushNotifications,
@@ -38,6 +40,50 @@ function isSuspiciousSnapshot(
   const prevRecords = Math.max(previous.recordsCount, 1);
   const drop = (prevRecords - current.recordsCount) / prevRecords;
   return drop > maxDropRatio;
+}
+
+function safeInt(raw: string | undefined, fallback: number): number {
+  const n = Number.parseInt(raw ?? "", 10);
+  if (!Number.isFinite(n) || n <= 0) return fallback;
+  return n;
+}
+
+function safePercent(raw: string | undefined, fallback: number): number {
+  const n = Number.parseFloat(raw ?? "");
+  if (!Number.isFinite(n) || n <= 0 || n >= 1) return fallback;
+  return n;
+}
+
+async function maybeSendUsageAlert80(): Promise<void> {
+  const usage = await getMonthlyApiUsage();
+  const monthlyLimit = safeInt(process.env.MONTHLY_API_LIMIT, 100000);
+  const thresholdRatio = safePercent(process.env.API_USAGE_ALERT_THRESHOLD, 0.8);
+  const thresholdCount = Math.ceil(monthlyLimit * thresholdRatio);
+  if (usage.total < thresholdCount) return;
+
+  const alertKey = `usage:alert:${usage.month}:${thresholdCount}`;
+  const alreadySent = await getDebugValue<{ sentAt: string }>(alertKey);
+  if (alreadySent) return;
+
+  const percent = monthlyLimit > 0 ? Math.round((usage.total / monthlyLimit) * 100) : 0;
+  await sendTelegramOpsAlert(
+    [
+      "Upozorenje: API usage je presao prag.",
+      `Mjesec: ${usage.month}`,
+      `Ukupno poziva: ${usage.total}`,
+      `Limit: ${monthlyLimit}`,
+      `Prag (${Math.round(thresholdRatio * 100)}%): ${thresholdCount}`,
+      `Trenutno: ${percent}%`
+    ].join("\n")
+  );
+  await setDebugValue(alertKey, {
+    sentAt: new Date().toISOString(),
+    usageMonth: usage.month,
+    usageTotal: usage.total,
+    monthlyLimit,
+    thresholdCount,
+    thresholdRatio
+  });
 }
 
 async function sendTelegramOpsAlert(text: string): Promise<void> {
@@ -130,6 +176,7 @@ export async function runDailySync(trigger: string): Promise<SyncResult> {
       previous.sourcePdfDate === current.sourcePdfDate &&
       snapshotsEqual(prevHash, currHash)
     ) {
+      await maybeSendUsageAlert80();
       return {
         ok: true,
         skipped: true,
@@ -150,6 +197,7 @@ export async function runDailySync(trigger: string): Promise<SyncResult> {
 
     await saveSnapshot(current);
     await pushNotifications(notifications);
+    await maybeSendUsageAlert80();
 
     return {
       ok: true,

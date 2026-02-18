@@ -16,7 +16,7 @@ type RawAccordionItem = {
 };
 
 const DOCTOR_NAME_REGEX =
-  /(?:(?:prof\.?|doc\.?|prim\.?|mr\.?|dr\.?)\s*)+(?:(?:sc\.?|med\.?)\s*)*[\p{L}][\p{L}\-']+(?:\s+(?!(?:prva?|druga?|treca?|četvrta?|cetvrta?|poslednji|posljednji|pslednji|ponedjeljak|ponedeljak|utorak|srijeda|sreda|četvrtak|cetvrtak|petak|subota|nedjelja|nedelja|u|mjesecu|od|do)\b)[\p{L}][\p{L}\-']+){1,3}/giu;
+  /(?:(?:prof\.?|doc\.?|prim\.?|mr\.?|dr\.?)\s*)+(?:(?:sc\.?|med\.?)\s*)*[\p{L}][\p{L}\-']+(?:\s+(?!(?:prva?|prvi|druga?|tre(?:\u0107|c)a?|cetvrta?|zadnja|poslednja|posljednja|poslednji|posljednji|pslednji|ponedjeljak|ponedeljak|utorak|srijeda|sreda|(?:\u010d|c)?etvrtak|petak|subota|nedjelja|nedelja|u|mjesecu|od|do|h|ordinira|ordiniraju|specijalista|specijalistkinja)\b)[\p{L}][\p{L}\-']+){1,3}/giu;
 const INFO_LINE_REGEX =
   /potrebne informacije|pozivom na broj|broj telefona|telefon|\bkontakt\b|u periodu od/i;
 const TITLE_TOKEN_REGEX = /^(?:dr|doc|prof|prim|mr|sc|med)+\.?$/i;
@@ -25,7 +25,7 @@ const DAY_PATTERNS: Array<{ label: string; re: RegExp }> = [
   { label: "Ponedjeljak", re: /\bponedjelj(?:ak|kom|ka)?\b|\bponedelj(?:ak|kom|ka)?\b/i },
   { label: "Utorak", re: /\butor(?:ak|kom|ka)?\b/i },
   { label: "Srijeda", re: /\bsrijed(?:a|om|e)?\b|\bsred(?:a|om|e)?\b/i },
-  { label: "Četvrtak", re: /\bčetvrt(?:ak|kom|ka)?\b|\bcetvrt(?:ak|kom|ka)?\b/i },
+  { label: "Cetvrtak", re: /\b(?:\u010d|c)?etvrt(?:ak|kom|ka)?\b/i },
   { label: "Petak", re: /\bpet(?:ak|kom|ka)?\b/i },
   { label: "Subota", re: /\bsubot(?:a|om|e)?\b/i },
   { label: "Nedjelja", re: /\bnedjelj(?:a|om|e)?\b|\bnedelj(?:a|om|e)?\b/i },
@@ -81,7 +81,8 @@ function normalizeSearch(value: string): string {
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .replace(/đ/g, "dj")
+    .replace(/\u0111/g, "dj")
+    .replace(/\u00f0/g, "dj")
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
 }
@@ -118,6 +119,24 @@ function tokenVariants(token: string): string[] {
 
   if (token.startsWith("dermatolog")) {
     out.add("dermato");
+  }
+
+  if (
+    token.startsWith("okuloplast") ||
+    token.startsWith("okuloplasti") ||
+    token.startsWith("okulopladt") ||
+    token.startsWith("oculoplast") ||
+    token.startsWith("okulo")
+  ) {
+    out.add("okuloplast");
+    out.add("okuloplasti");
+    out.add("oculoplast");
+    out.add("suzne");
+  }
+
+  if (token.startsWith("plastic") || token.startsWith("plast")) {
+    out.add("plasticn");
+    out.add("plasti");
   }
 
   if (token.startsWith("grud")) {
@@ -187,11 +206,38 @@ function containsDoctorMarker(line: string): boolean {
 }
 
 function containsScheduleMarker(line: string): boolean {
-  return /(poned|utor|srijed|sred|cetvrt|četvrt|petak|subot|nedjel|nedelj|radnim danima|svake|svakog|od\s*\d{1,2}|ordinira|ordiniraju)/i.test(
+  return /(poned|utor|srijed|sred|(?:\u010d|c)?etvrt|petak|subot|nedjel|nedelj|radnim danima|svake|svakog|prva|prvi|druga|tre(?:\u0107|c)a|zadnja|poslednja|posljednja|poslednji|posljednji|pslednji|u mjesecu|od\s*\d{1,2}|ordinira|ordiniraju)/i.test(
     line
   );
 }
 
+function extractMonthlyQualifier(text: string | null): string | null {
+  if (!text) return null;
+  const normalized = text.replace(/\s+/g, " ").trim();
+  const match = normalized.match(
+    /\b(prva|prvi|druga|tre(?:\u0107|c)a|cetvrta|zadnja|poslednja|posljednja|poslednji|posljednji|pslednji)\s+(ponedjeljak|ponedeljak|utorak|srijeda|sreda|(?:\u010d|c)?etvrtak|petak|subota|nedjelja|nedelja)\b(?:\s+u\s+mjesecu)?/i
+  );
+  if (!match) return null;
+  const rawOrdinal = match[1].toLowerCase();
+  const rawDay = match[2].toLowerCase();
+
+  const ordinal =
+    rawOrdinal === "pslednji"
+      ? "poslednji"
+      : rawOrdinal === "posljednji"
+        ? "poslednji"
+        : rawOrdinal;
+  const day =
+    rawDay === "ponedeljak"
+      ? "ponedjeljak"
+      : rawDay === "sreda"
+        ? "srijeda"
+        : rawDay === "nedelja"
+          ? "nedjelja"
+          : rawDay;
+
+  return `${ordinal} ${day} u mjesecu`;
+}
 function isNonScheduleInfoLine(line: string): boolean {
   return INFO_LINE_REGEX.test(line);
 }
@@ -199,6 +245,18 @@ function isNonScheduleInfoLine(line: string): boolean {
 function normalizeDoctorName(candidate: string): string | null {
   let value = candidate.replace(/\s+/g, " ").trim();
   value = value.replace(/\b(ordinira|ordiniraju|specijalista|specijalistkinja)\b.*$/i, "").trim();
+  value = value
+    .replace(
+      /\b(prva|prvi|druga|tre(?:\u0107|c)a|cetvrta|zadnja|poslednja|posljednja|poslednji|posljednji|pslednji)\b.*$/i,
+      ""
+    )
+    .trim();
+  value = value
+    .replace(
+      /\b(ponedjeljak|ponedeljak|utorak|srijeda|sreda|(?:\u010d|c)?etvrtak|petak|subota|nedjelja|nedelja|u|mjesecu)\b.*$/i,
+      ""
+    )
+    .trim();
   value = value.replace(/[,;:\s]+$/g, "").trim();
   value = value.replace(/\bmr\.?\s*sc\.?\s*med\.?$/i, "").trim();
   value = value.replace(/\bmr\.?\s*sc\.?$/i, "").trim();
@@ -268,7 +326,7 @@ function cleanScheduleLine(line: string): string {
 
   const withoutNames = line.replace(DOCTOR_NAME_REGEX, " ");
   const normalized = withoutNames
-    .replace(/\b(?:prof\.?|doc\.?|prim\.?|mr\.?|sc\.?|med\.?)\b/gi, " ")
+    .replace(/(?:\b(?:prof|doc|prim|mr|sc|med|dr)\.?\s*){1,8}/gi, " ")
     .replace(/\b(specijalista|specijalistkinja)\b[^,;:]*(?:[,;:]|$)/gi, " ")
     .replace(/\bordinira(?:ju)?\b/gi, " ")
     .replace(/\s+/g, " ")
@@ -293,6 +351,12 @@ function unifyScheduleDisplay(
   ambulantaHours: string | null,
   dayContext: string | null
 ): string {
+  const monthlyQualifier = extractMonthlyQualifier(schedule);
+  if (monthlyQualifier) {
+    const time = extractTimeRange(schedule) ?? extractTimeRange(ambulantaHours);
+    return time ? `${monthlyQualifier} ${time}`.replace(/\s+/g, " ").trim() : monthlyQualifier;
+  }
+
   const day = extractDayLabel(schedule) ?? dayContext ?? extractDayLabel(ambulantaHours);
   const time = extractTimeRange(schedule) ?? (day ? extractTimeRange(ambulantaHours) : null);
   const ambNo = extractAmbulantaNumber(schedule);
@@ -303,6 +367,24 @@ function unifyScheduleDisplay(
   if (ambNo) out = out ? `${out} (${ambNo})` : ambNo;
   if (time) out = out ? `${out} ${time}` : time;
   return out.replace(/\s+/g, " ").trim();
+}
+
+function isOculoplasticItem(item: DoctorScheduleItem): boolean {
+  const hay = normalizeSearch(
+    `${item.ambulanta} ${item.doctor} ${item.schedule} ${item.location ?? ""}`
+  );
+  return (
+    hay.includes("okuloplast") ||
+    hay.includes("oculoplast") ||
+    hay.includes("suzne puteve")
+  );
+}
+
+function isPlasticSurgeryItem(item: DoctorScheduleItem): boolean {
+  const hay = normalizeSearch(
+    `${item.ambulanta} ${item.doctor} ${item.schedule} ${item.location ?? ""}`
+  );
+  return hay.includes("plastic") && hay.includes("hirurg") && !isOculoplasticItem(item);
 }
 
 function buildId(parts: string[]): string {
@@ -432,7 +514,18 @@ export function filterDoctorSchedule(
     return tokenGroups.every((group) => group.some((token) => hay.includes(token)));
   });
 
-  return matched.sort((a, b) => {
+  const wantsOculoplastic =
+    /\bokuloplast|\boculoplast|\bokulopladt|\bokulo/.test(q) ||
+    tokenGroups.some((group) => group.some((x) => x.includes("okuloplast")));
+  const wantsPlastic = /\bplasticn|\bplasticni\b|\bplasti/.test(q) && !wantsOculoplastic;
+
+  const scoped = wantsOculoplastic
+    ? matched.filter((item) => isOculoplasticItem(item))
+    : wantsPlastic
+      ? matched.filter((item) => isPlasticSurgeryItem(item))
+      : matched;
+
+  return scoped.sort((a, b) => {
     const aa = normalizeSearch(`${a.doctor} ${a.ambulanta}`);
     const bb = normalizeSearch(`${b.doctor} ${b.ambulanta}`);
     return aa.localeCompare(bb);
