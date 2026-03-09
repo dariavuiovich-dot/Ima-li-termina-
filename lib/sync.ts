@@ -177,7 +177,7 @@ export async function runDailySync(trigger: string): Promise<SyncResult> {
       snapshotsEqual(prevHash, currHash)
     ) {
       await maybeSendUsageAlert80();
-      return {
+      const result: SyncResult = {
         ok: true,
         skipped: true,
         trigger,
@@ -189,6 +189,11 @@ export async function runDailySync(trigger: string): Promise<SyncResult> {
         notificationsCount: 0,
         reason: "No changes since previous snapshot"
       };
+      await setDebugValue("sync:last_result", {
+        at: new Date().toISOString(),
+        ...result
+      });
+      return result;
     }
 
     const changes = computeChanges(previous, current);
@@ -199,7 +204,7 @@ export async function runDailySync(trigger: string): Promise<SyncResult> {
     await pushNotifications(notifications);
     await maybeSendUsageAlert80();
 
-    return {
+    const result: SyncResult = {
       ok: true,
       skipped: false,
       trigger,
@@ -210,8 +215,13 @@ export async function runDailySync(trigger: string): Promise<SyncResult> {
       changesCount: changes.length,
       notificationsCount: notifications.length
     };
+    await setDebugValue("sync:last_result", {
+      at: new Date().toISOString(),
+      ...result
+    });
+    return result;
   } catch (error) {
-    return {
+    const result: SyncResult = {
       ok: false,
       skipped: false,
       trigger,
@@ -223,5 +233,15 @@ export async function runDailySync(trigger: string): Promise<SyncResult> {
       notificationsCount: 0,
       reason: error instanceof Error ? error.message : "Unknown sync error"
     };
+    await setDebugValue("sync:last_result", {
+      at: new Date().toISOString(),
+      ...result
+    });
+    await setDebugValue("sync:last_error", {
+      at: new Date().toISOString(),
+      trigger,
+      reason: result.reason ?? "Unknown sync error"
+    });
+    return result;
   }
 }

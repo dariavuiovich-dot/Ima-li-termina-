@@ -1,5 +1,11 @@
-import { fetchLatestSnapshot } from "@/lib/kccg";
-import { getLatestSnapshot, recordApiCall, saveSnapshot } from "@/lib/storage";
+import { fetchLatestPdfMeta, fetchLatestSnapshot } from "@/lib/kccg";
+import {
+  getDebugValue,
+  getLatestSnapshot,
+  recordApiCall,
+  saveSnapshot,
+  setDebugValue
+} from "@/lib/storage";
 import { normalizeForSearch, parseSlotDate } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -35,6 +41,17 @@ type ResultGroup = {
   title: string;
   items: ApiSlotItem[];
 };
+
+type SlotsMetaCheckState = {
+  checkedAt: string;
+  sourcePdfDate: string | null;
+  sourcePdfUrl: string | null;
+  status: "ok" | "error";
+  reason?: string;
+};
+
+const SLOT_META_CHECK_KEY = "slots:last_meta_check";
+const SLOT_META_ERROR_KEY = "slots:last_meta_error";
 
 const CYR_TO_LAT_MAP: Record<string, string> = {
   "\u0430": "a",
@@ -88,6 +105,26 @@ function transliterateCyrillicToLatin(input: string): string {
     out += CYR_TO_LAT_MAP[char] ?? char;
   }
   return out;
+}
+
+function parseReportDateToEpoch(value: string | null | undefined): number {
+  if (!value) return Number.MIN_SAFE_INTEGER;
+
+  const dotted = value.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+  if (dotted) {
+    const [, dd, mm, yyyy] = dotted;
+    return Date.UTC(Number(yyyy), Number(mm) - 1, Number(dd), 0, 0, 0, 0);
+  }
+
+  const iso = Date.parse(value);
+  return Number.isFinite(iso) ? iso : Number.MIN_SAFE_INTEGER;
+}
+
+function isMetaCheckDue(checkedAt: string | undefined, intervalSec: number): boolean {
+  if (!checkedAt) return true;
+  const last = Date.parse(checkedAt);
+  if (!Number.isFinite(last)) return true;
+  return Date.now() - last >= intervalSec * 1000;
 }
 
 function expandNeedleVariants(rawQuery: string): string[] {
@@ -1492,6 +1529,50 @@ export async function GET(req: NextRequest) {
     if (!snapshot) {
       snapshot = await fetchLatestSnapshot();
       await saveSnapshot(snapshot);
+    }
+
+    // Self-heal: periodically compare current source meta and refresh snapshot if a newer PDF exists.
+    const intervalSec = Math.max(
+      60,
+      Number.parseInt(process.env.SLOTS_META_CHECK_INTERVAL_SEC ?? "900", 10) || 900
+    );
+    const metaState = await getDebugValue<SlotsMetaCheckState>(SLOT_META_CHECK_KEY);
+    if (isMetaCheckDue(metaState?.checkedAt, intervalSec)) {
+      try {
+        const latestMeta = await fetchLatestPdfMeta();
+        const currentDateTs = parseReportDateToEpoch(snapshot.sourcePdfDate);
+        const latestDateTs = parseReportDateToEpoch(latestMeta.reportDate);
+        const hasNewerSource =
+          latestMeta.pdfUrl !== snapshot.sourcePdfUrl || latestDateTs > currentDateTs;
+
+        if (hasNewerSource) {
+          snapshot = await fetchLatestSnapshot();
+          await saveSnapshot(snapshot);
+        }
+
+        await setDebugValue(SLOT_META_CHECK_KEY, {
+          checkedAt: new Date().toISOString(),
+          sourcePdfDate: latestMeta.reportDate,
+          sourcePdfUrl: latestMeta.pdfUrl,
+          status: "ok"
+        } satisfies SlotsMetaCheckState);
+      } catch (metaError) {
+        const reason =
+          metaError instanceof Error
+            ? metaError.message
+            : "Unknown error while checking source meta";
+        await setDebugValue(SLOT_META_CHECK_KEY, {
+          checkedAt: new Date().toISOString(),
+          sourcePdfDate: snapshot.sourcePdfDate,
+          sourcePdfUrl: snapshot.sourcePdfUrl,
+          status: "error",
+          reason
+        } satisfies SlotsMetaCheckState);
+        await setDebugValue(SLOT_META_ERROR_KEY, {
+          at: new Date().toISOString(),
+          reason
+        });
+      }
     }
 
     const allItems: ApiSlotItem[] = snapshot.bySpecialist.map((item) => {

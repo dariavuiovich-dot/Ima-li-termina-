@@ -8,6 +8,51 @@ interface KccgPdfMeta {
   pdfUrl: string;
 }
 
+function normalizePdfUrl(raw: string): string {
+  const value = raw.trim();
+  if (/^https?:\/\//i.test(value)) return value;
+  if (value.startsWith("//")) return `https:${value}`;
+  if (value.startsWith("/")) return `https://www.kccg.me${value}`;
+  return `https://www.kccg.me/${value.replace(/^\.?\//, "")}`;
+}
+
+function extractPdfUrl(html: string): string | null {
+  const attrRegex =
+    /(?:href|data-url)=["']([^"']*prvi-slobodan-termin[^"']*\.pdf)["']/gi;
+  for (const match of html.matchAll(attrRegex)) {
+    const candidate = match[1]?.trim();
+    if (!candidate) continue;
+    return normalizePdfUrl(candidate);
+  }
+
+  const absRegex =
+    /https:\/\/www\.kccg\.me\/wp-content\/uploads\/[^\s"'<>]*prvi-slobodan-termin[^\s"'<>]*\.pdf/gi;
+  const abs = absRegex.exec(html)?.[0];
+  if (abs) return normalizePdfUrl(abs);
+
+  const relRegex =
+    /\/wp-content\/uploads\/[^\s"'<>]*prvi-slobodan-termin[^\s"'<>]*\.pdf/gi;
+  const rel = relRegex.exec(html)?.[0];
+  if (rel) return normalizePdfUrl(rel);
+
+  return null;
+}
+
+async function fetchHtml(url: string): Promise<string> {
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "user-agent": "kccg-slots-app/1.0"
+    },
+    next: { revalidate: 0 }
+  });
+
+  if (!res.ok) {
+    throw new Error(`Fetch failed (${url}): ${res.status}`);
+  }
+  return res.text();
+}
+
 function cleanName(value: string): string {
   return value
     // OCR can glue doctor marker to ambulanta ordinal:
@@ -297,35 +342,33 @@ function aggregateBySpecialist(rows: SlotRecord[]): SpecialistSlot[] {
 }
 
 export async function fetchLatestPdfMeta(): Promise<KccgPdfMeta> {
-  const res = await fetch(KCCG_HOME_URL, {
-    method: "GET",
-    headers: {
-      "user-agent": "kccg-slots-app/1.0"
-    },
-    next: { revalidate: 0 }
-  });
+  const sources = [KCCG_HOME_URL, "https://r.jina.ai/http://www.kccg.me/"];
+  const errors: string[] = [];
 
-  if (!res.ok) {
-    throw new Error(`KCCG home fetch failed: ${res.status}`);
+  for (const source of sources) {
+    try {
+      const html = await fetchHtml(source);
+      const pdfUrl = extractPdfUrl(html);
+      if (!pdfUrl) {
+        errors.push(`No PDF link parsed from ${source}`);
+        continue;
+      }
+
+      const dateMatch = html.match(/<h6[^>]*>(\d{2}\.\d{2}\.\d{4})<\/h6>/i);
+      const reportDate = dateMatch?.[1] ?? new Date().toISOString().slice(0, 10);
+
+      return {
+        reportDate,
+        pdfUrl
+      };
+    } catch (error) {
+      errors.push(error instanceof Error ? error.message : String(error));
+    }
   }
 
-  const html = await res.text();
-
-  const pdfMatch = html.match(
-    /href="(https:\/\/www\.kccg\.me\/wp-content\/uploads\/[^"]*prvi-slobodan-termin[^"]*\.pdf)"/i
+  throw new Error(
+    `Unable to locate KCCG daily PDF URL. Attempts: ${errors.join(" | ")}`
   );
-
-  if (!pdfMatch) {
-    throw new Error("Unable to locate KCCG daily PDF URL on homepage");
-  }
-
-  const dateMatch = html.match(/<h6[^>]*>(\d{2}\.\d{2}\.\d{4})<\/h6>/i);
-  const reportDate = dateMatch?.[1] ?? new Date().toISOString().slice(0, 10);
-
-  return {
-    reportDate,
-    pdfUrl: pdfMatch[1]
-  };
 }
 
 export async function fetchSnapshotFromPdfMeta(meta: KccgPdfMeta): Promise<SlotsSnapshot> {
