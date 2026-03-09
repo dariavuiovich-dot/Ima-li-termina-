@@ -8,3 +8,4 @@ node_modules
 # local-only notes
 private_notes/
 
+.vercel
