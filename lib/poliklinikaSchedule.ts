@@ -1,6 +1,7 @@
 import { DoctorScheduleItem, DoctorScheduleSnapshot } from "@/lib/types";
 
 const POLIKLINIKA_URL = "https://www.kccg.me/poliklinika/poliklinika-kccg/";
+export const SCHEDULE_PARSER_VERSION = 2;
 
 type RawAccordionItem = {
   ambulanta: string;
@@ -509,6 +510,7 @@ export async function fetchDoctorSchedule(): Promise<DoctorScheduleItem[]> {
 export async function fetchDoctorScheduleSnapshot(): Promise<DoctorScheduleSnapshot> {
   const items = await fetchDoctorSchedule();
   return {
+    parserVersion: SCHEDULE_PARSER_VERSION,
     generatedAt: new Date().toISOString(),
     sourceUrl: POLIKLINIKA_URL,
     recordsCount: items.length,

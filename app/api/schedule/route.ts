@@ -1,5 +1,6 @@
 import {
   POLIKLINIKA_URL,
+  SCHEDULE_PARSER_VERSION,
   fetchDoctorScheduleSnapshot,
   filterDoctorSchedule
 } from "@/lib/poliklinikaSchedule";
@@ -24,9 +25,17 @@ export async function GET(req: NextRequest) {
     const limit = toSafeLimit(req.nextUrl.searchParams.get("limit"), 50);
 
     let snapshot = await getLatestScheduleSnapshot();
-    if (!snapshot) {
+    const mustRefreshSnapshot =
+      !snapshot ||
+      !Number.isFinite(snapshot.parserVersion) ||
+      snapshot.parserVersion < SCHEDULE_PARSER_VERSION;
+
+    if (mustRefreshSnapshot) {
       snapshot = await fetchDoctorScheduleSnapshot();
       await saveScheduleSnapshot(snapshot);
+    }
+    if (!snapshot) {
+      throw new Error("Doctor schedule snapshot unavailable");
     }
 
     if (!query) {

@@ -103,6 +103,7 @@ export interface DoctorScheduleItem {
 }
 
 export interface DoctorScheduleSnapshot {
+  parserVersion: number;
   generatedAt: string;
   sourceUrl: string;
   recordsCount: number;
