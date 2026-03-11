@@ -8,7 +8,7 @@ type RawAccordionItem = {
 };
 
 const DOCTOR_NAME_REGEX =
-  /(?:(?:prof\.?|doc\.?|prim\.?|mr\.?|dr\.?)\s*)+(?:(?:sc\.?|med\.?)\s*)*[\p{L}][\p{L}\-']+(?:\s+(?!(?:prva?|prvi|druga?|tre(?:\u0107|c)a?|cetvrta?|zadnja|poslednja|posljednja|poslednji|posljednji|pslednji|ponedjeljak|ponedeljak|utorak|srijeda|sreda|(?:\u010d|c)?etvrtak|petak|subota|nedjelja|nedelja|u|mjesecu|od|do|h|ordinira|ordiniraju|specijalista|specijalistkinja)\b)[\p{L}][\p{L}\-']+){1,3}/giu;
+  /(?:(?:prof\.?|doc\.?|prim\.?|mr\.?|dr\.?)\s*)+(?:(?:sci\.?|sc\.?|med\.?)\s*)*[\p{L}][\p{L}\-']+(?:\s+(?!(?:prva?|prvi|druga?|tre(?:\u0107|c)a?|cetvrta?|zadnja|poslednja|posljednja|poslednji|posljednji|pslednji|ponedjeljak|ponedeljak|utorak|srijeda|sreda|(?:\u010d|c)?etvrtak|petak|subota|nedjelja|nedelja|u|mjesecu|od|do|h|ordinira|ordiniraju|specijalista|specijalistkinja)\b)[\p{L}][\p{L}\-']+){1,3}/giu;
 const INFO_LINE_REGEX =
   /potrebne informacije|pozivom na broj|broj telefona|telefon|\bkontakt\b|u periodu od/i;
 const TITLE_TOKEN_REGEX =
@@ -333,7 +333,7 @@ function cleanScheduleLine(line: string): string {
 
   const withoutNames = line.replace(DOCTOR_NAME_REGEX, " ");
   const normalized = withoutNames
-    .replace(/(?:\b(?:prof|doc|prim|mr|sc|med|dr)\.?\s*){1,8}/gi, " ")
+    .replace(/(?:\b(?:prof|doc|prim|mr|sci|sc|med|dr)\.?\s*){1,8}/gi, " ")
     .replace(/\bmr\.?\s*sc\.?\s*med\.?\b/gi, " ")
     .replace(/\bdr\.?\s*sc\.?\s*med\.?\b/gi, " ")
     .replace(/\bdoc\.?\s*prim\.?\s*dr\.?\s*sci\.?\s*med\.?\b/gi, " ")
