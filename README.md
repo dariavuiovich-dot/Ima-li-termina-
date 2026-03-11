@@ -45,6 +45,16 @@ Optional:
 - `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT`:
   required only for browser `web_push` delivery channel
 
+Recommended for zero-maintenance ops:
+
+- `APP_BASE_URL` (optional): explicit public URL (for webhook self-heal).  
+  If omitted, app uses `VERCEL_URL`.
+- `ADMIN_TELEGRAM_CHAT_ID`: where ops alerts are sent (usage 80%, stale source, Redis fallback, webhook issues).
+- `MONTHLY_API_LIMIT` (default `100000`)
+- `API_USAGE_ALERT_THRESHOLD` (default `0.8`)
+- `OPS_SNAPSHOT_STALE_DAYS` (default `2`)
+- `OPS_TELEGRAM_WEBHOOK_SELF_HEAL` (default `true`)
+
 ## Local run
 
 ```bash
@@ -70,6 +80,17 @@ Then open `http://localhost:3000`.
 - PDF text from the source may contain malformed characters due to encoding quality on the source side.
 - Matching uses normalized text search and may not be perfect for all variants.
 - For production scale, replace naive subscription matching with indexed search and dedicated queueing for notification delivery.
+
+## Ops Auto-Heal (already implemented)
+
+Daily sync now also does:
+
+- usage alert at configured threshold (`API_USAGE_ALERT_THRESHOLD`)
+- warning if app runs in `in-memory` mode in production (Redis fallback)
+- warning if source PDF date is stale (`OPS_SNAPSHOT_STALE_DAYS`)
+- Telegram webhook auto-repair (set to `https://<app>/api/telegram/webhook` if drifted)
+
+No manual Telegram webhook re-install should be needed after initial bot token setup.
 
 ## Browser Push Setup
 

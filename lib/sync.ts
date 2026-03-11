@@ -7,7 +7,8 @@ import {
   listSubscriptions,
   pushNotifications,
   saveSnapshot,
-  setDebugValue
+  setDebugValue,
+  usingRedis
 } from "@/lib/storage";
 import { SlotsSnapshot, SyncResult } from "@/lib/types";
 
@@ -54,6 +55,34 @@ function safePercent(raw: string | undefined, fallback: number): number {
   return n;
 }
 
+function todayKey(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function parseSnapshotDate(input: string | null | undefined): Date | null {
+  if (!input) return null;
+  const v = input.trim();
+  if (!v) return null;
+
+  const dmY = v.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+  if (dmY) {
+    const d = Number(dmY[1]);
+    const m = Number(dmY[2]);
+    const y = Number(dmY[3]);
+    const dt = new Date(Date.UTC(y, m - 1, d));
+    return Number.isFinite(dt.getTime()) ? dt : null;
+  }
+
+  const iso = new Date(v);
+  return Number.isFinite(iso.getTime()) ? iso : null;
+}
+
+function diffDaysUtc(from: Date, to: Date): number {
+  const a = Date.UTC(from.getUTCFullYear(), from.getUTCMonth(), from.getUTCDate());
+  const b = Date.UTC(to.getUTCFullYear(), to.getUTCMonth(), to.getUTCDate());
+  return Math.floor((b - a) / (24 * 60 * 60 * 1000));
+}
+
 async function maybeSendUsageAlert80(): Promise<void> {
   const usage = await getMonthlyApiUsage();
   const monthlyLimit = safeInt(process.env.MONTHLY_API_LIMIT, 100000);
@@ -84,6 +113,201 @@ async function maybeSendUsageAlert80(): Promise<void> {
     thresholdCount,
     thresholdRatio
   });
+}
+
+function resolvePublicBaseUrl(): string | null {
+  const direct =
+    (process.env.APP_BASE_URL ?? process.env.NEXT_PUBLIC_APP_URL ?? "").trim() || null;
+  if (direct) return direct.replace(/\/+$/, "");
+
+  const vercelUrl = (process.env.VERCEL_URL ?? "").trim();
+  if (vercelUrl) return `https://${vercelUrl}`.replace(/\/+$/, "");
+
+  return null;
+}
+
+async function tgGet<T>(
+  token: string,
+  method: string
+): Promise<{ ok: true; result: T } | { ok: false; description?: string }> {
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
+      method: "GET",
+      headers: { "content-type": "application/json" },
+      next: { revalidate: 0 }
+    });
+    const data = (await res.json().catch(() => null)) as unknown;
+    return (data ?? { ok: false, description: "Invalid JSON from Telegram" }) as
+      | { ok: true; result: T }
+      | { ok: false; description?: string };
+  } catch (error) {
+    return {
+      ok: false,
+      description: error instanceof Error ? error.message : "Telegram GET failed"
+    };
+  }
+}
+
+async function tgPost<T>(
+  token: string,
+  method: string,
+  body: Record<string, unknown>
+): Promise<{ ok: true; result: T } | { ok: false; description?: string }> {
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body),
+      next: { revalidate: 0 }
+    });
+    const data = (await res.json().catch(() => null)) as unknown;
+    return (data ?? { ok: false, description: "Invalid JSON from Telegram" }) as
+      | { ok: true; result: T }
+      | { ok: false; description?: string };
+  } catch (error) {
+    return {
+      ok: false,
+      description: error instanceof Error ? error.message : "Telegram POST failed"
+    };
+  }
+}
+
+async function maybeAlertRedisFallback(): Promise<void> {
+  if (process.env.VERCEL_ENV !== "production") return;
+  if (usingRedis()) return;
+
+  const alertKey = `ops:redis_fallback:${todayKey()}`;
+  const alreadySent = await getDebugValue<{ sentAt: string }>(alertKey);
+  if (alreadySent) return;
+
+  await sendTelegramOpsAlert(
+    [
+      "Upozorenje: aplikacija je pala na in-memory storage.",
+      "Redis nije aktivan (provjeriti UPSTASH/REDIS env varijable).",
+      "Podaci i notifikacije nece biti trajno sacuvani dok se Redis ne vrati."
+    ].join("\n")
+  );
+
+  await setDebugValue(alertKey, { sentAt: new Date().toISOString() });
+}
+
+async function maybeAlertStaleSnapshot(snapshot: SlotsSnapshot): Promise<void> {
+  const staleDays = safeInt(process.env.OPS_SNAPSHOT_STALE_DAYS, 2);
+  const sourceDate = parseSnapshotDate(snapshot.sourcePdfDate);
+  if (!sourceDate) return;
+
+  const ageDays = diffDaysUtc(sourceDate, new Date());
+  if (ageDays < staleDays) return;
+
+  const alertKey = `ops:stale_snapshot:${snapshot.sourcePdfDate}:${staleDays}`;
+  const alreadySent = await getDebugValue<{ sentAt: string }>(alertKey);
+  if (alreadySent) return;
+
+  await sendTelegramOpsAlert(
+    [
+      "Upozorenje: source PDF izgleda zastarjelo.",
+      `sourcePdfDate: ${snapshot.sourcePdfDate}`,
+      `starost: ${ageDays} dana`,
+      `sourcePdfUrl: ${snapshot.sourcePdfUrl}`
+    ].join("\n")
+  );
+
+  await setDebugValue(alertKey, {
+    sentAt: new Date().toISOString(),
+    sourcePdfDate: snapshot.sourcePdfDate,
+    sourcePdfUrl: snapshot.sourcePdfUrl,
+    ageDays,
+    staleDays
+  });
+}
+
+async function maybeEnsureTelegramWebhook(): Promise<void> {
+  if (process.env.OPS_TELEGRAM_WEBHOOK_SELF_HEAL === "false") return;
+
+  const token = (process.env.TELEGRAM_BOT_TOKEN ?? "").trim();
+  if (!token) return;
+
+  const baseUrl = resolvePublicBaseUrl();
+  if (!baseUrl) return;
+  const desiredUrl = `${baseUrl}/api/telegram/webhook`;
+
+  const info = await tgGet<{
+    url?: string;
+    pending_update_count?: number;
+    last_error_message?: string;
+  }>(token, "getWebhookInfo");
+
+  if (!info.ok) {
+    const errKey = `ops:telegram_webhook_info_error:${todayKey()}`;
+    const already = await getDebugValue<{ sentAt: string }>(errKey);
+    if (!already) {
+      await sendTelegramOpsAlert(
+        `Upozorenje: getWebhookInfo neuspjesan (${info.description ?? "unknown error"}).`
+      );
+      await setDebugValue(errKey, {
+        sentAt: new Date().toISOString(),
+        description: info.description ?? null
+      });
+    }
+    return;
+  }
+
+  const currentUrl = (info.result.url ?? "").trim();
+  if (currentUrl === desiredUrl) {
+    await setDebugValue("ops:telegram_webhook_last", {
+      checkedAt: new Date().toISOString(),
+      desiredUrl,
+      currentUrl,
+      pendingUpdateCount: info.result.pending_update_count ?? null,
+      lastErrorMessage: info.result.last_error_message ?? null,
+      status: "ok"
+    });
+    return;
+  }
+
+  const secret = (process.env.TELEGRAM_WEBHOOK_SECRET ?? "").trim() || undefined;
+  const set = await tgPost<unknown>(token, "setWebhook", {
+    url: desiredUrl,
+    secret_token: secret
+  });
+
+  await setDebugValue("ops:telegram_webhook_last", {
+    checkedAt: new Date().toISOString(),
+    desiredUrl,
+    previousUrl: currentUrl,
+    status: set.ok ? "repaired" : "error",
+    error: set.ok ? null : set.description ?? "setWebhook failed"
+  });
+
+  if (!set.ok) {
+    const errKey = `ops:telegram_webhook_set_error:${todayKey()}`;
+    const already = await getDebugValue<{ sentAt: string }>(errKey);
+    if (!already) {
+      await sendTelegramOpsAlert(
+        [
+          "Upozorenje: Telegram webhook auto-heal nije uspio.",
+          `desired: ${desiredUrl}`,
+          `previous: ${currentUrl || "-"}`,
+          `error: ${set.description ?? "unknown"}`
+        ].join("\n")
+      );
+      await setDebugValue(errKey, {
+        sentAt: new Date().toISOString(),
+        desiredUrl,
+        previousUrl: currentUrl || null,
+        error: set.description ?? null
+      });
+    }
+  }
+}
+
+async function runOpsSelfHeal(snapshot: SlotsSnapshot): Promise<void> {
+  await Promise.allSettled([
+    maybeSendUsageAlert80(),
+    maybeAlertRedisFallback(),
+    maybeAlertStaleSnapshot(snapshot),
+    maybeEnsureTelegramWebhook()
+  ]);
 }
 
 async function sendTelegramOpsAlert(text: string): Promise<void> {
@@ -176,7 +400,7 @@ export async function runDailySync(trigger: string): Promise<SyncResult> {
       previous.sourcePdfDate === current.sourcePdfDate &&
       snapshotsEqual(prevHash, currHash)
     ) {
-      await maybeSendUsageAlert80();
+      await runOpsSelfHeal(current);
       const result: SyncResult = {
         ok: true,
         skipped: true,
@@ -202,7 +426,7 @@ export async function runDailySync(trigger: string): Promise<SyncResult> {
 
     await saveSnapshot(current);
     await pushNotifications(notifications);
-    await maybeSendUsageAlert80();
+    await runOpsSelfHeal(current);
 
     const result: SyncResult = {
       ok: true,
