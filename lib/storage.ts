@@ -1,9 +1,15 @@
 import { Redis } from "@upstash/redis";
 import { createClient } from "redis";
-import { SlotsSnapshot, Subscription, UserNotification } from "@/lib/types";
+import {
+  DoctorScheduleSnapshot,
+  SlotsSnapshot,
+  Subscription,
+  UserNotification
+} from "@/lib/types";
 
 const LATEST_SNAPSHOT_KEY = "kccg:snapshot:latest";
 const SNAPSHOT_BY_DATE_PREFIX = "kccg:snapshot:date:";
+const LATEST_SCHEDULE_SNAPSHOT_KEY = "kccg:schedule:snapshot:latest";
 const SUBSCRIPTIONS_KEY = "kccg:subscriptions";
 const NOTIFICATION_PREFIX = "kccg:notifications:user:";
 const MAX_NOTIFICATIONS_PER_USER = 200;
@@ -11,6 +17,7 @@ const DEBUG_PREFIX = "kccg:debug:";
 
 type MemoryStore = {
   latestSnapshot: SlotsSnapshot | null;
+  latestScheduleSnapshot: DoctorScheduleSnapshot | null;
   snapshotsByDate: Record<string, SlotsSnapshot>;
   subscriptions: Subscription[];
   notificationsByUser: Record<string, UserNotification[]>;
@@ -27,6 +34,7 @@ function getMemoryStore(): MemoryStore {
   if (!globalThis.__kccgMemoryStore) {
     globalThis.__kccgMemoryStore = {
       latestSnapshot: null,
+      latestScheduleSnapshot: null,
       snapshotsByDate: {},
       subscriptions: [],
       notificationsByUser: {},
@@ -188,6 +196,24 @@ export async function saveSnapshot(snapshot: SlotsSnapshot): Promise<void> {
   const memory = getMemoryStore();
   memory.latestSnapshot = snapshot;
   memory.snapshotsByDate[snapshot.sourcePdfDate] = snapshot;
+}
+
+export async function getLatestScheduleSnapshot(): Promise<DoctorScheduleSnapshot | null> {
+  if (redis) {
+    const value = await redisGet<DoctorScheduleSnapshot>(LATEST_SCHEDULE_SNAPSHOT_KEY);
+    return value ?? null;
+  }
+  return getMemoryStore().latestScheduleSnapshot;
+}
+
+export async function saveScheduleSnapshot(
+  snapshot: DoctorScheduleSnapshot
+): Promise<void> {
+  if (redis) {
+    await redisSet(LATEST_SCHEDULE_SNAPSHOT_KEY, snapshot);
+    return;
+  }
+  getMemoryStore().latestScheduleSnapshot = snapshot;
 }
 
 export async function listSubscriptions(userId?: string): Promise<Subscription[]> {

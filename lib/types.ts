@@ -91,3 +91,29 @@ export interface SyncResult {
   notificationsCount: number;
   reason?: string;
 }
+
+export interface DoctorScheduleItem {
+  id: string;
+  ambulanta: string;
+  doctor: string;
+  schedule: string;
+  ambulantaHours: string | null;
+  location: string | null;
+  sourceUrl: string;
+}
+
+export interface DoctorScheduleSnapshot {
+  generatedAt: string;
+  sourceUrl: string;
+  recordsCount: number;
+  items: DoctorScheduleItem[];
+}
+
+export interface ScheduleSyncResult {
+  ok: boolean;
+  skipped: boolean;
+  trigger: string;
+  recordsCount: number;
+  changesCount: number;
+  reason?: string;
+}

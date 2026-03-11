@@ -9,7 +9,9 @@ MVP web app for:
 
 - `GET /api/slots?q=...` search by specialist/department text
 - `GET /api/cron/daily-sync` daily sync endpoint for Vercel Cron
+- `GET /api/cron/schedule-sync` schedule sync endpoint for Vercel Cron (weekend trigger, 15-day gate)
 - `POST /api/sync` manual sync endpoint (admin token)
+- `POST /api/schedule/sync` manual doctor-schedule sync (admin token)
 - `POST /api/subscriptions` create/update subscription
 - `GET /api/subscriptions?userId=...` list user subscriptions
 - `DELETE /api/subscriptions?id=...` disable subscription
@@ -35,6 +37,7 @@ Required in production:
 
 - `CRON_SECRET`: secures `/api/cron/daily-sync`
 - `ADMIN_API_TOKEN`: secures `/api/sync` (optional; falls back to `CRON_SECRET`)
+- `SCHEDULE_SYNC_MIN_DAYS` (default `15`): minimum interval for cron schedule sync runs
 - `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`
   - or `KV_REST_API_URL` and `KV_REST_API_TOKEN`
   - or `REDIS_URL` (Redis Cloud integration)
@@ -68,11 +71,12 @@ Then open `http://localhost:3000`.
 
 1. Import this project into Vercel.
 2. Add environment variables from section above.
-3. Ensure `vercel.json` is present (contains daily cron schedule).
+3. Ensure `vercel.json` is present (contains slots + schedule cron entries).
 4. Deploy.
 5. Test:
    - `GET /api/health`
    - `POST /api/sync` with header `Authorization: Bearer <ADMIN_API_TOKEN>`
+   - `POST /api/schedule/sync` with header `Authorization: Bearer <ADMIN_API_TOKEN>`
    - `GET /api/slots?q=neurologija`
 
 ## Notes

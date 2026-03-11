@@ -1,14 +1,6 @@
-const POLIKLINIKA_URL = "https://www.kccg.me/poliklinika/poliklinika-kccg/";
+import { DoctorScheduleItem, DoctorScheduleSnapshot } from "@/lib/types";
 
-export type DoctorScheduleItem = {
-  id: string;
-  ambulanta: string;
-  doctor: string;
-  schedule: string;
-  ambulantaHours: string | null;
-  location: string | null;
-  sourceUrl: string;
-};
+const POLIKLINIKA_URL = "https://www.kccg.me/poliklinika/poliklinika-kccg/";
 
 type RawAccordionItem = {
   ambulanta: string;
@@ -19,7 +11,10 @@ const DOCTOR_NAME_REGEX =
   /(?:(?:prof\.?|doc\.?|prim\.?|mr\.?|dr\.?)\s*)+(?:(?:sc\.?|med\.?)\s*)*[\p{L}][\p{L}\-']+(?:\s+(?!(?:prva?|prvi|druga?|tre(?:\u0107|c)a?|cetvrta?|zadnja|poslednja|posljednja|poslednji|posljednji|pslednji|ponedjeljak|ponedeljak|utorak|srijeda|sreda|(?:\u010d|c)?etvrtak|petak|subota|nedjelja|nedelja|u|mjesecu|od|do|h|ordinira|ordiniraju|specijalista|specijalistkinja)\b)[\p{L}][\p{L}\-']+){1,3}/giu;
 const INFO_LINE_REGEX =
   /potrebne informacije|pozivom na broj|broj telefona|telefon|\bkontakt\b|u periodu od/i;
-const TITLE_TOKEN_REGEX = /^(?:dr|doc|prof|prim|mr|sc|med)+\.?$/i;
+const TITLE_TOKEN_REGEX =
+  /^(?:dr|doc|prof|prim|mr|sc|sci|med|spec|specijalista|supspec|subspec)\.?$/i;
+const NON_NAME_TOKEN_REGEX =
+  /^(?:ponedjeljak|ponedeljak|utorak|srijeda|sreda|cetvrtak|četvrtak|petak|subota|nedjelja|nedelja|prva|prvi|druga|treca|treća|cetvrta|četvrta|zadnja|poslednja|posljednja|poslednji|posljednji|pslednji|u|mjesecu|od|do|h|ambulanta|br|ordinira|ordiniraju)$/i;
 
 const DAY_PATTERNS: Array<{ label: string; re: RegExp }> = [
   { label: "Ponedjeljak", re: /\bponedjelj(?:ak|kom|ka)?\b|\bponedelj(?:ak|kom|ka)?\b/i },
@@ -149,6 +144,12 @@ function tokenVariants(token: string): string[] {
     out.add("grud");
   }
 
+  // Better tolerance for surname case endings / transliteration variants:
+  // "abdic" <-> "abdica", "vlaisavljevic" <-> "vlaisavljevica", etc.
+  if (token.length >= 5) out.add(token.slice(0, 5));
+  if (token.length >= 6) out.add(token.slice(0, token.length - 1));
+  if (token.length >= 7 && token.endsWith("a")) out.add(token.slice(0, -1));
+
   if (token.length >= 6) out.add(token.slice(0, 6));
   if (token.length >= 7) out.add(token.slice(0, 7));
 
@@ -244,7 +245,12 @@ function isNonScheduleInfoLine(line: string): boolean {
 
 function normalizeDoctorName(candidate: string): string | null {
   let value = candidate.replace(/\s+/g, " ").trim();
-  value = value.replace(/\b(ordinira|ordiniraju|specijalista|specijalistkinja)\b.*$/i, "").trim();
+  value = value
+    .replace(
+      /\b(ordinira|ordiniraju|specijalista|specijalistkinja|supspecijalista|subspecijalista)\b.*$/i,
+      ""
+    )
+    .trim();
   value = value
     .replace(
       /\b(prva|prvi|druga|tre(?:\u0107|c)a|cetvrta|zadnja|poslednja|posljednja|poslednji|posljednji|pslednji)\b.*$/i,
@@ -266,12 +272,13 @@ function normalizeDoctorName(candidate: string): string | null {
     .split(/\s+/)
     .map((x) => x.replace(/[^\p{L}'-]/gu, ""))
     .filter(Boolean)
-    .filter((x) => !TITLE_TOKEN_REGEX.test(x));
+    .filter((x) => !TITLE_TOKEN_REGEX.test(x))
+    .filter((x) => !NON_NAME_TOKEN_REGEX.test(x));
 
   if (nameTokens.length < 2) return null;
   const capitalized = nameTokens.filter((x) => /^\p{Lu}/u.test(x));
   if (capitalized.length < 2) return null;
-  return `Dr ${nameTokens.join(" ")}`;
+  return `Dr ${capitalized.slice(0, 4).join(" ")}`;
 }
 
 function extractDoctorNames(line: string): string[] {
@@ -327,6 +334,9 @@ function cleanScheduleLine(line: string): string {
   const withoutNames = line.replace(DOCTOR_NAME_REGEX, " ");
   const normalized = withoutNames
     .replace(/(?:\b(?:prof|doc|prim|mr|sc|med|dr)\.?\s*){1,8}/gi, " ")
+    .replace(/\bmr\.?\s*sc\.?\s*med\.?\b/gi, " ")
+    .replace(/\bdr\.?\s*sc\.?\s*med\.?\b/gi, " ")
+    .replace(/\bdoc\.?\s*prim\.?\s*dr\.?\s*sci\.?\s*med\.?\b/gi, " ")
     .replace(/\b(specijalista|specijalistkinja)\b[^,;:]*(?:[,;:]|$)/gi, " ")
     .replace(/\bordinira(?:ju)?\b/gi, " ")
     .replace(/\s+/g, " ")
@@ -494,6 +504,16 @@ export async function fetchDoctorSchedule(): Promise<DoctorScheduleItem[]> {
   const buffer = await res.arrayBuffer();
   const html = new TextDecoder("utf-8").decode(buffer);
   return parseDoctorSchedule(html);
+}
+
+export async function fetchDoctorScheduleSnapshot(): Promise<DoctorScheduleSnapshot> {
+  const items = await fetchDoctorSchedule();
+  return {
+    generatedAt: new Date().toISOString(),
+    sourceUrl: POLIKLINIKA_URL,
+    recordsCount: items.length,
+    items
+  };
 }
 
 export function filterDoctorSchedule(

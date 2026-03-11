@@ -1,9 +1,13 @@
 import {
   POLIKLINIKA_URL,
-  fetchDoctorSchedule,
+  fetchDoctorScheduleSnapshot,
   filterDoctorSchedule
 } from "@/lib/poliklinikaSchedule";
-import { recordApiCall } from "@/lib/storage";
+import {
+  getLatestScheduleSnapshot,
+  recordApiCall,
+  saveScheduleSnapshot
+} from "@/lib/storage";
 import { NextRequest, NextResponse } from "next/server";
 
 function toSafeLimit(value: string | null, fallback = 50): number {
@@ -19,23 +23,30 @@ export async function GET(req: NextRequest) {
     const query = (req.nextUrl.searchParams.get("q") ?? "").trim();
     const limit = toSafeLimit(req.nextUrl.searchParams.get("limit"), 50);
 
+    let snapshot = await getLatestScheduleSnapshot();
+    if (!snapshot) {
+      snapshot = await fetchDoctorScheduleSnapshot();
+      await saveScheduleSnapshot(snapshot);
+    }
+
     if (!query) {
       return NextResponse.json({
         query,
         total: 0,
         items: [],
-        sourceUrl: POLIKLINIKA_URL
+        sourceUrl: snapshot.sourceUrl ?? POLIKLINIKA_URL,
+        snapshotGeneratedAt: snapshot.generatedAt
       });
     }
 
-    const all = await fetchDoctorSchedule();
-    const matched = filterDoctorSchedule(all, query).slice(0, limit);
+    const matched = filterDoctorSchedule(snapshot.items, query).slice(0, limit);
 
     return NextResponse.json({
       query,
       total: matched.length,
       items: matched,
-      sourceUrl: POLIKLINIKA_URL
+      sourceUrl: snapshot.sourceUrl ?? POLIKLINIKA_URL,
+      snapshotGeneratedAt: snapshot.generatedAt
     });
   } catch (error) {
     return NextResponse.json(
