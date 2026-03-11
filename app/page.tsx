@@ -546,7 +546,12 @@ export default function HomePage() {
           Potpisite se na notifikacije za specijalistu/pretragu za kojeg dugo
           cekate termin: mi cemo da Vam posaljemo notifikaciju kad se pojavi prvi
           slobodni (ili raniji) termin za pregled tog specijaliste ili
-          dijagnosticku pretragu od interesa.
+          dijagnosticku pretragu od interesa. S obzirom na to da podatke o
+          terminima koje koristimo uzimamo sa sajta KCCG i ne raspolazemo
+          informacijom o tome koliko ima termina kod trazenog specijaliste
+          (imamo uvid samo u to da li ih ima/nema i kad je prvi slobodni),
+          moze se desiti da termini prodju dok Vi stignete kod izabranog
+          doktora.
         </p>
         <div className="row">
           <input
