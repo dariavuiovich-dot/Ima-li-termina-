@@ -398,6 +398,55 @@ function isPlasticSurgeryItem(item: DoctorScheduleItem): boolean {
   return hay.includes("plastic") && hay.includes("hirurg") && !isOculoplasticItem(item);
 }
 
+function containsGastroIntent(query: string): boolean {
+  const q = normalizeSearch(query);
+  return /(gastro|geh|gastroenter|gastroentero|hepat)/.test(q);
+}
+
+function containsGastroProcedureIntent(query: string): boolean {
+  const q = normalizeSearch(query);
+  return /(gastroskop|kolonoskop|kolono)/.test(q);
+}
+
+function isGastroAmbulantaItem(item: DoctorScheduleItem): boolean {
+  const hay = normalizeSearch(item.ambulanta);
+  return hay.includes("gastroenterohepatol") && hay.includes("ambulanta");
+}
+
+function isEndoscopyItem(item: DoctorScheduleItem): boolean {
+  const hay = normalizeSearch(item.ambulanta);
+  return hay.includes("endoskop");
+}
+
+function isGastroscopyItem(item: DoctorScheduleItem): boolean {
+  const hay = normalizeSearch(item.ambulanta);
+  return hay.includes("gastroskop");
+}
+
+function isColonoscopyItem(item: DoctorScheduleItem): boolean {
+  const hay = normalizeSearch(item.ambulanta);
+  return hay.includes("kolonoskop") || hay.includes("kolono");
+}
+
+function rankGastroScheduleItem(item: DoctorScheduleItem, query: string): number {
+  const q = normalizeSearch(query);
+  const procedureIntent = containsGastroProcedureIntent(q);
+  const wantsGastroscopy = q.includes("gastroskop");
+  const wantsColonoscopy = q.includes("kolonoskop") || q.includes("kolono");
+
+  if (procedureIntent) {
+    if (wantsGastroscopy && isGastroscopyItem(item)) return 100;
+    if (wantsColonoscopy && isColonoscopyItem(item)) return 110;
+    if (isEndoscopyItem(item)) return 200;
+    if (isGastroAmbulantaItem(item)) return 300;
+    return 900;
+  }
+
+  if (isGastroAmbulantaItem(item)) return 100;
+  if (isEndoscopyItem(item)) return 200;
+  return 900;
+}
+
 function buildId(parts: string[]): string {
   return parts
     .map((p) => normalizeSearch(p))
@@ -547,7 +596,14 @@ export function filterDoctorSchedule(
       ? matched.filter((item) => isPlasticSurgeryItem(item))
       : matched;
 
+  const gastroIntent = containsGastroIntent(q) || containsGastroProcedureIntent(q);
+
   return scoped.sort((a, b) => {
+    if (gastroIntent) {
+      const ra = rankGastroScheduleItem(a, q);
+      const rb = rankGastroScheduleItem(b, q);
+      if (ra !== rb) return ra - rb;
+    }
     const aa = normalizeSearch(`${a.doctor} ${a.ambulanta}`);
     const bb = normalizeSearch(`${b.doctor} ${b.ambulanta}`);
     return aa.localeCompare(bb);

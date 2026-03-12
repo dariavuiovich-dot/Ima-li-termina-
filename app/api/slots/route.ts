@@ -792,6 +792,16 @@ function containsOncologyIntent(query: string): boolean {
   );
 }
 
+function containsGastroIntent(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  return /(gastro|geh|gastroenter|gastroentero|hepat)/.test(q);
+}
+
+function containsGastroProcedureIntent(query: string): boolean {
+  const q = normalizeQueryLatin(query);
+  return /(gastroskop|kolonoskop|kolono)/.test(q);
+}
+
 function cleanSpecialistName(value: string): string {
   return value
     .replace(/\b([123])1{4,}(?=\s+Ljekar specijalista u amb\.?)/gi, "$1")
@@ -1042,6 +1052,58 @@ function sortByStatusAndDate(items: ApiSlotItem[]): ApiSlotItem[] {
       parseSlotDate(b.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
     if (da !== db) return da - db;
     if (a.section !== b.section) return a.section.localeCompare(b.section);
+    return a.specialist.localeCompare(b.specialist);
+  });
+}
+
+function isGastroAmbulantaSlot(item: ApiSlotItem): boolean {
+  const sp = normalizeForSearch(item.specialist);
+  return sp.includes("gastroenterohepatol") && sp.includes("ambulanta");
+}
+
+function isGastroEndoscopySlot(item: ApiSlotItem): boolean {
+  const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
+  return combined.includes("endoskop") || combined.includes("gastroskop") || combined.includes("kolonoskop");
+}
+
+function isGastroscopySlot(item: ApiSlotItem): boolean {
+  const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
+  return combined.includes("gastroskop");
+}
+
+function isColonoscopySlot(item: ApiSlotItem): boolean {
+  const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
+  return combined.includes("kolonoskop") || combined.includes("kolono");
+}
+
+function rankGastroSlot(item: ApiSlotItem, query: string): number {
+  const q = normalizeQueryLatin(query);
+  const procedureIntent = containsGastroProcedureIntent(q);
+  const wantsGastroscopy = q.includes("gastroskop");
+  const wantsColonoscopy = q.includes("kolonoskop") || q.includes("kolono");
+
+  if (procedureIntent) {
+    if (wantsGastroscopy && isGastroscopySlot(item)) return 100;
+    if (wantsColonoscopy && isColonoscopySlot(item)) return 110;
+    if (isGastroEndoscopySlot(item)) return 200;
+    if (isGastroAmbulantaSlot(item)) return 300;
+    return 900;
+  }
+
+  if (isGastroAmbulantaSlot(item)) return 100;
+  if (isGastroEndoscopySlot(item)) return 200;
+  return 900;
+}
+
+function sortGastroSlots(items: ApiSlotItem[], query: string): ApiSlotItem[] {
+  return [...items].sort((a, b) => {
+    const ra = rankGastroSlot(a, query);
+    const rb = rankGastroSlot(b, query);
+    if (ra !== rb) return ra - rb;
+    if (a.status !== b.status) return a.status === "HAS_SLOTS" ? -1 : 1;
+    const da = parseSlotDate(a.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    const db = parseSlotDate(b.firstAvailable)?.getTime() ?? Number.MAX_SAFE_INTEGER;
+    if (da !== db) return da - db;
     return a.specialist.localeCompare(b.specialist);
   });
 }
@@ -1524,6 +1586,8 @@ export async function GET(req: NextRequest) {
     const ultrasoundIntent = containsUltrasoundQuery(q) && !ctIntent && !octIntent && !mrIntent;
     const emngIntent = containsEmngIntent(q);
     const oncologyIntent = containsOncologyIntent(q);
+    const gastroProcedureIntent = containsGastroProcedureIntent(q);
+    const gastroIntent = containsGastroIntent(q);
 
     let snapshot = await getLatestSnapshot();
     if (!snapshot) {
@@ -1630,6 +1694,15 @@ export async function GET(req: NextRequest) {
       forcedAnswer = createOncologyCombinedAnswer(primary);
       relatedItems = related;
       relatedTitle = related.length ? "Ostalo (onkologija)" : null;
+    } else if ((gastroProcedureIntent || gastroIntent) && !ctIntent && !mrIntent && !octIntent) {
+      const gastroMatched = visibleItems
+        .filter((item) => looseTextMatch(`${item.specialist} ${item.section}`, q))
+        .filter((item) => {
+          const combined = normalizeForSearch(`${item.specialist} ${item.section}`);
+          return /(gastro|geh|endoskop|gastroskop|kolonoskop|kolono)/.test(combined);
+        });
+
+      items = sortGastroSlots(gastroMatched, q);
     } else if (octIntent) {
       const octItems = sortByStatusAndDate(
         visibleItems
