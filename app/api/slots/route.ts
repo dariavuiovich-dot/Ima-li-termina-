@@ -149,7 +149,7 @@ function expandNeedleVariants(rawQuery: string): string[] {
     add("reumatoloski konzilijum");
   }
 
-  if (/(nevrolog|neurolog|nevro|neuro)/.test(latin)) {
+  if (/\b(?:nevrolog|neurolog|nevro|neuro)\w*\b/.test(latin)) {
     add("neurolog");
     add("neuroloska ambulanta");
   }
@@ -196,12 +196,12 @@ function expandNeedleVariants(rawQuery: string): string[] {
     add("ginekoloska ambulanta");
   }
 
-  if (/(urolog)/.test(latin)) {
+  if (/\burolog\w*\b/.test(latin)) {
     add("urolog");
     add("uroloska ambulanta");
   }
 
-  if (/(ortoped)/.test(latin)) {
+  if (/\bortop\w*\b/.test(latin)) {
     add("ortoped");
     add("ortopedska ambulanta");
   }
@@ -716,8 +716,7 @@ function wordWiseLooseMatch(haystack: string, needle: string): boolean {
       if ((n === "i" && h === "1") || (n === "ii" && h === "2")) return true;
       // Very short needles (ct, mr, etc.) should not match inside unrelated words (e.g. ct in oct).
       if (n.length <= 2) return h === n || h.startsWith(n);
-      if (h.includes(n)) return true;
-      if (h.length >= 3 && n.length >= 3 && n.includes(h)) return true;
+      if (h.startsWith(n) || n.startsWith(h)) return true;
       if (h.length >= 5 && n.length >= 5) return h.slice(0, 5) === n.slice(0, 5);
       return false;
     })
@@ -733,6 +732,7 @@ function looseTextMatch(haystackRaw: string, needleRaw: string): boolean {
 }
 
 function toSafeLimit(value: string | null, fallback = 50): number {
+  if (value == null || !value.trim()) return fallback;
   const n = Number(value);
   if (!Number.isFinite(n)) return fallback;
   return Math.max(1, Math.min(Math.floor(n), 200));
@@ -744,7 +744,7 @@ function normalizeQueryLatin(query: string): string {
 
 function hasChildIntent(query: string): boolean {
   const latin = normalizeQueryLatin(query);
-  return /(det|reben|pediatr|children|child|kids|kid|baby|infant|pedij|pediat|deca|djeca|djec|dijete|dece|ibd|neonat)/.test(
+  return /\b(det|reben|pediatr|children|child|kids|kid|baby|infant|pedij|pediat|deca|djeca|djec|dijete|dece|ibd|neonat)\w*\b/.test(
     latin
   );
 }
@@ -1127,8 +1127,8 @@ function isNeurologyAmbulantaOneOrTwo(item: ApiSlotItem): boolean {
   const raw = item.specialist.toUpperCase();
 
   if (!sec.includes("klinika za neurologiju")) return false;
-  if (!sp.includes("ambulanta")) return false;
   if (!(sp.includes("neurol") || raw.includes("NEUROLO"))) return false;
+  if (!sp.includes("ambulanta") && !/\bneuroloska\b/.test(sp)) return false;
   return /\b(I|II|1|2)\b/i.test(item.specialist) || /\b(i|ii|1|2)\b/.test(sp);
 }
 
@@ -1246,7 +1246,7 @@ function isPediatricItem(item: ApiSlotItem): boolean {
   const raw = `${item.section} ${item.specialist}`.toUpperCase();
 
   if (sectionNorm.includes("institut za bolesti djece")) return true;
-  if (raw.includes("IBD") || raw.includes("DJE") || raw.includes("PEDIJ")) return true;
+  if (/\bIBD\b|\bDJE|\bPEDIJ/.test(raw)) return true;
   return /(djec|deca|djeca|pedij|pediat|neonat|ibd)/.test(specialistNorm);
 }
 
@@ -1639,6 +1639,26 @@ export async function GET(req: NextRequest) {
       }
     }
 
+    if (childIntent) {
+      return NextResponse.json({
+        query: q,
+        total: 0,
+        childIntent,
+        pediatricFiltered: true,
+        sourcePdfDate: snapshot.sourcePdfDate,
+        sourcePdfUrl: snapshot.sourcePdfUrl,
+        answer: {
+          kind: "none",
+          text: `No records found for "${q}".`,
+          bannerTone: "info"
+        } satisfies SlotAnswer,
+        items: [],
+        resultGroups: [],
+        relatedItems: [],
+        relatedTitle: null
+      });
+    }
+
     const allItems: ApiSlotItem[] = snapshot.bySpecialist.map((item) => {
       const specialist = cleanSpecialistName(item.specialist);
       return {
@@ -1656,9 +1676,7 @@ export async function GET(req: NextRequest) {
       };
     });
 
-    const searchableItems = childIntent
-      ? allItems
-      : allItems.filter((item) => !isPediatricItem(item));
+    const searchableItems = allItems.filter((item) => !isPediatricItem(item));
 
     const visibleItems = searchableItems.filter(
       (item) => !isExcludedAdministrativeItem(item)
@@ -1980,7 +1998,7 @@ export async function GET(req: NextRequest) {
       query: q,
       total: finalItems.length,
       childIntent,
-      pediatricFiltered: !childIntent,
+      pediatricFiltered: true,
       sourcePdfDate: snapshot.sourcePdfDate,
       sourcePdfUrl: snapshot.sourcePdfUrl,
       answer: forcedAnswer ?? buildAnswer(q, finalItems, visibleItems),
