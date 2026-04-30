@@ -209,6 +209,21 @@ Why this is minimal and safe:
 - no change to specialty ordering semantics
 - only heals obviously bad adult coverage snapshots
 
+## Follow-up ops alert
+
+Files:
+- `lib/sync.ts`
+- `.env.example`
+
+Change:
+- added Telegram ops alert when parsed `recordsCount` drops versus the previous snapshot by at least `OPS_RECORDS_DROP_ALERT_MIN`
+- default threshold is `12` rows
+- alert is deduplicated via debug storage key, so the same drop does not spam repeatedly
+
+Purpose:
+- catch "PDF parsed, but 10-15 rows quietly disappeared" much earlier
+- surface medium parse degradation before the snapshot becomes catastrophically bad
+
 ## Residual semantics note
 
 Neurology answer semantics remain domain-specific:

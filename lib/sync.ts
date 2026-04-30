@@ -83,6 +83,45 @@ function diffDaysUtc(from: Date, to: Date): number {
   return Math.floor((b - a) / (24 * 60 * 60 * 1000));
 }
 
+async function maybeAlertRecordsDrop(
+  current: SlotsSnapshot,
+  previous: SlotsSnapshot | null
+): Promise<void> {
+  if (!previous) return;
+
+  const minDrop = Math.max(
+    1,
+    Number.parseInt(process.env.OPS_RECORDS_DROP_ALERT_MIN ?? "12", 10) || 12
+  );
+  const delta = previous.recordsCount - current.recordsCount;
+  if (delta < minDrop) return;
+
+  const alertKey = `ops:records_drop:${current.sourcePdfDate}:${previous.recordsCount}:${current.recordsCount}:${minDrop}`;
+  const alreadySent = await getDebugValue<{ sentAt: string }>(alertKey);
+  if (alreadySent) return;
+
+  await sendTelegramOpsAlert(
+    [
+      "Upozorenje: nakon parsiranja PDF-a broj redova je manji nego obicno.",
+      `sourcePdfDate: ${current.sourcePdfDate}`,
+      `records: ${current.recordsCount} (prev: ${previous.recordsCount}, delta: -${delta})`,
+      `specialists: ${current.bySpecialist.length} (prev: ${previous.bySpecialist.length})`,
+      "Provjeriti da li je KCCG promijenio format tabele ili je parser preskocio dio PDF-a."
+    ].join("\n")
+  );
+
+  await setDebugValue(alertKey, {
+    sentAt: new Date().toISOString(),
+    sourcePdfDate: current.sourcePdfDate,
+    previousRecordsCount: previous.recordsCount,
+    currentRecordsCount: current.recordsCount,
+    previousSpecialistsCount: previous.bySpecialist.length,
+    currentSpecialistsCount: current.bySpecialist.length,
+    delta,
+    minDrop
+  });
+}
+
 async function maybeSendUsageAlert80(): Promise<void> {
   const usage = await getMonthlyApiUsage();
   const monthlyLimit = safeInt(process.env.MONTHLY_API_LIMIT, 100000);
@@ -360,6 +399,8 @@ export async function runDailySync(trigger: string): Promise<SyncResult> {
     }
 
     const suspiciousFinal = isSuspiciousSnapshot(current, previous);
+    await maybeAlertRecordsDrop(current, previous);
+
     if (suspiciousFinal) {
       const prevCount = previous?.recordsCount ?? 0;
       await sendTelegramOpsAlert(
