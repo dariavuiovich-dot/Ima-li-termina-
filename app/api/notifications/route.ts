@@ -2,6 +2,7 @@ import { getNotifications, recordApiCall } from "@/lib/storage";
 import { NextRequest, NextResponse } from "next/server";
 
 function toSafeLimit(value: string | null, fallback = 20): number {
+  if (value == null || !value.trim()) return fallback;
   const n = Number(value);
   if (!Number.isFinite(n)) return fallback;
   return Math.max(1, Math.min(Math.floor(n), 200));

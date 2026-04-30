@@ -12,6 +12,7 @@ import {
 import { NextRequest, NextResponse } from "next/server";
 
 function toSafeLimit(value: string | null, fallback = 50): number {
+  if (value == null || !value.trim()) return fallback;
   const n = Number(value);
   if (!Number.isFinite(n)) return fallback;
   return Math.max(1, Math.min(Math.floor(n), 200));
