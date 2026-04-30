@@ -152,25 +152,66 @@ Compiled `/api/schedule` runtime with synthetic schedule snapshot:
 
 Git:
 - slots fix commit pushed: `f71f02c` (`Fix slots adult search pipeline`)
+- follow-up debug/limit commit pushed: `b2f0f2b` (`Document slots debug trail and fix API limits`)
 
 Production deploy:
-- attempted `vercel --prod --yes`
-- failed because Vercel token is invalid
-- error returned by CLI:
-  - `The specified token is not valid. Use vercel login to generate a new token.`
+- initial `vercel --prod --yes` failed because Vercel token was invalid
+- after CLI login was repaired, production deploy succeeded and served commit `b2f0f2b`
 
 Practical consequence:
-- GitHub has the pushed slots fix commit
-- production site can still show the old behavior until a valid Vercel deploy happens
+- new code reached production, but `/api/slots` still returned zero adult matches
+- this proved the remaining failure was not deploy state anymore
 
-## Open / residual items
+## Production-only root cause found after deploy
 
-1. The pushed commit currently contains the slots-route fixes only.
-- later local cleanups for `schedule`/`notifications` limit handling were not yet deployed
+Observed on production after successful deploy:
+- `/api/health` showed the new commit
+- `/api/slots?q=ortoped`
+- `/api/slots?q=urolog`
+- `/api/slots?q=neurolog`
+- `/api/slots?q=gastro`
+- all still returned `total: 0`
 
-2. If production still shows old behavior, first suspect deployment state before re-diagnosing parser logic.
+Meaning:
+- route code was new
+- source PDF date stayed the same
+- Redis snapshot still contained a degraded/bad specialist universe
+- metadata refresh logic did not run because it only self-healed when a newer PDF was detected
 
-3. Neurology answer semantics remain domain-specific:
+Final systemic gap:
+- pipeline recovery depended too much on "newer PDF exists"
+- it did not recover when the same PDF date had been parsed badly once and cached in Redis
+
+## Final fix added
+
+File:
+- `app/api/slots/route.ts`
+
+Change:
+- extracted snapshot-to-items mapping into a dedicated helper
+- added adult coverage health check over visible non-pediatric items
+- if adult coverage is suspiciously low, `/api/slots` now:
+  - refetches the latest snapshot immediately
+  - overwrites the bad cached snapshot
+  - stores a debug breadcrumb under `slots:last_query_self_heal`
+
+Coverage sentinel logic:
+- require at least 40 visible adult items
+- require at least 3 of these adult markers to exist:
+  - `neuroloska ambulanta`
+  - `uroloska ambulanta`
+  - `ortopedska ambulanta`
+  - `gastroenteroloska ambulanta`
+
+Why this is minimal and safe:
+- no parser refactor
+- no UI changes
+- no change to specialty ordering semantics
+- only heals obviously bad adult coverage snapshots
+
+## Residual semantics note
+
+Neurology answer semantics remain domain-specific:
 - `Neuroloska ambulanta I/II` can correctly show `NEMA TERMINA`
 - while grouped result items can still include EEG / dispanzer / neurohirurgija rows
 - this is expected from current grouped-neurology product logic, not a parse failure

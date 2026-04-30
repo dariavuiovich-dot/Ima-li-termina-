@@ -6,6 +6,7 @@ import {
   saveSnapshot,
   setDebugValue
 } from "@/lib/storage";
+import { SlotsSnapshot } from "@/lib/types";
 import { normalizeForSearch, parseSlotDate } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -1315,6 +1316,60 @@ function detectSlotKind(item: Pick<ApiSlotItem, "section" | "specialist">):
   return "SPECIALIST_VISIT";
 }
 
+function mapSnapshotItems(snapshot: SlotsSnapshot): {
+  allItems: ApiSlotItem[];
+  searchableItems: ApiSlotItem[];
+  visibleItems: ApiSlotItem[];
+} {
+  const allItems: ApiSlotItem[] = snapshot.bySpecialist.map((item) => {
+    const specialist = cleanSpecialistName(item.specialist);
+    return {
+      key: item.key,
+      section: item.section,
+      specialist,
+      status: item.status,
+      firstAvailable: item.firstAvailable,
+      codes: Array.isArray(item.codes) ? item.codes : [],
+      slotKind: detectSlotKind({
+        section: item.section,
+        specialist
+      }),
+      ...(getItemNote({ specialist, section: item.section }) ?? {})
+    };
+  });
+
+  const searchableItems = allItems.filter((item) => !isPediatricItem(item));
+  const visibleItems = searchableItems.filter(
+    (item) => !isExcludedAdministrativeItem(item)
+  );
+
+  return {
+    allItems,
+    searchableItems,
+    visibleItems
+  };
+}
+
+function hasExpectedAdultCoverage(items: ApiSlotItem[]): boolean {
+  if (items.length < 40) return false;
+
+  const haystacks = items.map((item) =>
+    normalizeForSearch(`${item.specialist} ${item.section}`)
+  );
+  const sentinels = [
+    "neuroloska ambulanta",
+    "uroloska ambulanta",
+    "ortopedska ambulanta",
+    "gastroenteroloska ambulanta"
+  ];
+
+  const present = sentinels.filter((needle) =>
+    haystacks.some((haystack) => haystack.includes(needle))
+  );
+
+  return present.length >= 3;
+}
+
 function applyEndocrinologyVisitFilter(
   query: string,
   items: ApiSlotItem[]
@@ -1659,28 +1714,26 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    const allItems: ApiSlotItem[] = snapshot.bySpecialist.map((item) => {
-      const specialist = cleanSpecialistName(item.specialist);
-      return {
-        key: item.key,
-        section: item.section,
-        specialist,
-        status: item.status,
-        firstAvailable: item.firstAvailable,
-        codes: Array.isArray(item.codes) ? item.codes : [],
-        slotKind: detectSlotKind({
-          section: item.section,
-          specialist
-        }),
-        ...(getItemNote({ specialist, section: item.section }) ?? {})
-      };
-    });
+    let { allItems, visibleItems } = mapSnapshotItems(snapshot);
 
-    const searchableItems = allItems.filter((item) => !isPediatricItem(item));
-
-    const visibleItems = searchableItems.filter(
-      (item) => !isExcludedAdministrativeItem(item)
-    );
+    if (!childIntent && !hasExpectedAdultCoverage(visibleItems)) {
+      const previousSnapshot = snapshot;
+      const refreshed = await fetchLatestSnapshot();
+      snapshot = refreshed;
+      await saveSnapshot(snapshot);
+      await setDebugValue("slots:last_query_self_heal", {
+        at: new Date().toISOString(),
+        reason: "adult_coverage_low",
+        previousSourcePdfDate: previousSnapshot.sourcePdfDate,
+        previousRecordsCount: previousSnapshot.recordsCount,
+        previousSpecialistsCount: previousSnapshot.bySpecialist.length,
+        previousVisibleItemsCount: visibleItems.length,
+        nextSourcePdfDate: snapshot.sourcePdfDate,
+        nextRecordsCount: snapshot.recordsCount,
+        nextSpecialistsCount: snapshot.bySpecialist.length
+      });
+      ({ allItems, visibleItems } = mapSnapshotItems(snapshot));
+    }
 
     let relatedItems: ApiSlotItem[] = [];
     let relatedTitle: string | null = null;
