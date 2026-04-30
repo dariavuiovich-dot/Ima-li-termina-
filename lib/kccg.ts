@@ -94,6 +94,134 @@ function dedupeRecords(rows: SlotRecord[]): SlotRecord[] {
   return out;
 }
 
+function sanitizeRowNoise(value: string): string {
+  return value
+    .replace(/#\s*Klini\S*\s+centar\s+Crne\s+Gore.*?(?=#|$)/gi, " ")
+    .replace(/Klini\S*\s+centar\s+Crne\s+Gore.*?(?=#|$)/gi, " ")
+    .replace(/Strana\s+\d+\s+od\s+\d+/gi, " ")
+    .replace(/\bPrvi slobodni termin\b/gi, " ")
+    .replace(/\bDatum Ambulanta Doktor Poslednje dati termin\b/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function parseRowsUniversal(markdown: string, meta: KccgPdfMeta): SlotRecord[] {
+  const lines = markdown
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  const rows: SlotRecord[] = [];
+  let currentSection = "";
+  let current:
+    | {
+        code: string;
+        rawStartName: string;
+        lines: string[];
+      }
+    | null = null;
+
+  const flushCurrent = () => {
+    if (!current) return;
+
+    const block = sanitizeRowNoise(current.lines.join(" "));
+    if (!block) {
+      current = null;
+      return;
+    }
+
+    const markerMatch = block.match(/\b111111\d*\s+Ljekar specijalista u amb\.?/i);
+    const markerIndex = markerMatch?.index ?? -1;
+
+    let specialistSource = current.rawStartName;
+    if (markerIndex >= 0) {
+      const specialistMatch = block.match(
+        new RegExp(
+          `^${current.code}(?:\\.\\s*\\d+)?\\s*([\\s\\S]*?)\\s+111111\\d*\\s+Ljekar specijalista u amb\\.?`,
+          "i"
+        )
+      );
+      specialistSource = specialistMatch?.[1] ?? specialistSource;
+    } else {
+      const withoutCode = block.replace(
+        new RegExp(`^${current.code}(?:\\.\\s*\\d+)?\\s*`),
+        ""
+      );
+      const fallbackSplit = withoutCode.split(
+        /\b(?:Nema slobodnih termina|\d{2}\.\d{2}\.\d{4}\.\s*\d{2}:\d{2})\b/i
+      )[0];
+      specialistSource = fallbackSplit || specialistSource;
+    }
+
+    const specialist = cleanName(sanitizeRowNoise(specialistSource));
+    if (!specialist) {
+      current = null;
+      return;
+    }
+
+    const afterMarker =
+      markerIndex >= 0
+        ? block.slice(markerIndex + markerMatch![0].length).trim()
+        : block;
+
+    const hasNoSlots = /Nema slobodnih termina/i.test(afterMarker);
+    const dateMatches = [
+      ...afterMarker.matchAll(/\d{2}\.\d{2}\.\d{4}\.\s*\d{2}:\d{2}/g)
+    ]
+      .map((m) => m[0].replace(/\s+/g, " "))
+      .filter(Boolean);
+
+    rows.push({
+      section: currentSection,
+      code: current.code,
+      specialist,
+      status: hasNoSlots ? "NO_SLOTS" : "HAS_SLOTS",
+      firstAvailable: hasNoSlots ? null : dateMatches[0] ?? null,
+      lastBooked: dateMatches.at(-1) ?? null,
+      sourcePdfDate: meta.reportDate,
+      sourcePdfUrl: meta.pdfUrl
+    });
+
+    current = null;
+  };
+
+  for (const line of lines) {
+    if (
+      /^#\s*Klini/i.test(line) ||
+      /^Strana\s+\d+\s+od\s+\d+/i.test(line) ||
+      /^Prvi slobodni termin$/i.test(line) ||
+      /^Datum Ambulanta Doktor Poslednje dati termin$/i.test(line)
+    ) {
+      continue;
+    }
+
+    const sectionMatch = line.match(/^#\s*(\d+)\s*-\s*(.+)$/);
+    if (sectionMatch) {
+      flushCurrent();
+      currentSection = sanitizeRowNoise(sectionMatch[2]);
+      continue;
+    }
+
+    const rowStart = line.match(/^(\d{6})(?:\.\s*\d+)?\s*(.*)$/);
+    if (rowStart && rowStart[1] !== "111111") {
+      flushCurrent();
+      current = {
+        code: rowStart[1],
+        rawStartName: rowStart[2] ?? "",
+        lines: [line]
+      };
+      continue;
+    }
+
+    if (current) {
+      current.lines.push(line);
+    }
+  }
+
+  flushCurrent();
+  return dedupeRecords(rows);
+}
+
 function parseRowsLegacy(markdown: string, meta: KccgPdfMeta): SlotRecord[] {
   const lines = markdown
     .split(/\r?\n/)
@@ -264,26 +392,30 @@ function scoreRows(rows: SlotRecord[]): number {
   const hasSlotsCount = rows.filter((x) => x.status === "HAS_SLOTS").length;
   const longNamePenalty = rows.filter((x) => x.specialist.length > 140).length * 5;
   const looksBrokenPenalty = rows.filter((x) =>
-    /(prvi slobodni termin|datum ambulanta doktor|strana \d+ od \d+)/i.test(
+    /(prvi slobodni termin|datum ambulanta doktor|strana \d+ od \d+|klini\S* centar|ljekar specijalista u amb)/i.test(
       x.specialist
     )
   ).length * 10;
+  const emptySectionPenalty = rows.filter((x) => !x.section).length * 3;
 
   return (
     rows.length * 10 +
     sectionCount * 5 +
     hasSlotsCount * 2 -
     longNamePenalty -
-    looksBrokenPenalty
+    looksBrokenPenalty -
+    emptySectionPenalty
   );
 }
 
 function parseRows(markdown: string, meta: KccgPdfMeta): SlotRecord[] {
+  const universal = parseRowsUniversal(markdown, meta);
   const legacy = parseRowsLegacy(markdown, meta);
   const modern = parseRowsModern(markdown, meta);
-  const hybrid = dedupeRecords([...modern, ...legacy]);
+  const hybrid = dedupeRecords([...universal, ...modern, ...legacy]);
 
   const candidates = [
+    { name: "universal", rows: universal, score: scoreRows(universal) + 25 },
     { name: "legacy", rows: legacy, score: scoreRows(legacy) },
     { name: "modern", rows: modern, score: scoreRows(modern) },
     { name: "hybrid", rows: hybrid, score: scoreRows(hybrid) }
