@@ -90,6 +90,10 @@ test('search repairs a healthy August cache and keeps specialty semantics', asyn
   const fresh = await runtime.load('lib/kccg.ts').fetchLatestSnapshot();
   const storage = runtime.load('lib/storage.ts');
   await storage.saveSnapshot({ ...fresh, sourcePdfDate: '14.08.2026', sourcePdfUrl: 'https://www.kccg.me/wp-content/uploads/2026/08/old.pdf' });
+  await storage.setDebugValue('slots:last_meta_check', {
+    checkedAt: new Date().toISOString(), sourcePdfDate: '14.08.2026',
+    sourcePdfUrl: 'https://www.kccg.me/wp-content/uploads/2026/08/old.pdf', status: 'ok'
+  });
   const route = runtime.load('app/api/slots/route.ts');
   for (const query of ['neurolog', 'urolog', 'ortoped', 'gastro', 'gastroskopija', 'kolonoskopija', 'MR', 'CT koronografije', 'OCT']) {
     const response = await route.GET(new NextRequest(`http://localhost/api/slots?q=${encodeURIComponent(query)}`));
@@ -105,6 +109,7 @@ test('search repairs a healthy August cache and keeps specialty semantics', asyn
   assert.equal(child.total, 0);
   assert.equal((await storage.getLatestSnapshot()).sourcePdfDate, meta.reportDate);
   assert.equal((await storage.getDebugValue('slots:last_meta_check')).status, 'ok');
+  assert.equal((await storage.getDebugValue('slots:last_meta_check')).sourceDiscoveryVersion, 1);
 });
 
 test('daily sync persists current data and skips an unchanged repeat', async () => {

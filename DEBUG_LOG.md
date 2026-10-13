@@ -271,3 +271,9 @@ Follow-up production observations after network settings propagated:
 - Unauthenticated `/api/sync/last` returns 401 as expected; protected production diagnostics remain unavailable.
 - The user clarified that there are no visible Vercel login errors, only stopped data refresh. Session expiry is not an established cause of that behavior.
 - Fixes were pushed to GitHub branch `fix/kccg-report-refresh`; production still serves the original main commit.
+
+Deployment follow-up:
+- With user authorization, fixes were fast-forwarded to main and pushed. Vercel automatically published `c21b0a193c92add1c48b31455ffda718903d1f2a`, proving deployment through Git works without local CLI login.
+- Initial new-version search still returned 12.10.2026. A recent legacy `slots:last_meta_check` can suppress source checks for 900 seconds even across deployments.
+- A regression test seeded a recent successful legacy metadata check and reproduced stale August data despite the discovery fix.
+- Added `PDF_SOURCE_DISCOVERY_VERSION` to persisted metadata-check state. Missing/older discovery versions force an immediate check; subsequent checks retain the normal interval. No secrets or authentication were weakened.

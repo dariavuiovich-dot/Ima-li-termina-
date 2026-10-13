@@ -2,6 +2,7 @@ import { SlotRecord, SpecialistSlot, SlotsSnapshot } from "@/lib/types";
 import { makeKey, parseSlotDate } from "@/lib/utils";
 
 const KCCG_HOME_URL = "https://www.kccg.me/";
+export const PDF_SOURCE_DISCOVERY_VERSION = 1;
 
 interface KccgPdfMeta {
   reportDate: string;

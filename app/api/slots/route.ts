@@ -1,4 +1,9 @@
-import { fetchLatestPdfMeta, fetchLatestSnapshot, fetchSnapshotFromPdfMeta } from "@/lib/kccg";
+import {
+  PDF_SOURCE_DISCOVERY_VERSION,
+  fetchLatestPdfMeta,
+  fetchLatestSnapshot,
+  fetchSnapshotFromPdfMeta
+} from "@/lib/kccg";
 import {
   getDebugValue,
   getLatestSnapshot,
@@ -44,6 +49,7 @@ type ResultGroup = {
 };
 
 type SlotsMetaCheckState = {
+  sourceDiscoveryVersion?: number;
   checkedAt: string;
   sourcePdfDate: string | null;
   sourcePdfUrl: string | null;
@@ -1656,7 +1662,10 @@ export async function GET(req: NextRequest) {
       Number.parseInt(process.env.SLOTS_META_CHECK_INTERVAL_SEC ?? "900", 10) || 900
     );
     const metaState = await getDebugValue<SlotsMetaCheckState>(SLOT_META_CHECK_KEY);
-    if (isMetaCheckDue(metaState?.checkedAt, intervalSec)) {
+    if (
+      metaState?.sourceDiscoveryVersion !== PDF_SOURCE_DISCOVERY_VERSION ||
+      isMetaCheckDue(metaState?.checkedAt, intervalSec)
+    ) {
       try {
         const latestMeta = await fetchLatestPdfMeta();
         const currentDateTs = parseReportDateToEpoch(snapshot.sourcePdfDate);
@@ -1670,6 +1679,7 @@ export async function GET(req: NextRequest) {
         }
 
         await setDebugValue(SLOT_META_CHECK_KEY, {
+          sourceDiscoveryVersion: PDF_SOURCE_DISCOVERY_VERSION,
           checkedAt: new Date().toISOString(),
           sourcePdfDate: latestMeta.reportDate,
           sourcePdfUrl: latestMeta.pdfUrl,
@@ -1681,6 +1691,7 @@ export async function GET(req: NextRequest) {
             ? metaError.message
             : "Unknown error while checking source meta";
         await setDebugValue(SLOT_META_CHECK_KEY, {
+          sourceDiscoveryVersion: PDF_SOURCE_DISCOVERY_VERSION,
           checkedAt: new Date().toISOString(),
           sourcePdfDate: snapshot.sourcePdfDate,
           sourcePdfUrl: snapshot.sourcePdfUrl,
