@@ -264,3 +264,10 @@ Validation:
 - Live manual slots sync and cron-handler checks succeed; an unchanged report is skipped. This does not establish Vercel cron scheduling.
 - Production network access, Redis and delivery credentials are unavailable; no production deployment or external notifications were performed.
 - Production build passes. Local `next start` returns current slots and colonoscopy schedules; unauthenticated sync/cron requests correctly return HTTP 401.
+
+Follow-up production observations after network settings propagated:
+- Public `/api/health` became reachable and reports production commit `bcc6d2209b2451c25106498b57875784130534c3` on main, Redis mode, and configured admin/cron secrets. This does not verify Redis writes or scheduled cron execution.
+- Public orthopedics search returns report 12.10.2026, not the August date initially reported by the user; the live KCCG homepage publishes 13.10.2026.
+- Unauthenticated `/api/sync/last` returns 401 as expected; protected production diagnostics remain unavailable.
+- The user clarified that there are no visible Vercel login errors, only stopped data refresh. Session expiry is not an established cause of that behavior.
+- Fixes were pushed to GitHub branch `fix/kccg-report-refresh`; production still serves the original main commit.
