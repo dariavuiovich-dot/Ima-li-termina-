@@ -1,6 +1,6 @@
 # DEBUG_LOG
 
-Last updated: 2026-04-30
+Last updated: 2026-10-14
 
 ## Context
 
@@ -230,3 +230,37 @@ Neurology answer semantics remain domain-specific:
 - `Neuroloska ambulanta I/II` can correctly show `NEMA TERMINA`
 - while grouped result items can still include EEG / dispanzer / neurohirurgija rows
 - this is expected from current grouped-neurology product logic, not a parse failure
+
+## 2026-10-14: PDF refresh and schedule recovery
+
+User reported the deployed app remained on the 14.08.2026 report. Production logs and Redis were not available in this cloud task, so the exact first failure date is not established.
+
+Confirmed source-discovery defect:
+- The live KCCG homepage publishes a dated availability report at `https://www.kccg.me/wp-content/uploads/2026/10/ilovepdf-merged-6.pdf` (13.10.2026).
+- Existing discovery required `prvi-slobodan-termin` in the filename, so it could not discover this report.
+- Existing PDF parsing itself recovered all 174 codes and 171 specialist groups from current Jina text, with no malformed specialist names.
+
+Fixes:
+- Discover the PDF and date inside the availability report section, ignoring unrelated documents/dates elsewhere on the homepage. Preserve historical named-PDF and Markdown fallback behavior.
+- Do not substitute today's date when the source date is missing.
+- Normalize the Jina request to `https://r.jina.ai/<absolute-pdf-url>`. The historical double-scheme URL still returned 200 during investigation, so it is not claimed as the root cause.
+- Set finite upstream timeouts and reject zero-record parses before storage is updated.
+- When checking for a newer report, fetch the exact metadata already discovered rather than discovering it a second time.
+
+Additional confirmed schedule defect:
+- Both uploaded and live Poliklinika HTML include colonoscopy schedules inside the endoscopy accordion.
+- The parser discarded these subsection headings, making colonoscopy schedule searches return no results.
+- Preserve procedure-specific source headings, reset schedule context at each procedure, recognize the ezofagogastroduodenoscopy name, and bump parser version to 3 to invalidate old cached schedules.
+- Record schedule refresh diagnostics at `schedule:last_query_refresh`.
+
+Cloud runtime issue:
+- Native Node fetch initially failed with EAI_AGAIN while curl succeeded through the supplied proxy.
+- `NODE_USE_ENV_PROXY=1` on Node 24 fixed live API fetches without disabling TLS verification.
+
+Validation:
+- 13 offline regression tests pass, including current/historical PDF parsing, August-cache recovery, empty-parse cache preservation, specialty filtering, schedule procedure separation, in-app notifications, repeat sync and production auth denial.
+- Live local searches for neurology, urology, orthopedics, gastro, gastroscopy, colonoscopy, MR, CT and OCT return the 13.10.2026 report; child-intent searches remain empty.
+- Live schedule parsing returns 260 records; colonoscopy returns 7 doctor/day entries.
+- Live manual slots sync and cron-handler checks succeed; an unchanged report is skipped. This does not establish Vercel cron scheduling.
+- Production network access, Redis and delivery credentials are unavailable; no production deployment or external notifications were performed.
+- Production build passes. Local `next start` returns current slots and colonoscopy schedules; unauthenticated sync/cron requests correctly return HTTP 401.

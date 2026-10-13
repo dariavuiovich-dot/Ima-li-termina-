@@ -1,4 +1,4 @@
-import { fetchLatestPdfMeta, fetchLatestSnapshot } from "@/lib/kccg";
+import { fetchLatestPdfMeta, fetchLatestSnapshot, fetchSnapshotFromPdfMeta } from "@/lib/kccg";
 import {
   getDebugValue,
   getLatestSnapshot,
@@ -1665,7 +1665,7 @@ export async function GET(req: NextRequest) {
           latestMeta.pdfUrl !== snapshot.sourcePdfUrl || latestDateTs > currentDateTs;
 
         if (hasNewerSource) {
-          snapshot = await fetchLatestSnapshot();
+          snapshot = await fetchSnapshotFromPdfMeta(latestMeta);
           await saveSnapshot(snapshot);
         }
 

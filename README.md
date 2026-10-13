@@ -60,6 +60,13 @@ Recommended for zero-maintenance ops:
 
 ## Local run
 
+For regression checks, run `npm test` and `npm run typecheck -- --incremental false`.
+The tests use real historical/current report fixtures without network access or production credentials.
+
+In a Node 24 cloud environment with supplied HTTPS proxy variables, prefix the
+development command with `NODE_USE_ENV_PROXY=1` so application fetches use that proxy.
+See `docs/recovery-2026-10-14.md` for the source-refresh investigation and validation.
+
 ```bash
 npm install
 npm run dev

@@ -1,7 +1,7 @@
 import { DoctorScheduleItem, DoctorScheduleSnapshot } from "@/lib/types";
 
 const POLIKLINIKA_URL = "https://www.kccg.me/poliklinika/poliklinika-kccg/";
-export const SCHEDULE_PARSER_VERSION = 2;
+export const SCHEDULE_PARSER_VERSION = 3;
 
 type RawAccordionItem = {
   ambulanta: string;
@@ -85,6 +85,8 @@ function normalizeSearch(value: string): string {
 
 function tokenVariants(token: string): string[] {
   const out = new Set<string>([token]);
+
+  if (token.startsWith("gastroskop")) out.add("gastroduodenoskop");
 
   if (token.startsWith("neurolog") || token.startsWith("nevrolog")) {
     out.add("neuro");
@@ -420,7 +422,7 @@ function isEndoscopyItem(item: DoctorScheduleItem): boolean {
 
 function isGastroscopyItem(item: DoctorScheduleItem): boolean {
   const hay = normalizeSearch(item.ambulanta);
-  return hay.includes("gastroskop");
+  return hay.includes("gastroskop") || hay.includes("gastroduodenoskop");
 }
 
 function isColonoscopyItem(item: DoctorScheduleItem): boolean {
@@ -468,9 +470,21 @@ function parseDoctorSchedule(pageHtml: string): DoctorScheduleItem[] {
     let currentScheduleContext: string | null = null;
     let currentDayContext: string | null = null;
     let currentHoursContext: string | null = fallbackAmbulantaHours;
+    let currentAmbulanta = item.ambulanta;
 
     for (const line of lines) {
       if (isNonScheduleInfoLine(line)) continue;
+
+      // Endoscopy contains separate procedure schedules inside one accordion.
+      // Preserve their source headings so colonoscopy remains searchable and
+      // doctors do not inherit the preceding procedure's day or hours.
+      if (/^Kabinet za (?:ezofagogastroduodenoskopiju|gastroskopiju|kolonoskopiju)$/i.test(line)) {
+        currentAmbulanta = `${item.ambulanta} — ${line}`;
+        currentScheduleContext = null;
+        currentDayContext = null;
+        currentHoursContext = null;
+        continue;
+      }
 
       const hasDoctor = containsDoctorMarker(line);
       const hasSchedule = containsScheduleMarker(line);
@@ -521,12 +535,12 @@ function parseDoctorSchedule(pageHtml: string): DoctorScheduleItem[] {
       currentDayContext = extractDayLabel(rowSchedule) ?? currentDayContext;
 
       for (const doctor of names) {
-        const id = buildId([item.ambulanta, doctor, rowSchedule, location ?? ""]);
+        const id = buildId([currentAmbulanta, doctor, rowSchedule, location ?? ""]);
         if (seen.has(id)) continue;
         seen.add(id);
         out.push({
           id,
-          ambulanta: item.ambulanta,
+          ambulanta: currentAmbulanta,
           doctor,
           schedule: rowSchedule,
           ambulantaHours: rowHours,

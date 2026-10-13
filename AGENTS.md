@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Last updated: 2026-03-12
+Last updated: 2026-10-14
 
 This file is operational memory for the project, to avoid re-discovery after outages.
 
@@ -36,7 +36,7 @@ This file is operational memory for the project, to avoid re-discovery after out
   - fallback: in-memory (`lib/storage.ts`) for local/dev only.
 - KCCG slot data source:
   - homepage: `https://www.kccg.me/`
-  - PDF discovered from homepage HTML
+  - PDF discovered from the availability report block on the homepage (filenames may be arbitrary, including merged PDFs)
   - PDF parsed through `https://r.jina.ai/http://<pdf-url>`
 - Schedule data source:
   - `https://www.kccg.me/poliklinika/poliklinika-kccg/`
@@ -53,7 +53,7 @@ This file is operational memory for the project, to avoid re-discovery after out
   - if newer PDF found, refresh snapshot.
 - Matching logic:
   - free text + transliteration/alias expansion;
-  - pediatric rows hidden unless child intent detected;
+  - pediatric rows always excluded; child-intent searches return no results;
   - administrative rows excluded.
 - Custom intent pipelines in `app/api/slots/route.ts`:
   - CT/OCT/MR/UZ/EMNG;
@@ -155,6 +155,7 @@ This file is operational memory for the project, to avoid re-discovery after out
 ### Standard workflow
 
 1. Local checks:
+   - `npm test` (offline regression tests with real April/October fixtures)
    - `npm run typecheck`
    - `npm run build` (optional but recommended before prod deploy)
 2. Commit only relevant files.
@@ -231,4 +232,14 @@ Ops knobs:
 - When fixing parsing, add debug breadcrumbs (`setDebugValue`) for observability.
 - Before deploy, ensure only intended files are staged.
 - Never include secret values in commits or chat replies.
+
+## 13) October 2026 recovery
+
+- Homepage report on 2026-10-14: `13.10.2026`, URL ending `2026/10/ilovepdf-merged-6.pdf`.
+- Old filename-only discovery failed because it required `prvi-slobodan-termin`. Discovery now scopes arbitrary PDF links and the date to the availability report section, with HTML and Jina Markdown support.
+- The October report parses into 174 records / 171 specialist groups. An empty parse must fail without replacing the last good snapshot.
+- Schedule parser version is now 3. Preserve gastroscopy/colonoscopy subsection headings inside the endoscopy accordion; older cached schedules refresh automatically.
+- In this cloud environment, Node 24 must be launched with `NODE_USE_ENV_PROXY=1` to use the supplied HTTPS proxy. This is a development-environment requirement, not a Vercel application setting. Keep TLS verification enabled.
+- Public deployment, production Redis, Telegram and browser push require separate access/validation. Passing local tests does not prove the deployed site was updated.
+- See `docs/recovery-2026-10-14.md` for uploaded-file comparison, evidence and remaining limitations.
 

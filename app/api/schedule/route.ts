@@ -7,7 +7,8 @@ import {
 import {
   getLatestScheduleSnapshot,
   recordApiCall,
-  saveScheduleSnapshot
+  saveScheduleSnapshot,
+  setDebugValue
 } from "@/lib/storage";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -32,8 +33,16 @@ export async function GET(req: NextRequest) {
       snapshot.parserVersion < SCHEDULE_PARSER_VERSION;
 
     if (mustRefreshSnapshot) {
+      const previousParserVersion = snapshot?.parserVersion ?? null;
       snapshot = await fetchDoctorScheduleSnapshot();
       await saveScheduleSnapshot(snapshot);
+      await setDebugValue("schedule:last_query_refresh", {
+        at: new Date().toISOString(),
+        reason: previousParserVersion === null ? "missing_snapshot" : "parser_version_changed",
+        previousParserVersion,
+        parserVersion: snapshot.parserVersion,
+        recordsCount: snapshot.recordsCount
+      });
     }
     if (!snapshot) {
       throw new Error("Doctor schedule snapshot unavailable");

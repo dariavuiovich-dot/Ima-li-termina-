@@ -9,7 +9,7 @@ interface KccgPdfMeta {
 }
 
 function normalizePdfUrl(raw: string): string {
-  const value = raw.trim();
+  const value = raw.trim().replace(/&amp;/gi, "&");
   if (/^https?:\/\//i.test(value)) return value;
   if (value.startsWith("//")) return `https:${value}`;
   if (value.startsWith("/")) return `https://www.kccg.me${value}`;
@@ -38,9 +38,56 @@ function extractPdfUrl(html: string): string | null {
   return null;
 }
 
+// KCCG also publishes merged PDFs with arbitrary filenames. Only accept those
+// from the availability report block, not unrelated PDFs elsewhere on the page.
+function extractReportSection(page: string): string | null {
+  const heading = /<h([1-5])\b[^>]*>([\s\S]*?)<\/h\1>/gi;
+  for (const match of page.matchAll(heading)) {
+    const title = match[2].replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+    if (!/^Prvi slobodni termin za zakazivanje\b/i.test(title)) continue;
+    const tail = page.slice((match.index ?? 0) + match[0].length);
+    const nextHeading = new RegExp(`<h[1-${match[1]}]\\b`, "i").exec(tail);
+    return tail.slice(0, nextHeading?.index ?? tail.length);
+  }
+
+  // Jina's homepage fallback returns Markdown rather than HTML.
+  const markdownHeading = /^(#{1,5})\s+Prvi slobodni termin za zakazivanje[^\n]*$/im.exec(page);
+  if (!markdownHeading) return null;
+  const tail = page.slice(markdownHeading.index + markdownHeading[0].length);
+  const nextHeading = new RegExp(`^#{1,${markdownHeading[1].length}}\\s+`, "m").exec(tail);
+  return tail.slice(0, nextHeading?.index ?? tail.length);
+}
+
+function extractReportMeta(page: string): KccgPdfMeta | null {
+  const section = extractReportSection(page);
+  const scope = section ?? page;
+  let pdfUrl: string | null = null;
+  if (section !== null) {
+    const links = /(?:href|data-url)=["']([^"']+\.pdf(?:\?[^"']*)?)["']|\]\(([^\s)]+\.pdf(?:\?[^\s)]*)?)\)/gi;
+    for (const link of scope.matchAll(links)) {
+      const candidate = normalizePdfUrl(link[1] ?? link[2]);
+      const url = new URL(candidate);
+      if (url.protocol === "https:" && url.hostname === "www.kccg.me") {
+        pdfUrl = candidate;
+        break;
+      }
+    }
+  } else {
+    pdfUrl = extractPdfUrl(scope);
+  }
+  if (!pdfUrl) return null;
+
+  const dateMatch = scope.match(/<h6\b[^>]*>\s*(\d{2}\.\d{2}\.\d{4})\.?\s*<\/h6>/i)
+    ?? scope.match(/(?:^|\n)\s*(?:#{1,6}\s*)?(\d{2}\.\d{2}\.\d{4})\.?\s*(?:\n|$)/);
+  // Never label an undated old report with today's date.
+  if (!dateMatch) return null;
+  return { reportDate: dateMatch[1], pdfUrl };
+}
+
 async function fetchHtml(url: string): Promise<string> {
   const res = await fetch(url, {
     method: "GET",
+    signal: AbortSignal.timeout(20_000),
     headers: {
       "user-agent": "kccg-slots-app/1.0"
     },
@@ -480,19 +527,12 @@ export async function fetchLatestPdfMeta(): Promise<KccgPdfMeta> {
   for (const source of sources) {
     try {
       const html = await fetchHtml(source);
-      const pdfUrl = extractPdfUrl(html);
-      if (!pdfUrl) {
-        errors.push(`No PDF link parsed from ${source}`);
+      const meta = extractReportMeta(html);
+      if (!meta) {
+        errors.push(`No dated availability PDF link parsed from ${source}`);
         continue;
       }
-
-      const dateMatch = html.match(/<h6[^>]*>(\d{2}\.\d{2}\.\d{4})<\/h6>/i);
-      const reportDate = dateMatch?.[1] ?? new Date().toISOString().slice(0, 10);
-
-      return {
-        reportDate,
-        pdfUrl
-      };
+      return meta;
     } catch (error) {
       errors.push(error instanceof Error ? error.message : String(error));
     }
@@ -504,9 +544,10 @@ export async function fetchLatestPdfMeta(): Promise<KccgPdfMeta> {
 }
 
 export async function fetchSnapshotFromPdfMeta(meta: KccgPdfMeta): Promise<SlotsSnapshot> {
-  const proxyUrl = `https://r.jina.ai/http://${meta.pdfUrl}`;
+  const proxyUrl = `https://r.jina.ai/${meta.pdfUrl}`;
   const res = await fetch(proxyUrl, {
     method: "GET",
+    signal: AbortSignal.timeout(45_000),
     headers: {
       "user-agent": "kccg-slots-app/1.0"
     },
@@ -520,6 +561,9 @@ export async function fetchSnapshotFromPdfMeta(meta: KccgPdfMeta): Promise<Slots
   const raw = await res.text();
   const markdown = extractMarkdown(raw);
   const records = parseRows(markdown, meta);
+  if (!records.length) {
+    throw new Error("KCCG PDF parsing produced no slot records; snapshot was not saved");
+  }
 
   return {
     generatedAt: new Date().toISOString(),
